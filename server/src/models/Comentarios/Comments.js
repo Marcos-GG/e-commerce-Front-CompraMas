@@ -15,12 +15,28 @@ module.exports = (sequelize) => {
         },
       },
 
+      // ID del usuario que realiza el comentario
+      userId: {
+        type: DataTypes.UUID,
+        allowNull: false,
+      },
+
+      // ID de la publicación a la que pertenece el comentario
+      productId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        validate: {
+          isInt: true,
+          min: 1,
+        },
+      },
+
       text: {
         type: DataTypes.VARCHAR(255),
         allowNull: false,
         validate: {
           len: {
-            args: [5, 1000],
+            args: [2, 1000],
             msg: "Debe tener entre 10 y 300 caracteres",
           },
         },

@@ -29,7 +29,7 @@ module.exports = (sequelize) => {
 
       image: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true, // despues tiene que estar si o si en false
       },
 
       description: {
@@ -52,7 +52,7 @@ module.exports = (sequelize) => {
         allowNull: false,
       },
 
-      categoty: {
+      category: {
         // categorias
         type: DataTypes.STRING,
         allowNull: false,

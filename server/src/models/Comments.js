@@ -32,7 +32,7 @@ module.exports = (sequelize) => {
       },
 
       text: {
-        type: DataTypes.VARCHAR(255),
+        type: DataTypes.TEXT,
         allowNull: false,
         validate: {
           len: {

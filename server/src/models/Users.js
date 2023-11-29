@@ -56,7 +56,7 @@ module.exports = (sequelize) => {
         allowNull: true,
       },
 
-      birth_date: {
+      birthDate: {
         type: DataTypes.DATEONLY,
         allowNull: false,
       },
@@ -69,7 +69,6 @@ module.exports = (sequelize) => {
       active: {
         type: DataTypes.BOOLEAN,
         defaultValue: true,
-        allowNull: true,
       },
     },
     { timestamps: false }

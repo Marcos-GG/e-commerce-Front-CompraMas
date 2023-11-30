@@ -3,10 +3,8 @@ const { Like, Products } = require("../../db");
 const postLikeController = async ({ productId, userId }) => {
   // creamos el like
   const createLike = await Like.create({
-    where: {
-      userId: userId,
-      productId: productId,
-    },
+    userId: userId,
+    productId: productId,
   });
 
   // traemos el prodcuto para luego actualizar el valor

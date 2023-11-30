@@ -71,6 +71,7 @@ module.exports = (sequelize) => {
       status: {
         // Estado de la publicación (puede ser nulo)
         type: DataTypes.BOOLEAN,
+        defaultValue: true,
         allowNull: true,
       },
     },

@@ -13,6 +13,7 @@ const putProductHandler = require("../Handlers/Productos/putProduct");
 
 // handlers likes
 const postLikeHandler = require("../Handlers/Like/postLikeHandler");
+const removeLikeHandler = require("../Handlers/Like/removeLikeHandler");
 
 const router = Router();
 
@@ -30,5 +31,6 @@ router.put("/products/:id", putProductHandler);
 
 //likes
 router.post("/likes", postLikeHandler);
+router.put("/likes", removeLikeHandler);
 
 module.exports = router;

@@ -4,6 +4,7 @@ const { Router } = require("express");
 /// handlers Users
 const createUserHandler = require("../Handlers/Usuarios/postUser");
 const getUserHandler = require("../Handlers/Usuarios/getUser");
+const putUserHandler = require("../Handlers/Usuarios/putUser");
 
 // handlers Products
 const postProductHandler = require("../Handlers/Productos/postProduct");
@@ -16,9 +17,10 @@ const postLikeHandler = require("../Handlers/Like/postLikeHandler");
 const router = Router();
 
 // users
+router.get("/users/:id", getUserHandler);
 router.post("/users", createUserHandler);
 router.get("/users", getUserHandler);
-router.get("/users/:id", getUserHandler);
+router.put("/users/:id", putUserHandler);
 
 // products
 router.get("/products/:id", getProductHandler);

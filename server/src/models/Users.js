@@ -12,27 +12,27 @@ module.exports = (sequelize) => {
 
       name: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
       },
 
       email: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
       },
 
       lastname: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
       },
 
       password: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
       },
 
       passwordConfirmation: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
         validate: {
           isConfirmed(value) {
             if (this.password !== value) {
@@ -53,12 +53,12 @@ module.exports = (sequelize) => {
 
       phone: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
       },
 
       birthDate: {
         type: DataTypes.DATEONLY,
-        allowNull: false,
+        allowNull: true,
       },
 
       admin: {

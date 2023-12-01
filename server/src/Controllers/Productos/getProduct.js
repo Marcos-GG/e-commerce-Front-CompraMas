@@ -1,4 +1,4 @@
-const { Products, Like, User, Comment } = require("../../db");
+const { Products, Like, User, Comment, Answer } = require("../../db");
 
 const getProductController = async (id) => {
   if (id) {
@@ -11,6 +11,10 @@ const getProductController = async (id) => {
         {
           model: Comment,
           include: { model: User, attributes: ["name", "lastname"] },
+          include: {
+            model: Answer,
+            include: { model: User, attributes: ["name", "lastname"] },
+          },
         },
       ],
     });
@@ -27,6 +31,10 @@ const getProductController = async (id) => {
       {
         model: Comment,
         include: { model: User, attributes: ["name", "lastname"] },
+        include: {
+          model: Answer,
+          include: { model: User, attributes: ["name", "lastname"] },
+        },
       },
     ],
   });

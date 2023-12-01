@@ -17,7 +17,7 @@ module.exports = (sequelize) => {
       type: DataTypes.TEXT,
       allowNull: false,
       validate: {
-        len: [20, 1000],
+        len: [2, 1000],
       },
     },
 

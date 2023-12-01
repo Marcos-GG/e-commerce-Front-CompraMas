@@ -28,6 +28,10 @@ const deleteCommentHandler = require("../Handlers/Comentarios/deleteComment");
 const putCommentHandler = require("../Handlers/Comentarios/putComment");
 const getCommentHandler = require("../Handlers/Comentarios/getComment");
 
+// handlers Answer
+const postAnswerHandler = require("../Handlers/Answer/postAnswer");
+const deleteAnswerHandler = require("../Handlers/Answer/deleteAnswer");
+
 const router = Router();
 
 // users
@@ -60,5 +64,9 @@ router.delete("/comments/:id", deleteCommentHandler);
 router.put("/comments/:id", putCommentHandler);
 router.get("/comments", getCommentHandler);
 router.get("/comments/:id", getCommentHandler);
+
+// answer
+router.post("/answer", postAnswerHandler);
+router.delete("/answer/:id", deleteAnswerHandler);
 
 module.exports = router;

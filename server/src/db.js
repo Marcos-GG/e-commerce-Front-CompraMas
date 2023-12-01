@@ -55,6 +55,11 @@ Products.hasMany(Comment, { foreignKey: "productId" });
 Comment.belongsTo(User, { foreignKey: "userId" });
 Comment.belongsTo(Products, { foreignKey: "productId" });
 
+// relaciones de Answer
+Comment.hasMany(Answer, { foreignKey: "commentId" });
+Answer.belongsTo(Comment, { foreignKey: "commentId" });
+Answer.belongsTo(User, { foreignKey: "userId" });
+
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');
   conn: sequelize, // para importart la conexión { pool } = require('./db.js');

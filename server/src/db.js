@@ -42,6 +42,14 @@ sequelize.models = Object.fromEntries(capsEntries);
 
 const { Products, Like, User, Category, Comment, Answer } = sequelize.models;
 
+// Products.belongsTo(Category, { foreignKey: "category" });
+// Category.hasMany(Products, { foreignKey: "category" });
+
+// relaciones de likes
+Like.belongsTo(Products, { foreignKey: "productId" });
+Like.belongsTo(User, { foreignKey: "userId" });
+Products.hasMany(Like, { foreignKey: "productId" });
+
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');
   conn: sequelize, // para importart la conexión { pool } = require('./db.js');

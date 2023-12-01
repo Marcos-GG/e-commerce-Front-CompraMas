@@ -1,4 +1,4 @@
-const { Products } = require("../../db");
+const { Products, Like, User } = require("../../db");
 
 const getProductController = async (id) => {
   if (id) {
@@ -7,7 +7,11 @@ const getProductController = async (id) => {
     return idProduct;
   }
 
-  const allProducts = await Products.findAll();
+  const allProducts = await Products.findAll({
+    include: [
+      { model: Like, include: { model: User, attributes: ["name", "id"] } },
+    ],
+  });
 
   return allProducts;
 };

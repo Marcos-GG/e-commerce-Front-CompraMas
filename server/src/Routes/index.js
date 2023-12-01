@@ -22,6 +22,9 @@ const getCategoryHandler = require("../Handlers/Categorias/getCategory");
 const postCategoryHandler = require("../Handlers/Categorias/postCategory");
 const putCategoryHandler = require("../Handlers/Categorias/putCategory");
 
+// handlers Comments
+const postCommentHandler = require("../Handlers/Comentarios/postComment");
+
 const router = Router();
 
 // users
@@ -47,5 +50,8 @@ router.get("/categories", getCategoryHandler);
 router.get("/category?", getCategoryHandler);
 router.post("/category", postCategoryHandler);
 router.put("/category", putCategoryHandler);
+
+// comments
+router.post("/comments", postCommentHandler);
 
 module.exports = router;

@@ -20,6 +20,7 @@ const removeLikeHandler = require("../Handlers/Like/removeLikeHandler");
 // handlers Categories
 const getCategoryHandler = require("../Handlers/Categorias/getCategory");
 const postCategoryHandler = require("../Handlers/Categorias/postCategory");
+const putCategoryHandler = require("../Handlers/Categorias/putCategory");
 
 const router = Router();
 
@@ -45,5 +46,6 @@ router.put("/likes", removeLikeHandler);
 router.get("/categories", getCategoryHandler);
 router.get("/category?", getCategoryHandler);
 router.post("/category", postCategoryHandler);
+router.put("/category", putCategoryHandler);
 
 module.exports = router;

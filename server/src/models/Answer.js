@@ -20,5 +20,16 @@ module.exports = (sequelize) => {
         len: [20, 1000],
       },
     },
+
+    commentId: {
+      // lo tuve que agregar si o si
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+
+    userId: {
+      type: DataTypes.UUID,
+      allowNull: false,
+    },
   });
 };

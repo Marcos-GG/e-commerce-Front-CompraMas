@@ -17,6 +17,9 @@ const deleteProductHandler = require("../Handlers/Productos/deleteProduct");
 const postLikeHandler = require("../Handlers/Like/postLikeHandler");
 const removeLikeHandler = require("../Handlers/Like/removeLikeHandler");
 
+// handlers Categories
+const getCategoryHandler = require("../Handlers/Categorias/getCategory");
+
 const router = Router();
 
 // users
@@ -36,5 +39,9 @@ router.delete("/products/:id", deleteProductHandler);
 //likes
 router.post("/likes", postLikeHandler);
 router.put("/likes", removeLikeHandler);
+
+//Category
+router.get("/categories", getCategoryHandler);
+router.get("/category?", getCategoryHandler);
 
 module.exports = router;

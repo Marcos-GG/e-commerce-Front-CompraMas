@@ -24,6 +24,8 @@ const putCategoryHandler = require("../Handlers/Categorias/putCategory");
 
 // handlers Comments
 const postCommentHandler = require("../Handlers/Comentarios/postComment");
+const deleteCommentHandler = require("../Handlers/Comentarios/deleteComment");
+const putCommentHandler = require("../Handlers/Comentarios/putComment");
 
 const router = Router();
 
@@ -53,5 +55,7 @@ router.put("/category", putCategoryHandler);
 
 // comments
 router.post("/comments", postCommentHandler);
+router.delete("/comments/:id", deleteCommentHandler);
+router.put("/comments/:id", putCommentHandler);
 
 module.exports = router;

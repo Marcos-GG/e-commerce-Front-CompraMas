@@ -31,6 +31,7 @@ const getCommentHandler = require("../Handlers/Comentarios/getComment");
 // handlers Answer
 const postAnswerHandler = require("../Handlers/Answer/postAnswer");
 const deleteAnswerHandler = require("../Handlers/Answer/deleteAnswer");
+const putAnswerHandler = require("../Handlers/Answer/putAnswer");
 
 const router = Router();
 
@@ -68,5 +69,6 @@ router.get("/comments/:id", getCommentHandler);
 // answer
 router.post("/answer", postAnswerHandler);
 router.delete("/answer/:id", deleteAnswerHandler);
+router.put("/answer", putAnswerHandler);
 
 module.exports = router;

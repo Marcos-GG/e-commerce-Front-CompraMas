@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import { GET_PRODUCTS } from "./acionsTypes/ProductsActionTypes";
+import { GET_PRODUCTS } from "../actionsTypes/ProductsActionTypes";
 
 export const getProducts = () => {
   return async function (dispatch) {

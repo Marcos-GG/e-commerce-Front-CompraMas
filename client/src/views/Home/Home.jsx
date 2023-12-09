@@ -1,9 +1,9 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
-import { getProducts } from "../../Redux/actions";
+import { getProducts } from "../../Redux/actions/productsActions";
 
 function Home() {
-  const products = useSelector((state) => state.products);
+  const products = useSelector((state) => state.products.products);
   const dispatch = useDispatch();
 
   useEffect(() => {

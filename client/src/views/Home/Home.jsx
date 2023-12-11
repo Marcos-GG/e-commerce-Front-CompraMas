@@ -4,6 +4,7 @@ import { getProducts } from "../../Redux/actions/productsActions";
 
 function Home() {
   const products = useSelector((state) => state.products.products);
+  console.log(products, "como llega al home");
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -17,10 +18,9 @@ function Home() {
       <div>
         {products.map((product) => (
           <div key={product?.id}>
-            <p>id : {product?.id}</p>
+            {/* <p>id : {product?.id}</p> */}
             <p>title: {product?.title}</p>
             <p>image: {product?.image}</p>
-            <p>description:{product?.description}</p>
             <p>price: {product?.price}</p>
             <p>gender: {product?.gender}</p>
             <p>category: {product?.category}</p>

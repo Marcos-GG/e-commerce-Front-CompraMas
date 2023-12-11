@@ -1,9 +1,11 @@
 import { createStore, applyMiddleware, compose, combineReducers } from "redux";
 import thunkMiddleware from "redux-thunk";
 import productsReducer from "./reducer/productsReducer";
+import commentsReducer from "./reducer/commentsReducer";
 
 const rootReducer = combineReducers({
   products: productsReducer,
+  comments: commentsReducer,
 });
 
 // quien va a ser el compose           // extension               || compose

@@ -2,6 +2,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import { getProductId } from "../../Redux/actions/productsActions";
 import { useEffect } from "react";
+import RelatedProducts from "../../components/RelatedProducts";
 
 function DetailProduct() {
   const { id } = useParams();
@@ -12,7 +13,7 @@ function DetailProduct() {
   useEffect(() => {
     dispatch(getProductId(id));
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [id]);
 
   return (
     <>
@@ -54,6 +55,13 @@ function DetailProduct() {
         ) : (
           <p>No hay comentarios para este producto.</p>
         )}
+      </div>
+      <div>
+        <RelatedProducts
+          id={productId?.id}
+          gender={productId?.gender}
+          category={productId?.category}
+        />
       </div>
     </>
   );

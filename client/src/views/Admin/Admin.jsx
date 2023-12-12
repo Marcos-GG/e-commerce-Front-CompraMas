@@ -5,7 +5,6 @@ import { allComments } from "../../Redux/actions/CommentsAction";
 function Admin() {
   const dispatch = useDispatch();
   const comments = useSelector((state) => state.comments.commments);
-  console.log(comments, "admin");
 
   useEffect(() => {
     dispatch(allComments());

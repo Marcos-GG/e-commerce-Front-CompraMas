@@ -3,7 +3,6 @@
 import Card from "./Card";
 
 function CardContainer({ products }) {
-  console.log(products, "como llega la info alcomponente cardcontainer");
   return (
     <>
       <div>

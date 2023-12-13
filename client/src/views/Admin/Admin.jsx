@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { allComments } from "../../Redux/actions/CommentsAction";
+import { NavLink } from "react-router-dom";
 
 function Admin() {
   const dispatch = useDispatch();
@@ -14,6 +15,14 @@ function Admin() {
   return (
     <>
       <h1>Panel del admin</h1>
+      <NavLink to="/comments&Answer">
+        <button> Comentarios </button>
+      </NavLink>
+
+      <NavLink to="/admin/users">
+        <button> Usuarios </button>
+      </NavLink>
+
       <div>
         {comments.map((comment) => (
           <div key={comment.id}>

@@ -1,4 +1,5 @@
-import { POST_USERS, GET_USERS } from "../actionsTypes/LoginRegisterTypes";
+import { POST_USERS } from "../actionsTypes/LoginRegisterTypes";
+import { GET_USERS } from "../actionsTypes/UsersActionTypes";
 
 const initialState = {
   users: [],

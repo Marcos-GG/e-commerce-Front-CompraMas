@@ -5,6 +5,8 @@ import DetailProduct from "./views/DetailProduct/DetailProduct";
 import Register from "./views/Register/Register";
 import UserBlocked from "./components/Userblocked";
 import NavBarAdmin from "./components/NavBarAdmin";
+import ProductsAdmin from "./components/ProductsAdmin";
+import DesactivatedProducts from "./components/DesactivatedProducts";
 
 function App() {
   let location = useLocation();
@@ -18,6 +20,12 @@ function App() {
         <Route exact path="admin" element={<Admin />} />
         <Route exact path="detail/:id" element={<DetailProduct />} />
         <Route exact path="register" element={<Register />} />
+        <Route exact path="/admin/products" element={<ProductsAdmin />} />
+        <Route
+          exact
+          path="/admin/desactivatedProducts"
+          element={<DesactivatedProducts />}
+        />
         {/* si sos admin ( hay que hacer ) */}
         <Route exact path="admin/users" element={<UserBlocked />} />
         <Route path="*" element={<Home />} />

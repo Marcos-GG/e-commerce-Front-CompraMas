@@ -10,6 +10,14 @@ const NavBarAdmin = () => {
       <NavLink to="/admin/users">
         <button> Usuarios </button>
       </NavLink>
+
+      <NavLink to="/admin/products">
+        <button> Productos </button>
+      </NavLink>
+
+      <NavLink to="/admin/desactivatedProducts">
+        <button> Productos Desactivados</button>
+      </NavLink>
     </>
   );
 };

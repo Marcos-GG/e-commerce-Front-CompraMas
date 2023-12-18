@@ -6,12 +6,27 @@ import {
 const initialState = {
   products: [],
   productId: [],
+  desactivatedproducts: [],
 };
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_PRODUCTS: {
-      return { ...state, products: action.payload };
+      const statusTrue = action.payload.filter(
+        (product) => product.status === true
+      );
+      console.log(statusTrue, "productos activados");
+
+      const statusFalse = action.payload.filter(
+        (product) => product.status === false
+      );
+      console.log(statusFalse, "productos desactivados");
+
+      return {
+        ...state,
+        products: statusTrue,
+        desactivatedproducts: statusFalse,
+      };
     }
 
     case GET_PRODUCT_ID: {

@@ -19,6 +19,10 @@ const UserBlocked = () => {
           <p>
             Nombre: {user.name} {user.lastname}
           </p>
+          {/* faltan botones para bloquear y desbloquear clientes */}
+          <button>bloquear/desbloquear</button>
+          <br />
+          <button>eliminar</button>
         </div>
       ))}
     </>

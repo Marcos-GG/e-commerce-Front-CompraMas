@@ -1,14 +1,24 @@
 import { useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { NavLink } from "react-router-dom";
+import { putProduct, moveToActive } from "../Redux/actions/productsActions";
 
 const DesactivatedProducts = () => {
+  const dispatch = useDispatch();
+
   const products = useSelector((state) => state.products.desactivatedproducts);
-  console.log(products, "productos desactivados componente");
 
   useEffect(() => {
-    console.log("El estado de productos desactivados ha cambiado:", products);
-  }, [products]);
+    if (products.length === 0) {
+      dispatch(putProduct());
+    }
+  }, [dispatch, products]);
+
+  const activateProduct = (id, product) => {
+    const updateProduct = { ...product, status: true };
+    dispatch(putProduct(id, updateProduct));
+    dispatch(moveToActive(id));
+  };
 
   return (
     <div>
@@ -24,7 +34,9 @@ const DesactivatedProducts = () => {
             <button>
               <NavLink to={`/detail/${product.id}`}>Ver mas</NavLink>
             </button>
-            <button>reacivar</button>
+            <button onClick={() => activateProduct(product.id, product)}>
+              reactivar
+            </button>
             <button>eliminar</button>
           </div>
         ))}

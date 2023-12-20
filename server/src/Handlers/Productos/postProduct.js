@@ -2,7 +2,8 @@ const postProductController = require("../../Controllers/Productos/postProduct")
 
 const postProductHandler = async (req, res) => {
   try {
-    const { title, image, description, price, gender, category } = req.body;
+    const { title, image, description, price, gender, category, stock } =
+      req.body;
 
     if (!title || !image || !description || !price || !gender || !category)
       throw new Error("Datos incompletos para realizar publicacion");
@@ -14,6 +15,7 @@ const postProductHandler = async (req, res) => {
       price,
       gender,
       category,
+      stock,
     });
 
     if (!postProduct) throw new Error("No se pudo crear la publicacion");

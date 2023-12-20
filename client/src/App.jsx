@@ -7,6 +7,7 @@ import UserBlocked from "./components/Userblocked";
 import NavBarAdmin from "./components/NavBarAdmin";
 import ProductsAdmin from "./components/ProductsAdmin";
 import DesactivatedProducts from "./components/DesactivatedProducts";
+import FormProduct from "./components/FormProduct";
 
 function App() {
   let location = useLocation();
@@ -21,6 +22,7 @@ function App() {
         <Route exact path="detail/:id" element={<DetailProduct />} />
         <Route exact path="register" element={<Register />} />
         <Route exact path="/admin/products" element={<ProductsAdmin />} />
+        <Route exact path="/admin/createProduct" element={<FormProduct />} />
         <Route
           exact
           path="/admin/desactivatedProducts"

@@ -46,6 +46,10 @@ module.exports = (sequelize) => {
         allowNull: false,
       },
 
+      stock: {
+        type: DataTypes.INTEGER,
+      },
+
       gender: {
         // genero
         type: DataTypes.STRING,

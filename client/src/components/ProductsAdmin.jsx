@@ -1,6 +1,11 @@
 import { useSelector, useDispatch } from "react-redux";
+import { NavLink } from "react-router-dom";
 import { useEffect } from "react";
-import { getProducts } from "../Redux/actions/productsActions";
+import {
+  getProducts,
+  putProduct,
+  moveToDeactivate,
+} from "../Redux/actions/productsActions";
 
 const ProductsAdmin = () => {
   const products = useSelector((state) => state.products.products);
@@ -14,6 +19,12 @@ const ProductsAdmin = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch]);
 
+  const deactiveProduct = (id, product) => {
+    const updateProduct = { ...product, status: false };
+    dispatch(putProduct(id, updateProduct));
+    dispatch(moveToDeactivate(id));
+  };
+
   return (
     <div>
       <h1>aca se ven los productos y se los desactiva</h1>
@@ -25,8 +36,12 @@ const ProductsAdmin = () => {
             <p>{product.title}</p>
             <p>{product.price}</p>
             {/* hay que dar funcionalidad botones para detalle del producto y para suspender/desactivar/eliminar publicacion */}
-            <button>Detalle</button>
-            <button>suspender</button>
+            <button>
+              <NavLink to={`/detail/${product.id}`}>Ver mas</NavLink>
+            </button>
+            <button onClick={() => deactiveProduct(product.id, product)}>
+              suspender
+            </button>
             <button>eliminar</button>
           </div>
         ))}

@@ -3,6 +3,10 @@ import axios from "axios";
 import {
   GET_PRODUCTS,
   GET_PRODUCT_ID,
+  PUT_PRODUCT,
+  MOVE_TO_ACTIVE,
+  MOVE_TO_DEACTIVATE,
+  CREATE_PRODUCT,
 } from "../actionsTypes/ProductsActionTypes";
 
 export const getProducts = () => {
@@ -20,6 +24,7 @@ export const getProducts = () => {
         price: product.price,
         status: product.status,
         title: product.title,
+        description: product.description,
       }));
 
       dispatch({ type: GET_PRODUCTS, payload: Products });
@@ -34,5 +39,39 @@ export const getProductId = (id) => {
     const response = await axios.get(`http://localhost:58968/products/${id}`);
 
     dispatch({ type: GET_PRODUCT_ID, payload: response.data });
+  };
+};
+
+export const putProduct = (id, product) => {
+  return async function (dispatch) {
+    const response = await axios.put(
+      `http://localhost:58968/products/${id}`,
+      product
+    );
+
+    dispatch({ type: PUT_PRODUCT, payload: response.data });
+  };
+};
+
+export const moveToActive = (id) => {
+  return function (dispatch) {
+    dispatch({ type: MOVE_TO_ACTIVE, payload: id });
+  };
+};
+
+export const moveToDeactivate = (id) => {
+  return function (dispatch) {
+    dispatch({ type: MOVE_TO_DEACTIVATE, payload: id });
+  };
+};
+
+export const createProduct = (product) => {
+  return async function (dispatch) {
+    const response = await axios.post(
+      `http://localhost:58968/products`,
+      product
+    );
+
+    dispatch({ type: CREATE_PRODUCT, payload: response.data });
   };
 };

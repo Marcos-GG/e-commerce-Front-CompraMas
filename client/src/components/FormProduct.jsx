@@ -1,9 +1,12 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { createProduct } from "../Redux/actions/productsActions";
 
 const FormProduct = () => {
   const dispatch = useDispatch();
+
+  useEffect(() => {}, []);
+
   const [form, setForm] = useState({
     title: "",
     image: "",

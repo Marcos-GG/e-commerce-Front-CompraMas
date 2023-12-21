@@ -33,6 +33,10 @@ const postAnswerHandler = require("../Handlers/Answer/postAnswer");
 const deleteAnswerHandler = require("../Handlers/Answer/deleteAnswer");
 const putAnswerHandler = require("../Handlers/Answer/putAnswer");
 
+// handler Gender
+const getGenderHandler = require("../Handlers/Gender/getGender");
+const postGenderHandler = require("../Handlers/Gender/postGender");
+
 const router = Router();
 
 // users
@@ -70,5 +74,10 @@ router.get("/comments/:id", getCommentHandler);
 router.post("/answer", postAnswerHandler);
 router.delete("/answer/:id", deleteAnswerHandler);
 router.put("/answer", putAnswerHandler);
+
+// Gender
+router.get("/gender?", getGenderHandler);
+router.post("/gender", postGenderHandler);
+router.get("/gender", getGenderHandler);
 
 module.exports = router;

@@ -14,14 +14,6 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      productId: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        validate: {
-          isInt: true,
-          min: 1,
-        },
-      },
     },
     {
       timestamps: false,

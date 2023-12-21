@@ -61,8 +61,8 @@ Comment.hasMany(Answer, { foreignKey: "commentId" });
 Answer.belongsTo(Comment, { foreignKey: "commentId" });
 Answer.belongsTo(User, { foreignKey: "userId" });
 
-Products.belongsTo(Gender, { foreignKey: "productId" });
-Gender.hasMany(Products, { foreignKey: "productId" });
+Products.belongsTo(Gender, { foreignKey: "genderId" });
+Gender.hasMany(Products, { foreignKey: "genderId" });
 
 Products.belongsTo(Category, { foreignKey: "categoryId" });
 Category.hasMany(Products, { foreignKey: "categoryId" });

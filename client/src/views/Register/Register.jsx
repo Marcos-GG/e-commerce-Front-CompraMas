@@ -13,7 +13,6 @@ function Register() {
     birthDate: "",
     phone: "",
     password: "",
-    passwordConfirmation: "",
   });
 
   const formHandler = (event) => {
@@ -96,15 +95,6 @@ function Register() {
             type="password"
             name="password"
             value={form.password}
-            onChange={formHandler}
-          />
-        </div>
-        <div>
-          <label>Confirmar contraseña:</label>
-          <input
-            type="password"
-            name="passwordConfirmation"
-            value={form.passwordConfirmation}
             onChange={formHandler}
           />
         </div>

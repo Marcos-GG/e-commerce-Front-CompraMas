@@ -8,6 +8,7 @@ import NavBarAdmin from "./components/NavBarAdmin";
 import ProductsAdmin from "./components/ProductsAdmin";
 import DesactivatedProducts from "./components/DesactivatedProducts";
 import FormProduct from "./components/FormProduct";
+import Login from "./views/Login/Login";
 
 function App() {
   let location = useLocation();
@@ -30,6 +31,7 @@ function App() {
         />
         {/* si sos admin ( hay que hacer ) */}
         <Route exact path="admin/users" element={<UserBlocked />} />
+        <Route exact path="login" element={<Login />} />
         <Route path="*" element={<Home />} />
       </Routes>
     </div>

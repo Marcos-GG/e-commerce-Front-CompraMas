@@ -1,11 +1,18 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { createProduct } from "../Redux/actions/productsActions";
+import { getCategory, getGender } from "../Redux/actions/CategoryGender";
 
 const FormProduct = () => {
   const dispatch = useDispatch();
+  const categories = useSelector((state) => state.categoryGender.category);
+  const genders = useSelector((state) => state.categoryGender.gender);
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    dispatch(getCategory());
+    dispatch(getGender());
+  }, [getCategory, getGender]);
 
   const [form, setForm] = useState({
     title: "",
@@ -77,22 +84,37 @@ const FormProduct = () => {
             placeholder="Precio"
           />
           <div>
-            <input
+            <select
               type="text"
               name="gender"
               value={form.gender}
               onChange={formHandler}
               placeholder="Género"
-            />
+            >
+              <option value="">Genero</option>
+              {genders &&
+                genders.map((gender) => (
+                  <option key={gender.id} value={gender.id}>
+                    {gender.gender}
+                  </option>
+                ))}
+            </select>
           </div>
           <div>
-            <input
-              type="text"
+            <select
               name="category"
               value={form.category}
               onChange={formHandler}
               placeholder="Categoría"
-            />
+            >
+              <option value="">Categoria</option>
+              {categories &&
+                categories.map((category) => (
+                  <option key={category.id} value={category.id}>
+                    {category.name}
+                  </option>
+                ))}
+            </select>
           </div>
           <button type="submit">Crear</button>
         </form>

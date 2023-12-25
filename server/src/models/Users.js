@@ -29,19 +29,6 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
         allowNull: true,
       },
-
-      passwordConfirmation: {
-        type: DataTypes.STRING,
-        allowNull: true,
-        validate: {
-          isConfirmed(value) {
-            if (this.password !== value) {
-              throw new Error("La contraseña y la confirmación no coinciden");
-            }
-          },
-        },
-      },
-
       // Numero de documento de identidad del usuario con el atributo que debe ser unico.
       DNI: {
         type: DataTypes.INTEGER,

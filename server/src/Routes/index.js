@@ -37,7 +37,13 @@ const putAnswerHandler = require("../Handlers/Answer/putAnswer");
 const getGenderHandler = require("../Handlers/Gender/getGender");
 const postGenderHandler = require("../Handlers/Gender/postGender");
 
+//handler login
+const loginHandler = require("../Handlers/Login/loginHandler");
+
 const router = Router();
+
+//login
+router.post("/login", loginHandler);
 
 // users
 router.get("/users/:id", getUserHandler);

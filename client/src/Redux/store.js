@@ -7,6 +7,7 @@ import storage from "redux-persist/lib/storage";
 import productsReducer from "./reducer/productsReducer";
 import commentsReducer from "./reducer/commentsReducer";
 import usersReducer from "./reducer/UsersReducer";
+import categoryGenderReducer from "./reducer/categoryGenderReducer";
 
 // persistConfig
 const persistConfig = {
@@ -19,6 +20,7 @@ const rootReducer = combineReducers({
   products: productsReducer,
   comments: commentsReducer,
   users: usersReducer,
+  categoryGender: categoryGenderReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

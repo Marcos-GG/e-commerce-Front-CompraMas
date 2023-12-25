@@ -2,23 +2,13 @@ const createUserController = require("../../Controllers/Usuarios/postUser");
 
 const createUserHandler = async (req, res) => {
   try {
-    const {
-      name,
-      email,
-      lastname,
-      password,
-      passwordConfirmation,
-      DNI,
-      phone,
-      birthDate,
-    } = req.body;
+    const { name, email, lastname, password, DNI, phone, birthDate } = req.body;
 
     if (
       !name ||
       !email ||
       !lastname ||
       !password ||
-      !passwordConfirmation ||
       !DNI ||
       !phone ||
       !birthDate
@@ -30,7 +20,6 @@ const createUserHandler = async (req, res) => {
       email,
       lastname,
       password,
-      passwordConfirmation,
       DNI,
       phone,
       birthDate,

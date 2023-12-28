@@ -19,6 +19,7 @@ const loginController = async (email, password) => {
     expiresIn: "2h",
   });
 
+  console.log(token, " que tiene el token dentro ");
   return token;
 };
 

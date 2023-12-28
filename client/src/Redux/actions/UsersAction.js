@@ -5,7 +5,7 @@ import { GET_USERS } from "../actionsTypes/UsersActionTypes";
 export const getUsers = () => {
   return async function (dispatch) {
     try {
-      const response = await axios.get(`http://localhost:58968/users`);
+      const response = await axios.get(`http://localhost:13050/users`);
       const Users = response.data;
 
       const users = Users.map((user) => ({

@@ -36,7 +36,7 @@ export const getProducts = () => {
 
 export const getProductId = (id) => {
   return async function (dispatch) {
-    const response = await axios.get(`http://localhost:58968/products/${id}`);
+    const response = await axios.get(`http://localhost:13050/products/${id}`);
 
     dispatch({ type: GET_PRODUCT_ID, payload: response.data });
   };
@@ -45,7 +45,7 @@ export const getProductId = (id) => {
 export const putProduct = (id, product) => {
   return async function (dispatch) {
     const response = await axios.put(
-      `http://localhost:58968/products/${id}`,
+      `http://localhost:13050/products/${id}`,
       product
     );
 
@@ -68,7 +68,7 @@ export const moveToDeactivate = (id) => {
 export const createProduct = (product) => {
   return async function (dispatch) {
     const response = await axios.post(
-      `http://localhost:58968/products`,
+      `http://localhost:13050/products`,
       product
     );
 

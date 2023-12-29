@@ -8,10 +8,10 @@ const loginHandler = async (req, res) => {
 
     const token = await loginController(email, password);
 
-    if (!token) throw new Error("El ususario ya existe");
+    if (!token) throw new Error("El usuario ya existe");
 
-    res.cookie("token", token, { httpOnly: true, maxAge: 2 * 60 * 60 * 1000 });
-    return res
+    res
+      .cookie("token", token, { httpOnly: true, maxAge: 2 * 60 * 60 * 1000 })
       .status(200)
       .json({ message: "Inicio de sesión exitoso", token: token });
   } catch (error) {

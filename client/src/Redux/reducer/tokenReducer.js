@@ -1,7 +1,7 @@
 import { LOGIN } from "../actionsTypes/LoginRegisterTypes";
 
 const initialState = {
-  token: [],
+  token: null,
 };
 
 const reducer = (state = initialState, action) => {

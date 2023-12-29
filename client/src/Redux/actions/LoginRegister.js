@@ -18,8 +18,6 @@ export const postLogin = (form) => {
   return async function (dispatch) {
     try {
       const response = await axios.post(`http://localhost:13050/login`, form);
-      console.log(response);
-
       dispatch({ type: LOGIN, payload: response.data });
     } catch (error) {
       return error;

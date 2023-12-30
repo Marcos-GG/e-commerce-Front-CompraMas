@@ -1,4 +1,7 @@
 const jwt = require("jsonwebtoken");
+const { User } = require("../../db");
+
+const rutasDeAdmin = ["/createProduct"];
 
 const autenticarToken = async (req, res, next) => {
   //obtengo el authorization que se envia por el header de la solicitud en formato Bearer token
@@ -17,11 +20,24 @@ const autenticarToken = async (req, res, next) => {
     // Valido el token con la clave privada almacenada en las variables de entorno
     let decodenToken = await jwt.verify(token, "secretKey");
     req.userId = decodenToken.id; // Extraigo el ID del token y lo guardo en el req para usarlo en el manejador de ruta que se ejecuta después del middleware
+
+    const url = req.originalUrl.replace(req.baseUrl, "");
+
+    console.log(url);
+
+    if (rutasDeAdmin.includes(url)) {
+      const permiso = await User.findByPk(decodenToken.id);
+
+      if (!permiso.admin)
+        return res.status(401).json({ error: "No autorizado no es admin" });
+    }
+
     if (decodenToken) {
       console.log("token válido");
       next(); // Ejecuta la siguiente función del enrutador
     }
   } catch (error) {
+    console.log(error);
     return res.status(401).json({ error: "Error en la validación del token" });
   }
 };

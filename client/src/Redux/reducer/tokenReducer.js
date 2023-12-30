@@ -7,6 +7,7 @@ const initialState = {
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case LOGIN: {
+      localStorage.setItem("token", action.payload.token);
       return { ...state, token: action.payload };
     }
 

@@ -10,8 +10,7 @@ const loginHandler = async (req, res) => {
 
     if (!token) throw new Error("El usuario ya existe");
 
-    res
-      .cookie("token", token, { httpOnly: true, maxAge: 2 * 60 * 60 * 1000 })
+    return res
       .status(200)
       .json({ message: "Inicio de sesión exitoso", token: token });
   } catch (error) {

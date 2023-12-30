@@ -9,7 +9,7 @@ import {
 
 const ProductsAdmin = () => {
   const products = useSelector((state) => state.products.products);
-  console.log(products, "productos en admin");
+
   const dispatch = useDispatch();
 
   useEffect(() => {

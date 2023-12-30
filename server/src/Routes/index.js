@@ -47,14 +47,14 @@ router.post("/login", loginHandler);
 
 // users
 router.get("/users/:id", getUserHandler);
-router.post("/users", createUserHandler);
+router.post("/register", createUserHandler);
 router.delete("/users/:id", deleteUserHandler);
 router.get("/users", getUserHandler);
 router.put("/users/:id", putUserHandler);
 
 // products
 router.get("/products/:id", getProductHandler);
-router.post("/products", postProductHandler);
+router.post("/createProduct", postProductHandler);
 router.get("/products", getProductHandler);
 router.put("/products/:id", putProductHandler);
 router.delete("/products/:id", deleteProductHandler);

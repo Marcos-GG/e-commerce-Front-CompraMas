@@ -1,4 +1,5 @@
 import axios from "axios";
+import { configureHeaders } from "../auth/configureHeaders";
 
 import {
   GET_PRODUCTS,
@@ -12,7 +13,11 @@ import {
 export const getProducts = () => {
   return async function (dispatch) {
     try {
-      const response = await axios.get("http://localhost:58968/products");
+      const config = configureHeaders();
+      const response = await axios.get(
+        "http://localhost:13050/products",
+        config
+      );
       const products = response.data;
 
       const Products = products.map((product) => ({
@@ -36,7 +41,11 @@ export const getProducts = () => {
 
 export const getProductId = (id) => {
   return async function (dispatch) {
-    const response = await axios.get(`http://localhost:13050/products/${id}`);
+    const config = configureHeaders();
+    const response = await axios.get(
+      `http://localhost:13050/products/${id}`,
+      config
+    );
 
     dispatch({ type: GET_PRODUCT_ID, payload: response.data });
   };
@@ -44,9 +53,11 @@ export const getProductId = (id) => {
 
 export const putProduct = (id, product) => {
   return async function (dispatch) {
+    const config = configureHeaders();
     const response = await axios.put(
       `http://localhost:13050/products/${id}`,
-      product
+      product,
+      config
     );
 
     dispatch({ type: PUT_PRODUCT, payload: response.data });
@@ -67,9 +78,11 @@ export const moveToDeactivate = (id) => {
 
 export const createProduct = (product) => {
   return async function (dispatch) {
+    const config = configureHeaders();
     const response = await axios.post(
-      `http://localhost:13050/products`,
-      product
+      `http://localhost:13050/createProduct`,
+      product,
+      config
     );
 
     dispatch({ type: CREATE_PRODUCT, payload: response.data });

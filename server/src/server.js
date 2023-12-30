@@ -17,7 +17,7 @@ server.use(cookieParser());
 //--------Proteccion de rutas-----------------
 //middleware para proteccion de rutas
 server.use((req, res, next) => {
-  if (req.originalUrl === "/login" || req.originalUrl === "/register") {
+  if (req.originalUrl === "/login" /* || req.originalUrl === "/register") */) {
     next(); // Si la ruta es /login, /register no se necesita autenticación
   } else {
     autenticarToken(req, res, (error) => {

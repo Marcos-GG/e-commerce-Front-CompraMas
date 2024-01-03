@@ -17,9 +17,9 @@ function Home() {
   //   const handlePersistingData = async () => {
   //     try {
   //       const purgeResult = await persistor.purge();
-  //       console.log("Resultado de purgar datos persistidos:", purgeResult);
+  //       ("Resultado de purgar datos persistidos:", purgeResult);
   //       const persistResult = await persistor.persist();
-  //       console.log("Resultado de persistir datos:", persistResult);
+  //       ("Resultado de persistir datos:", persistResult);
   //       // Aquí puedes realizar cualquier otra lógica necesaria después de purgar y persistir los datos
   //     } catch (error) {
   //       console.error("Error al purgar o persistir datos:", error);

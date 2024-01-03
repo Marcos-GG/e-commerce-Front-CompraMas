@@ -23,8 +23,6 @@ const autenticarToken = async (req, res, next) => {
 
     const url = req.originalUrl.replace(req.baseUrl, "");
 
-    console.log(url);
-
     if (rutasDeAdmin.includes(url)) {
       const permiso = await User.findByPk(decodenToken.id);
 
@@ -33,11 +31,9 @@ const autenticarToken = async (req, res, next) => {
     }
 
     if (decodenToken) {
-      console.log("token válido");
       next(); // Ejecuta la siguiente función del enrutador
     }
   } catch (error) {
-    console.log(error);
     return res.status(401).json({ error: "Error en la validación del token" });
   }
 };

@@ -2,7 +2,8 @@ const postCommentController = require("../../Controllers/Comentarios/postComment
 
 const postCommentHandler = async (req, res) => {
   try {
-    const { userId, productId, text } = req.body;
+    const userId = req.userId;
+    const { productId, text } = req.body;
 
     if (!text) throw new Error("Campo imcompleto");
 

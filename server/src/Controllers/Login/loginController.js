@@ -22,7 +22,7 @@ const loginController = async (email, password) => {
 
     return { token, admin: user.admin };
   } catch (error) {
-    console.log(error);
+    return { error: error };
   }
 };
 

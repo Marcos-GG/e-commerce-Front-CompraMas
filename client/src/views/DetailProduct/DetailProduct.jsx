@@ -3,15 +3,18 @@ import { useParams } from "react-router-dom";
 import { getProductId } from "../../Redux/actions/productsActions";
 import { useEffect } from "react";
 import RelatedProducts from "../../components/RelatedProducts";
+import CommetProducts from "../../components/CommentProducts";
 
 function DetailProduct() {
   const { id } = useParams();
   const dispatch = useDispatch();
 
   const productId = useSelector((state) => state.products.productId);
+  console.log(productId, "la info que lleva productId");
+  const token = localStorage.getItem("token");
 
   useEffect(() => {
-    dispatch(getProductId(id));
+    dispatch(getProductId(id, token));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
@@ -35,6 +38,7 @@ function DetailProduct() {
             {productId.Comments.map((comment) => (
               <div key={comment.id}>
                 <p>{comment.text}</p>
+
                 <p>Respuestas:</p>
                 {comment.Answers && comment.Answers.length > 0 ? (
                   comment.Answers.map((answer) => (
@@ -55,6 +59,10 @@ function DetailProduct() {
         ) : (
           <p>No hay comentarios para este producto.</p>
         )}
+      </div>
+      <div>
+        <h3>generar comentario</h3>
+        <CommetProducts productId={productId?.id} />
       </div>
       <div>
         <RelatedProducts

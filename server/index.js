@@ -7,7 +7,7 @@ conn
   .sync({ force: false })
   .then(() => {
     server.listen(PORT, () => {
-      console.log(`server conectado a base de datos, puerto ${PORT}`);
+      `server conectado a base de datos, puerto ${PORT}`;
     });
   })
   .catch((error) => console.error(error));

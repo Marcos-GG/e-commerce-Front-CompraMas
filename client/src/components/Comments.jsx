@@ -4,7 +4,7 @@ import { allComments } from "../Redux/actions/CommentsAction";
 
 const Comments = () => {
   const dispatch = useDispatch();
-  const comments = useSelector((state) => state.comments.commments);
+  const comments = useSelector((state) => state.comments.comments);
 
   useEffect(() => {
     dispatch(allComments());
@@ -27,7 +27,7 @@ const Comments = () => {
                 <div key={answer.id}>
                   <p>{answer.answer}</p>
                   <p>
-                    quien hizo la respues: {answer.User.name}
+                    quien hizo la respuesta: {answer.User.name}
                     {answer.User.lastname}
                   </p>
                 </div>

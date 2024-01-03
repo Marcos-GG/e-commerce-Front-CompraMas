@@ -32,8 +32,6 @@ function App() {
   const admin = adminRedux || adminLocalStorage;
 
   useEffect(() => {
-    console.log("Pathname:", location.pathname);
-
     if (
       !token &&
       !location.pathname.includes("login") &&

@@ -39,9 +39,9 @@ export const getProducts = () => {
   };
 };
 
-export const getProductId = (id) => {
+export const getProductId = (id, token) => {
   return async function (dispatch) {
-    const config = configureHeaders();
+    const config = configureHeaders(token);
     const response = await axios.get(
       `http://localhost:13050/products/${id}`,
       config

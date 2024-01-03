@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { postUsers } from "../../Redux/actions/LoginRegister";
+import { useNavigate } from "react-router-dom";
 
 function Register() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const [form, setForm] = useState({
     name: "",
@@ -25,9 +27,14 @@ function Register() {
     });
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    dispatch(postUsers(form));
+    try {
+      await dispatch(postUsers(form));
+      navigate("/login");
+    } catch (error) {
+      return error.message;
+    }
     event.target.reset();
   };
 

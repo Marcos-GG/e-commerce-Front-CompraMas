@@ -16,11 +16,11 @@ const loginController = async (email, password) => {
     if (!isValidPassword) throw new Error("contraseña incorrecta.");
 
     //si es valido generamos token JWT
-    const token = jwt.sign({ id: user.id, admin: user.admin }, "secretKey", {
+    const token = jwt.sign({ id: user.id }, "secretKey", {
       expiresIn: "2h",
     });
 
-    return token;
+    return { token, admin: user.admin };
   } catch (error) {
     console.log(error);
   }

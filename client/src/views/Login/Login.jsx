@@ -4,7 +4,6 @@ import { postLogin } from "../../Redux/actions/LoginRegister"; // Asegúrate de 
 
 function Login() {
   const dispatch = useDispatch();
-
   const [form, setForm] = useState({
     email: "",
     password: "",
@@ -22,7 +21,9 @@ function Login() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    dispatch(postLogin(form)); // Ejecuta la acción de inicio de sesión con los datos del formulario
+    // Ejecuta la acción de inicio de sesión con los datos del formulario
+    dispatch(postLogin(form));
+
     event.target.reset();
   };
 

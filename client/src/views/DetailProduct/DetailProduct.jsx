@@ -14,6 +14,7 @@ function DetailProduct() {
   const productId = useSelector((state) => state.products.productId);
   const comments = useSelector((state) => state.comments.comments);
   const answer = useSelector((state) => state.comments.answer);
+  const products = useSelector((state) => state.products.products);
 
   console.log(productId);
   const token = localStorage.getItem("token");
@@ -26,6 +27,21 @@ function DetailProduct() {
     dispatch(getProductId(id, token));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id, comments, answer]);
+
+  // productos relacionados :
+
+  const category = productId?.category;
+  const gender = productId?.gender;
+
+  const filterProducts = products.filter((product) => {
+    return product
+      ? product.id !== id &&
+          product.category === category &&
+          product.gender === gender
+      : product.gender === gender && product.id !== id;
+  });
+
+  const limitedFilteredProducts = filterProducts.slice(0, 5);
 
   return (
     <>
@@ -44,29 +60,38 @@ function DetailProduct() {
         {productId.Comments && productId.Comments.length > 0 ? (
           <div style={{ backgroundColor: "green" }}>
             <h3>Comentarios:</h3>
+
             {productId.Comments.map((comment) => (
               <div key={comment.id}>
-                <p>{comment.text}</p>
+                <div
+                  style={{
+                    margin: "10px",
+                    backgroundColor: "aqua",
+                    border: "solid 2px",
+                  }}
+                >
+                  <p>{comment.text}</p>
 
-                <div style={{ backgroundColor: "yellow" }}>
-                  <p>Respuestas:</p>
-                  {comment.Answers && comment.Answers.length > 0 ? (
-                    comment.Answers.map((answer) => (
-                      <div key={answer.id}>
-                        <p>{answer.answer}</p>
-                        <p>
-                          Respondido por: {answer.User.name}{" "}
-                          {answer.User.lastname}
-                        </p>
-                      </div>
-                    ))
-                  ) : (
-                    <p>No hay respuestas para este comentario.</p>
+                  <div style={{ backgroundColor: "yellow" }}>
+                    <p>Respuestas:</p>
+                    {comment.Answers && comment.Answers.length > 0 ? (
+                      comment.Answers.map((answer) => (
+                        <div key={answer.id}>
+                          <p>{answer.answer}</p>
+                          <p>
+                            Respondido por: {answer.User.name}{" "}
+                            {answer.User.lastname}
+                          </p>
+                        </div>
+                      ))
+                    ) : (
+                      <p>No hay respuestas para este comentario.</p>
+                    )}
+                  </div>
+                  {(isAdmin || userId === comment.userId) && (
+                    <AnswerComment commentId={comment.id} />
                   )}
                 </div>
-                {(isAdmin || userId === comment.userId) && (
-                  <AnswerComment commentId={comment.id} />
-                )}
               </div>
             ))}
           </div>
@@ -79,11 +104,9 @@ function DetailProduct() {
         <CommetProducts productId={productId?.id} />
       </div>
       <div>
-        <RelatedProducts
-          id={productId?.id}
-          gender={productId?.gender}
-          category={productId?.category}
-        />
+        {limitedFilteredProducts.length > 0 && (
+          <RelatedProducts limitedFilteredProducts={limitedFilteredProducts} />
+        )}
       </div>
     </>
   );

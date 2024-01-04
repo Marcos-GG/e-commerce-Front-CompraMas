@@ -36,3 +36,16 @@ export const postComment = (form, token, productId) => {
     }
   };
 };
+
+export const postAnswer = (form, commentId) => {
+  return async function () {
+    try {
+      const config = configureHeaders();
+      const body = { ...form, commentId };
+
+      await axios.post("http://localhost:13050/answer", body, config);
+    } catch (error) {
+      return error.message;
+    }
+  };
+};

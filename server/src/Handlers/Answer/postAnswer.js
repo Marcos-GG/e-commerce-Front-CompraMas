@@ -2,7 +2,8 @@ const postAnswerController = require("../../Controllers/Answer/postAnswer");
 
 const postAnswerHandler = async (req, res) => {
   try {
-    const { userId, commentId, answer } = req.body;
+    const userId = req.userId;
+    const { commentId, answer } = req.body;
 
     if (!answer) throw new Error("Campo imcompleto");
 

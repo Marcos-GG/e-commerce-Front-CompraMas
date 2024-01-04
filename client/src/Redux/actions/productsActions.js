@@ -46,7 +46,6 @@ export const getProductId = (id, token) => {
       `http://localhost:13050/products/${id}`,
       config
     );
-
     dispatch({ type: GET_PRODUCT_ID, payload: response.data });
   };
 };

@@ -22,8 +22,14 @@ const AnswerComment = ({ commentId }) => {
   };
   const handleSubmit = (event) => {
     event.preventDefault();
+
+    if (form.answer.trim() === "") {
+      return;
+    }
+
     dispatch(postAnswer(form, commentId));
-    event.target.reset();
+
+    setForm({ answer: "" });
   };
 
   return (

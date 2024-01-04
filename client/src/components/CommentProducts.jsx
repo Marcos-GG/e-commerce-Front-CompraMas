@@ -23,8 +23,14 @@ const CommetProducts = ({ productId }) => {
   };
   const handleSubmit = (event) => {
     event.preventDefault();
+
+    if (form.text.trim() === "") {
+      return;
+    }
+
     dispatch(postComment(form, token, productId));
-    event.target.reset();
+
+    setForm({ text: "" });
   };
 
   return (

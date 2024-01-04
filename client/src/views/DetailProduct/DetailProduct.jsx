@@ -4,14 +4,15 @@ import { getProductId } from "../../Redux/actions/productsActions";
 import { useEffect } from "react";
 import RelatedProducts from "../../components/RelatedProducts";
 import CommetProducts from "../../components/CommentProducts";
+import AnswerComment from "../../components/AnswerComment";
 
 function DetailProduct() {
   const { id } = useParams();
   const dispatch = useDispatch();
 
   const productId = useSelector((state) => state.products.productId);
-  console.log(productId, "la info que lleva productId");
   const token = localStorage.getItem("token");
+  const isAdmin = localStorage.getItem("admin");
 
   useEffect(() => {
     dispatch(getProductId(id, token));
@@ -33,26 +34,29 @@ function DetailProduct() {
           <p>likes: {productId?.likes}</p>
         </div>
         {productId.Comments && productId.Comments.length > 0 ? (
-          <div>
+          <div style={{ backgroundColor: "green" }}>
             <h3>Comentarios:</h3>
             {productId.Comments.map((comment) => (
               <div key={comment.id}>
                 <p>{comment.text}</p>
 
-                <p>Respuestas:</p>
-                {comment.Answers && comment.Answers.length > 0 ? (
-                  comment.Answers.map((answer) => (
-                    <div key={answer.id}>
-                      <p>{answer.answer}</p>
-                      <p>
-                        Respondido por: {answer.User.name}{" "}
-                        {answer.User.lastname}
-                      </p>
-                    </div>
-                  ))
-                ) : (
-                  <p>No hay respuestas para este comentario.</p>
-                )}
+                <div style={{ backgroundColor: "yellow" }}>
+                  <p>Respuestas:</p>
+                  {comment.Answers && comment.Answers.length > 0 ? (
+                    comment.Answers.map((answer) => (
+                      <div key={answer.id}>
+                        <p>{answer.answer}</p>
+                        <p>
+                          Respondido por: {answer.User.name}{" "}
+                          {answer.User.lastname}
+                        </p>
+                      </div>
+                    ))
+                  ) : (
+                    <p>No hay respuestas para este comentario.</p>
+                  )}
+                </div>
+                {isAdmin && <AnswerComment commentId={comment.id} />}
               </div>
             ))}
           </div>

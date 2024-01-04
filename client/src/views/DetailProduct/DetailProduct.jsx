@@ -5,19 +5,27 @@ import { useEffect } from "react";
 import RelatedProducts from "../../components/RelatedProducts";
 import CommetProducts from "../../components/CommentProducts";
 import AnswerComment from "../../components/AnswerComment";
+import { jwtDecode } from "jwt-decode";
 
 function DetailProduct() {
   const { id } = useParams();
   const dispatch = useDispatch();
 
   const productId = useSelector((state) => state.products.productId);
+  const comments = useSelector((state) => state.comments.comments);
+  const answer = useSelector((state) => state.comments.answer);
+
+  console.log(productId);
   const token = localStorage.getItem("token");
   const isAdmin = localStorage.getItem("admin");
+
+  const decodeToken = jwtDecode(token);
+  const userId = decodeToken.id;
 
   useEffect(() => {
     dispatch(getProductId(id, token));
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id]);
+  }, [id, comments, answer]);
 
   return (
     <>
@@ -56,7 +64,9 @@ function DetailProduct() {
                     <p>No hay respuestas para este comentario.</p>
                   )}
                 </div>
-                {isAdmin && <AnswerComment commentId={comment.id} />}
+                {(isAdmin || userId === comment.userId) && (
+                  <AnswerComment commentId={comment.id} />
+                )}
               </div>
             ))}
           </div>

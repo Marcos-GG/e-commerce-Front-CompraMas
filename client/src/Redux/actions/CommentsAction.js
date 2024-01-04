@@ -1,7 +1,11 @@
 import axios from "axios";
 import { configureHeaders } from "../auth/configureHeaders";
 
-import { ALL_COMMENTS, POST_COMMENTS } from "../actionsTypes/CommentsTypes";
+import {
+  ALL_COMMENTS,
+  POST_COMMENTS,
+  POST_ANSWER,
+} from "../actionsTypes/CommentsTypes";
 
 export const allComments = () => {
   return async function (dispatch) {
@@ -38,12 +42,18 @@ export const postComment = (form, token, productId) => {
 };
 
 export const postAnswer = (form, commentId) => {
-  return async function () {
+  return async function (dispatch) {
     try {
       const config = configureHeaders();
       const body = { ...form, commentId };
 
-      await axios.post("http://localhost:13050/answer", body, config);
+      const response = await axios.post(
+        "http://localhost:13050/answer",
+        body,
+        config
+      );
+
+      dispatch({ type: POST_ANSWER, payload: response.data });
     } catch (error) {
       return error.message;
     }

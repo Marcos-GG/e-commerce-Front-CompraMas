@@ -1,7 +1,12 @@
-import { ALL_COMMENTS, POST_COMMENTS } from "../actionsTypes/CommentsTypes.js";
+import {
+  ALL_COMMENTS,
+  POST_COMMENTS,
+  POST_ANSWER,
+} from "../actionsTypes/CommentsTypes.js";
 
 const initialState = {
   comments: [],
+  answer: [],
 };
 
 const reducer = (state = initialState, action) => {
@@ -14,6 +19,9 @@ const reducer = (state = initialState, action) => {
       return { ...state, comments: [...state.comments, action.payload] };
     }
 
+    case POST_ANSWER: {
+      return { ...state, answer: action.payload };
+    }
     default:
       return { ...state };
   }

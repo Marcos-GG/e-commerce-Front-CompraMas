@@ -9,6 +9,7 @@ import commentsReducer from "./reducer/commentsReducer";
 import usersReducer from "./reducer/UsersReducer";
 import categoryGenderReducer from "./reducer/categoryGenderReducer";
 import tokenReducer from "./reducer/tokenReducer";
+import shoppingCartReducer from "./reducer/ShoppingCartReducer";
 
 // persistConfig
 const persistConfig = {
@@ -23,6 +24,7 @@ const rootReducer = combineReducers({
   users: usersReducer,
   categoryGender: categoryGenderReducer,
   token: tokenReducer,
+  shoppingCart: shoppingCartReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

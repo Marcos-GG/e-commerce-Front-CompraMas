@@ -30,6 +30,7 @@ export const getProducts = () => {
         status: product.status,
         title: product.title,
         description: product.description,
+        stock: product.stock,
       }));
 
       dispatch({ type: GET_PRODUCTS, payload: Products });

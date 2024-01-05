@@ -15,6 +15,7 @@ import FormProduct from "./components/FormProduct";
 import ProductsAdmin from "./components/ProductsAdmin";
 import DesactivatedProducts from "./components/DesactivatedProducts";
 import DetailProduct from "./views/DetailProduct/DetailProduct";
+import ShoppingCart from "./views/ShoppingCart/ShoppingCart";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 
@@ -89,6 +90,11 @@ function App() {
         <Route
           path="/admin/createProduct"
           element={token && admin ? <FormProduct /> : <Navigate to="/login" />}
+        />
+
+        <Route
+          path="/carrito"
+          element={token ? <ShoppingCart /> : <Navigate to="/login" />}
         />
       </Routes>
     </div>

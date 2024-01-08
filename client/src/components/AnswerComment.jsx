@@ -33,7 +33,7 @@ const AnswerComment = ({ commentId }) => {
   };
 
   return (
-    <>
+    <div>
       <form onSubmit={handleSubmit}>
         <input
           type="text"
@@ -45,7 +45,7 @@ const AnswerComment = ({ commentId }) => {
           <input type="submit" value="responder" />
         </div>
       </form>
-    </>
+    </div>
   );
 };
 

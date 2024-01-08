@@ -11,17 +11,17 @@ const Comments = () => {
   useEffect(() => {
     dispatch(allComments());
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [comments, answer]);
+  }, [dispatch, answer]);
 
   return (
-    <>
+    <div>
       <div>
         {comments.map((comment) => (
           <div key={comment.id}>
             <div style={{ border: "solid 2px", margin: "10px" }}>
               <p>commentario: {comment.text}</p>
               <p>
-                quien hizo la pregunta: {comment.User.name}{" "}
+                quien hizo la pregunta: {comment && comment.User.name}{" "}
                 {comment.User.lastname}
               </p>
               <h3>Respuestas al comentario</h3>
@@ -38,15 +38,15 @@ const Comments = () => {
               ) : (
                 <p>No tiene respuestas</p>
               )}
-              <p>
-                Responder:
+              <div>
+                <p>Responder:</p>
                 <AnswerComment commentId={comment.id} />
-              </p>
+              </div>
             </div>
           </div>
         ))}
       </div>
-    </>
+    </div>
   );
 };
 

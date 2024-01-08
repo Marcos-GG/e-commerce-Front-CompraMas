@@ -39,7 +39,7 @@ const FormProduct = () => {
   };
 
   return (
-    <>
+    <div>
       <h1> Formulario de creacion para los productos</h1>
       <div>
         <form onSubmit={handlerSubmit}>
@@ -119,7 +119,7 @@ const FormProduct = () => {
           <button type="submit">Crear</button>
         </form>
       </div>
-    </>
+    </div>
   );
 };
 

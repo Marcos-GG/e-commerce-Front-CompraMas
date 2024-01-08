@@ -10,6 +10,10 @@ function Card({ product }) {
     dispatch(addProduct(product));
   };
 
+  // const handleClickLike = () => {
+  //   dispatch(addLike());
+  // };
+
   return (
     <div style={{ border: "solid 1px", margin: "10px" }}>
       <p>title: {product?.title}</p>
@@ -24,9 +28,13 @@ function Card({ product }) {
       </button>
       <div>
         <button onClick={() => handleClickAdd(product)}>
-          <NavLink to={"/carrito"}>Agregar</NavLink>
+          Agregar
+          {/* <NavLink to={"/carrito"}>Agregar</NavLink> */}
         </button>
       </div>
+      {/* <div onClick={() => handleClickLike(product?.id)}>
+        <button>Like</button>
+      </div> */}
     </div>
   );
 }

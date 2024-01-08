@@ -40,9 +40,9 @@ export const getProducts = () => {
   };
 };
 
-export const getProductId = (id, token) => {
+export const getProductId = (id) => {
   return async function (dispatch) {
-    const config = configureHeaders(token);
+    const config = configureHeaders();
     const response = await axios.get(
       `http://localhost:13050/products/${id}`,
       config
@@ -79,6 +79,7 @@ export const moveToDeactivate = (id) => {
 export const createProduct = (product) => {
   return async function (dispatch) {
     const config = configureHeaders();
+    console.log(config, "como se envia el header y token  ");
     const response = await axios.post(
       `http://localhost:13050/createProduct`,
       product,

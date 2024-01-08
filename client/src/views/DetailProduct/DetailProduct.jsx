@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import RelatedProducts from "../../components/RelatedProducts";
 import CommetProducts from "../../components/CommentProducts";
 import AnswerComment from "../../components/AnswerComment";
+import { addProduct } from "../../Redux/actions/ShoppingCartAction";
 import { jwtDecode } from "jwt-decode";
 
 function DetailProduct() {
@@ -16,7 +17,6 @@ function DetailProduct() {
   const answer = useSelector((state) => state.comments.answer);
   const products = useSelector((state) => state.products.products);
 
-  console.log(productId);
   const token = localStorage.getItem("token");
   const isAdmin = localStorage.getItem("admin");
 
@@ -24,12 +24,11 @@ function DetailProduct() {
   const userId = decodeToken.id;
 
   useEffect(() => {
-    dispatch(getProductId(id, token));
+    dispatch(getProductId(id));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id, comments, answer]);
 
   // productos relacionados :
-
   const category = productId?.category;
   const gender = productId?.gender;
 
@@ -40,6 +39,10 @@ function DetailProduct() {
           product.gender === gender
       : product.gender === gender && product.id !== id;
   });
+
+  const handleClickAdd = (product) => {
+    dispatch(addProduct(product));
+  };
 
   const limitedFilteredProducts = filterProducts.slice(0, 5);
 
@@ -56,6 +59,10 @@ function DetailProduct() {
           <p>gender: {productId?.gender}</p>
           <p>category: {productId?.category}</p>
           <p>likes: {productId?.likes}</p>
+
+          <div>
+            <button onClick={() => handleClickAdd(productId)}>Agregar</button>
+          </div>
         </div>
         {productId.Comments && productId.Comments.length > 0 ? (
           <div style={{ backgroundColor: "green" }}>

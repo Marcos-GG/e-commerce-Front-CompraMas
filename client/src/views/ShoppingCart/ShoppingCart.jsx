@@ -1,11 +1,14 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   addProduct,
   removeProduct,
 } from "../../Redux/actions/ShoppingCartAction";
 
 const ShoppingCart = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const products = useSelector((state) => state.shoppingCart.products);
   console.log(products, "lo que hay en el carrito");
@@ -25,7 +28,11 @@ const ShoppingCart = () => {
     );
   };
 
-  useEffect(() => {}, [products]);
+  useEffect(() => {
+    if (products.length === 0) {
+      navigate("/");
+    }
+  }, [products]);
 
   return (
     <>

@@ -1,8 +1,8 @@
-export const configureHeaders = (Token) => {
+export const configureHeaders = () => {
   try {
     const token = localStorage.getItem("token");
 
-    if (!token && !Token) {
+    if (!token) {
       //("Token no encontrado en localStorage");
       return {};
     }

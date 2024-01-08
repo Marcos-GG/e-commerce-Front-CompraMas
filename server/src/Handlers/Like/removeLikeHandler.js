@@ -5,7 +5,8 @@ const removeLikeController = require("../../Controllers/Like/removeLikeControlle
 const removeLikeHandler = async (req, res) => {
   try {
     // Obtener el ID del usuario desde la información de autenticación
-    const { productId, userId } = req.body;
+    const { productId } = req.body;
+    const userId = req.userId;
 
     // Obtener el ID de la publicación desde el cuerpo de la solicitud
     // const userId = req.userId;

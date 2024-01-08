@@ -4,7 +4,8 @@ const postLikeHandler = async (req, res) => {
   try {
     // Obtener los parámetros necesarios del cuerpo de la solicitud
 
-    const { productId, userId } = req.body;
+    const { productId } = req.body;
+    const userId = req.userId;
 
     // Verificar si se recibieron los parámetros necesarios
     if (!userId || !productId) {

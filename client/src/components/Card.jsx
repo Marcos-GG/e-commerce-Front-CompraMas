@@ -2,17 +2,29 @@
 import { NavLink } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addProduct } from "../Redux/actions/ShoppingCartAction";
+import { addLike, removeLike } from "../Redux/actions/Likes";
+import { useState } from "react";
 
 function Card({ product }) {
   const dispatch = useDispatch();
+  const [liked, setLiked] = useState(false);
 
   const handleClickAdd = () => {
     dispatch(addProduct(product));
   };
 
-  // const handleClickLike = () => {
-  //   dispatch(addLike());
-  // };
+  const handleClickLike = () => {
+    if (!liked) {
+      dispatch(addLike(product?.id));
+      console.log(product?.id, "como se  manda");
+
+      setLiked(true);
+    } else {
+      dispatch(removeLike(product?.id));
+      console.log(product?.id, "como se  manda");
+      setLiked(false);
+    }
+  };
 
   return (
     <div style={{ border: "solid 1px", margin: "10px" }}>
@@ -27,14 +39,11 @@ function Card({ product }) {
         <NavLink to={`/detail/${product?.id}`}>Ver mas</NavLink>
       </button>
       <div>
-        <button onClick={() => handleClickAdd(product)}>
-          Agregar
-          {/* <NavLink to={"/carrito"}>Agregar</NavLink> */}
-        </button>
+        <button onClick={() => handleClickAdd(product)}>Agregar</button>
       </div>
-      {/* <div onClick={() => handleClickLike(product?.id)}>
-        <button>Like</button>
-      </div> */}
+      <div onClick={() => handleClickLike(product?.id)}>
+        <button>{liked ? "Dislike" : "Like"}</button>
+      </div>
     </div>
   );
 }

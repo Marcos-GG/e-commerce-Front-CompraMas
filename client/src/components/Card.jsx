@@ -24,7 +24,7 @@ function Card({ product }) {
       </button>
       <div>
         <button onClick={() => handleClickAdd(product)}>
-          <NavLink to={"/Carrito"}>Agregar</NavLink>
+          <NavLink to={"/carrito"}>Agregar</NavLink>
         </button>
       </div>
     </div>

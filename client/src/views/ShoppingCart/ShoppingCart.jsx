@@ -8,6 +8,7 @@ import {
 const ShoppingCart = () => {
   const dispatch = useDispatch();
   const products = useSelector((state) => state.shoppingCart.products);
+  console.log(products, "lo que hay en el carrito");
 
   const handleClickAdd = (product) => {
     dispatch(addProduct(product));
@@ -24,7 +25,7 @@ const ShoppingCart = () => {
     );
   };
 
-  useEffect(() => {}, [products, dispatch]);
+  useEffect(() => {}, [products]);
 
   return (
     <>

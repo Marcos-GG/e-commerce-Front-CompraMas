@@ -3,6 +3,10 @@ import { NavLink } from "react-router-dom";
 const NavBarAdmin = () => {
   return (
     <>
+      <NavLink to="/">
+        <button> Home </button>
+      </NavLink>
+
       <NavLink to="/admin">
         <button> Comentarios </button>
       </NavLink>

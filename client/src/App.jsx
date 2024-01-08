@@ -16,6 +16,7 @@ import ProductsAdmin from "./components/ProductsAdmin";
 import DesactivatedProducts from "./components/DesactivatedProducts";
 import DetailProduct from "./views/DetailProduct/DetailProduct";
 import ShoppingCart from "./views/ShoppingCart/ShoppingCart";
+import NavBar from "./components/NavBar";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 
@@ -44,7 +45,7 @@ function App() {
 
   return (
     <div>
-      {location.pathname.includes("admin") && <NavBarAdmin />}
+      {location.pathname.includes("admin") ? <NavBarAdmin /> : <NavBar />}
       <Routes>
         <Route
           path="/register"

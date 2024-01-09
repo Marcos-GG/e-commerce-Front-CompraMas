@@ -3,9 +3,10 @@ import { configureHeaders } from "../auth/configureHeaders";
 
 import {
   ALL_COMMENTS,
-  POST_COMMENTS,
+  // POST_COMMENTS,
   POST_ANSWER,
 } from "../actionsTypes/CommentsTypes";
+import { POST_COMMENT_PRODUCT_ID } from "../actionsTypes/ProductsActionTypes";
 
 export const allComments = () => {
   return async function (dispatch) {
@@ -34,7 +35,7 @@ export const postComment = (form, token, productId) => {
         config
       );
 
-      dispatch({ type: POST_COMMENTS, payload: response.data });
+      dispatch({ type: POST_COMMENT_PRODUCT_ID, payload: response.data });
     } catch (error) {
       return error.message;
     }

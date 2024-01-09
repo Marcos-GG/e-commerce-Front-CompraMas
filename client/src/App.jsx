@@ -19,6 +19,7 @@ import ShoppingCart from "./views/ShoppingCart/ShoppingCart";
 import NavBar from "./components/NavBar";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
+import LogOut from "./views/Logout/LogOut";
 
 function App() {
   const location = useLocation();
@@ -55,6 +56,7 @@ function App() {
           path="/login"
           element={token ? <Navigate to="/" replace /> : <Login />} // Si ya hay un token en local storage o Redux, redirigir a Home
         />
+        <Route path="/logout" element={<LogOut />} />
         <Route
           path="/"
           element={token ? <Home /> : <Navigate to="/login" />} // Si no hay un token, redirigir a Login

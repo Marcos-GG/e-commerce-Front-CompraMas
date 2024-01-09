@@ -26,7 +26,7 @@ function DetailProduct() {
   useEffect(() => {
     dispatch(getProductId(id));
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id, comments, answer]);
+  }, [id]);
 
   // productos relacionados :
   const category = productId?.category;

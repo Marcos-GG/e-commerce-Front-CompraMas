@@ -5,6 +5,7 @@ import {
   MOVE_TO_ACTIVE,
   MOVE_TO_DEACTIVATE,
   CREATE_PRODUCT,
+  POST_COMMENT_PRODUCT_ID,
 } from "../actionsTypes/ProductsActionTypes";
 
 const initialState = {
@@ -33,6 +34,16 @@ const reducer = (state = initialState, action) => {
 
     case GET_PRODUCT_ID: {
       return { ...state, productId: action.payload };
+    }
+
+    case POST_COMMENT_PRODUCT_ID: {
+      return {
+        ...state,
+        productId: {
+          ...state.productId,
+          Comments: [action.payload, ...state.productId.Comments],
+        },
+      };
     }
 
     case PUT_PRODUCT: {

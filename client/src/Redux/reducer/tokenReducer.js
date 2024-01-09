@@ -1,4 +1,4 @@
-import { LOGIN } from "../actionsTypes/LoginRegisterTypes";
+import { LOGIN, LOGOUT } from "../actionsTypes/LoginRegisterTypes";
 
 const initialState = {
   token: null,
@@ -17,6 +17,12 @@ const reducer = (state = initialState, action) => {
         ...state,
         token: token,
         admin: admin,
+      };
+    }
+    case LOGOUT: {
+      return {
+        token: null,
+        admin: null,
       };
     }
 

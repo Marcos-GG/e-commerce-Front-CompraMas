@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { LOGOUT } from "../../Redux/actionsTypes/LoginRegisterTypes";
 import { useDispatch } from "react-redux";
 

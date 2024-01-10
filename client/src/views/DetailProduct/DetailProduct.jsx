@@ -13,8 +13,6 @@ function DetailProduct() {
   const dispatch = useDispatch();
 
   const productId = useSelector((state) => state.products.productId);
-  const comments = useSelector((state) => state.comments.comments);
-  const answer = useSelector((state) => state.comments.answer);
   const products = useSelector((state) => state.products.products);
 
   const token = localStorage.getItem("token");

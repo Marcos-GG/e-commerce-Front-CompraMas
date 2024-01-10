@@ -16,12 +16,10 @@ function Card({ product }) {
   const handleClickLike = () => {
     if (!liked) {
       dispatch(addLike(product?.id));
-      console.log(product?.id, "como se  manda");
 
       setLiked(true);
     } else {
       dispatch(removeLike(product?.id));
-      console.log(product?.id, "como se  manda");
       setLiked(false);
     }
   };

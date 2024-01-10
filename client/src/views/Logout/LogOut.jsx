@@ -7,6 +7,7 @@ export default function LogOut() {
 
   useEffect(() => {
     dispatch({ type: LOGOUT });
+    // localStorage.removeItem("carrito");
     localStorage.clear();
   }, [dispatch]);
 

@@ -79,7 +79,7 @@ export const moveToDeactivate = (id) => {
 export const createProduct = (product) => {
   return async function (dispatch) {
     const config = configureHeaders();
-    console.log(config, "como se envia el header y token  ");
+
     const response = await axios.post(
       `http://localhost:13050/createProduct`,
       product,

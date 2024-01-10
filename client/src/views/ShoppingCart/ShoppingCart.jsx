@@ -11,7 +11,6 @@ const ShoppingCart = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const products = useSelector((state) => state.shoppingCart.products);
-  console.log(products, "lo que hay en el carrito");
 
   const handleClickAdd = (product) => {
     dispatch(addProduct(product));

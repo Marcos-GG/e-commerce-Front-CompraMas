@@ -10,7 +10,6 @@ const initialState = {
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case ADD_PRODUCT: {
-      console.log(action.payload, "vemos si llega el estado de redux");
       const siExiste = state.products.findIndex(
         (product) => product.id === action.payload.id
       );

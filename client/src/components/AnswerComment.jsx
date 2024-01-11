@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { postAnswer } from "../Redux/actions/CommentsAction";
+import { postAnswer, postAnswerAdmin } from "../Redux/actions/CommentsAction";
 
 // eslint-disable-next-line react/prop-types
 const AnswerComment = ({ commentId }) => {
@@ -28,6 +28,7 @@ const AnswerComment = ({ commentId }) => {
     }
 
     dispatch(postAnswer(form, commentId));
+    dispatch(postAnswerAdmin(form, commentId));
 
     setForm({ answer: "" });
   };

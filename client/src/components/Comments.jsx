@@ -6,12 +6,11 @@ import AnswerComment from "./AnswerComment";
 const Comments = () => {
   const dispatch = useDispatch();
   const comments = useSelector((state) => state.comments.comments);
-  const answer = useSelector((state) => state.comments.answer);
 
   useEffect(() => {
     dispatch(allComments());
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dispatch, answer]);
+  }, [dispatch]);
 
   return (
     <div>

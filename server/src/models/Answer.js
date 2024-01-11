@@ -22,7 +22,6 @@ module.exports = (sequelize) => {
     },
 
     commentId: {
-      // lo tuve que agregar si o si
       type: DataTypes.INTEGER,
       allowNull: false,
     },

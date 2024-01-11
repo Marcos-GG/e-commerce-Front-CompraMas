@@ -84,8 +84,8 @@ function DetailProduct() {
                         <div key={answer.id}>
                           <p>{answer.answer}</p>
                           <p>
-                            Respondido por: {answer.User.name}{" "}
-                            {answer.User.lastname}
+                            Respondido por: {answer.User?.name}{" "}
+                            {answer.User?.lastname}
                           </p>
                         </div>
                       ))

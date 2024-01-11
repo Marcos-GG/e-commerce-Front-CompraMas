@@ -6,8 +6,6 @@ const NavBar = () => {
 
   const ShoppingCart = useSelector((state) => state.shoppingCart);
 
-  console.log(ShoppingCart, "carrito desde el estado");
-
   return (
     <div
       style={{

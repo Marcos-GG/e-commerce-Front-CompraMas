@@ -6,6 +6,7 @@ import {
   MOVE_TO_DEACTIVATE,
   CREATE_PRODUCT,
   POST_COMMENT_PRODUCT_ID,
+  POST_ANSWER_PRODUCT_ID,
 } from "../actionsTypes/ProductsActionTypes";
 
 const initialState = {
@@ -42,6 +43,30 @@ const reducer = (state = initialState, action) => {
         productId: {
           ...state.productId,
           Comments: [action.payload, ...state.productId.Comments],
+        },
+      };
+    }
+
+    case POST_ANSWER_PRODUCT_ID: {
+      const commentId = action.payload.commentId;
+
+      // encontramos el comentario especifico para agregarle answer
+      const updatedComments = state.productId.Comments.map((comment) => {
+        if (comment.id === commentId) {
+          // actualizamos Answers y le agregamos el nuevo
+          return {
+            ...comment,
+            Answers: [...comment.Answers, action.payload],
+          };
+        }
+        return comment;
+      });
+
+      return {
+        ...state,
+        productId: {
+          ...state.productId,
+          Comments: updatedComments,
         },
       };
     }

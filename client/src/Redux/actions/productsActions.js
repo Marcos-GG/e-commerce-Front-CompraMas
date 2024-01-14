@@ -20,20 +20,20 @@ export const getProducts = () => {
       );
       const products = response.data;
 
-      const Products = products.map((product) => ({
-        id: product.id,
-        category: product.category,
-        gender: product.gender,
-        image: product.image,
-        likes: product.likes,
-        price: product.price,
-        status: product.status,
-        title: product.title,
-        description: product.description,
-        stock: product.stock,
-      }));
+      // const Products = products.map((product) => ({
+      //   id: product.id,
+      //   category: product.category,
+      //   gender: product.gender,
+      //   image: product.image,
+      //   likes: product.likes,
+      //   price: product.price,
+      //   status: product.status,
+      //   title: product.title,
+      //   description: product.description,
+      //   stock: product.stock,
+      // }));
 
-      dispatch({ type: GET_PRODUCTS, payload: Products });
+      dispatch({ type: GET_PRODUCTS, payload: products });
     } catch (error) {
       return error;
     }

@@ -140,7 +140,7 @@ function Login() {
                   type="password"
                   InputProps={{
                     endAdornment: (
-                      <InputAdornment position="center">
+                      <InputAdornment position="end">
                         <PasswordIcon />
                       </InputAdornment>
                     ),

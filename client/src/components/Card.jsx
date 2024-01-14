@@ -3,15 +3,30 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addProduct } from "../Redux/actions/ShoppingCartAction";
 import { addLike, removeLike } from "../Redux/actions/Likes";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Box, Typography } from "@mui/material";
 import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
 import ThumbUpAltIcon from "@mui/icons-material/ThumbUpAlt";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
+import { jwtDecode } from "jwt-decode";
 
 function Card({ product }) {
   const dispatch = useDispatch();
   const [liked, setLiked] = useState(false);
+
+  const token = localStorage.getItem("token");
+  const decodeToken = jwtDecode(token);
+  const userId = decodeToken.id;
+
+  const productosLikeados = product.Likes?.some(
+    // Likes es un array de objetos que son los usuarios que le dieron like , si "alguno" de esos objetos es del userId devuelve true
+    (like) => like.userId === userId
+  );
+  console.log(productosLikeados, "productos likeados");
+
+  useEffect(() => {
+    setLiked(productosLikeados); // cargamos con true o false dependieno lo que devuelva some
+  }, [productosLikeados]);
 
   const handleClickAdd = () => {
     dispatch(addProduct(product));

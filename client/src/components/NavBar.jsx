@@ -1,3 +1,4 @@
+import { Box } from "@mui/material";
 import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 
@@ -7,10 +8,14 @@ const NavBar = () => {
   const ShoppingCart = useSelector((state) => state.shoppingCart);
 
   return (
-    <div
-      style={{
+    <Box
+      sx={{
         display: "flex",
         justifyContent: "space-between",
+        position: "sticky",
+        top: 0,
+        width: 1,
+        py: 2,
       }}
     >
       <div>
@@ -28,7 +33,9 @@ const NavBar = () => {
             {" "}
             Carrito{" "}
             {ShoppingCart?.products?.length > 0
-              ? `(${ShoppingCart?.products?.length})`
+              ? `(${ShoppingCart?.products?.reduce(function (acc, obj) {
+                  return acc + (obj?.cantidad || 1);
+                }, 0)})`
               : ""}
           </button>
         </NavLink>
@@ -42,7 +49,7 @@ const NavBar = () => {
           <button> LogOut </button>
         </NavLink>
       </div>
-    </div>
+    </Box>
   );
 };
 

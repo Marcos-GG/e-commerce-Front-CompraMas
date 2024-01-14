@@ -18,8 +18,10 @@ import DetailProduct from "./views/DetailProduct/DetailProduct";
 import ShoppingCart from "./views/ShoppingCart/ShoppingCart";
 import NavBar from "./components/NavBar";
 import { useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import LogOut from "./views/Logout/LogOut";
+import "./App.css";
+import { SET_INITIAL_CART } from "./Redux/actionsTypes/ShoppingCartActionTypes";
 
 function App() {
   const location = useLocation();
@@ -44,9 +46,29 @@ function App() {
     }
   }, [token, location.pathname, navigate, admin]);
 
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const cart = localStorage.getItem("carrito");
+    if (cart) {
+      const parseCart = JSON.parse(cart);
+
+      console.log(parseCart, "cart parseado");
+
+      dispatch({
+        type: SET_INITIAL_CART,
+        payload: parseCart,
+      });
+    }
+  }, []);
+
   return (
     <div>
-      {location.pathname.includes("admin") ? <NavBarAdmin /> : <NavBar />}
+      {location.pathname.includes("admin") ? (
+        <NavBarAdmin />
+      ) : (
+        !location.pathname.includes("login") && <NavBar />
+      )}
       <Routes>
         <Route
           path="/register"

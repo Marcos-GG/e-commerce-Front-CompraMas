@@ -1,6 +1,7 @@
 import {
   ADD_PRODUCT,
   REMOVE_PRODUCT,
+  SET_INITIAL_CART,
 } from "../actionsTypes/ShoppingCartActionTypes";
 
 const initialState = {
@@ -46,6 +47,11 @@ const reducer = (state = initialState, action) => {
 
       return;
     }
+    case SET_INITIAL_CART:
+      return {
+        ...state,
+        products: action.payload,
+      };
 
     default:
       return { ...state };

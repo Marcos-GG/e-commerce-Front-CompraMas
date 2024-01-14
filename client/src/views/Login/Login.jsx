@@ -1,6 +1,20 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { postLogin } from "../../Redux/actions/LoginRegister"; // Asegúrate de importar la acción correcta para el inicio de sesión
+import { postLogin } from "../../Redux/actions/LoginRegister";
+
+import { NavLink } from "react-router-dom";
+import LoginIcon from "@mui/icons-material/Login";
+import MailOutlineIcon from "@mui/icons-material/MailOutline";
+import {
+  Box,
+  Button,
+  Card,
+  Divider,
+  InputAdornment,
+  TextField,
+  Typography,
+} from "@mui/material";
+import PasswordIcon from "@mui/icons-material/Password";
 
 function Login() {
   const dispatch = useDispatch();
@@ -28,32 +42,157 @@ function Login() {
   };
 
   return (
-    <div>
-      <h1>¡Hola, soy el formulario de inicio de sesión!</h1>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Email:</label>
-          <input
-            type="email"
-            name="email"
-            value={form.email}
-            onChange={formHandler}
-          />
-        </div>
-        <div>
-          <label>Contraseña:</label>
-          <input
-            type="password"
-            name="password"
-            value={form.password}
-            onChange={formHandler}
-          />
-        </div>
-        <div>
-          <input type="submit" value="Iniciar Sesión" />
-        </div>
-      </form>
-    </div>
+    // <Box sx={{ display: "flex" }}>
+    <Box
+      sx={{
+        background:
+          "linear-gradient(0deg, rgba(2,0,36,0.8) 0%, rgba(9,102,121,1) 47%, rgba(0,212,255,1) 100%);",
+        width: "100vw",
+        height: "100vh",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <Card
+        sx={{
+          // bgcolor: "#81b2c1",
+          backdropFilter: "blur(20px)",
+          borderRadius: "30px",
+          boxShadow: 6,
+        }}
+      >
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            // width: "35rem",
+            justifyContent: "center",
+            // height: "30rem",
+            alignItems: "center",
+            p: 6,
+            maxWidth: "90vw",
+          }}
+        >
+          <Box
+            mb={2.5}
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              flexDirection: "column",
+              gap: 2,
+            }}
+          >
+            <Box
+              component="img"
+              src="/logonegro.svg"
+              sx={{
+                display: "flex",
+              }}
+            />
+            <Typography variant="subtitle2">
+              Ingresa tu correo electrónico y contraseña
+            </Typography>
+          </Box>
+          <form onSubmit={handleSubmit}>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "space-around",
+                width: "28rem",
+                maxWidth: "90vw",
+                gap: 2,
+                maxHeight: "80vh",
+              }}
+            >
+              <Box>
+                {/* <MailOutlineIcon sx={{ marginLeft: "10px" }} /> */}
+                <TextField
+                  name="email"
+                  value={form.email}
+                  onChange={formHandler}
+                  variant="outlined"
+                  placeholder="E-mail"
+                  fullWidth
+                  sx={{
+                    backgroundColor: "transparent",
+                  }}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <MailOutlineIcon />
+                      </InputAdornment>
+                    ),
+                  }}
+                />
+              </Box>
+
+              <Box>
+                <TextField
+                  name="password"
+                  value={form.password}
+                  onChange={formHandler}
+                  variant="outlined"
+                  placeholder="Password"
+                  fullWidth
+                  type="password"
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="center">
+                        <PasswordIcon />
+                      </InputAdornment>
+                    ),
+                  }}
+                />
+              </Box>
+              <Box
+                sx={{
+                  py: 1,
+                }}
+              >
+                <Button
+                  fullWidth
+                  type="submit"
+                  variant="contained"
+                  color="primary"
+                  endIcon={<LoginIcon />}
+                >
+                  Iniciar sesión
+                </Button>
+              </Box>
+              <Box
+                sx={{
+                  width: 1,
+                  display: "flex",
+                  justifyContent: "center",
+                }}
+              >
+                <Typography variant="subtitle2">
+                  <u>Olvide mi contraseña</u>
+                </Typography>
+              </Box>
+              <Divider />
+              <Box
+                sx={{
+                  width: 1,
+                  display: "flex",
+                  justifyContent: "center",
+                }}
+              >
+                <Typography variant="subtitle2">
+                  No tenes una cuenta?{" "}
+                  <NavLink to="/register" style={{ textDecoration: "none" }}>
+                    <u>Registrate acá</u>
+                  </NavLink>
+                </Typography>
+              </Box>
+            </Box>
+          </form>
+        </Box>
+      </Card>
+    </Box>
   );
 }
 

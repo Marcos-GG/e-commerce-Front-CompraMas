@@ -1,3 +1,4 @@
+import Style from "./Home.module.css";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { getProducts } from "../../Redux/actions/productsActions";
@@ -31,7 +32,7 @@ function Home() {
   // }, []);
 
   return (
-    <div>
+    <div className={Style}>
       <h1>home</h1>
       <CardContainer products={products} />
     </div>

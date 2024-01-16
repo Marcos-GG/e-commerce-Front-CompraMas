@@ -9,7 +9,9 @@ import {
   Checkbox,
   Slider,
   TextField,
+  Typography,
 } from "@mui/material";
+import { apllyFilters } from "../Redux/actions/productsActions";
 
 const Filtros = () => {
   const dispatch = useDispatch();
@@ -26,12 +28,14 @@ const Filtros = () => {
   const [categoriaSeleccionada, setCategoriaSeleccionada] = useState(null);
   const [generoSeleccionado, setGeneroSeleccionado] = useState(null);
   const [morePopular, setMorePopular] = useState(false);
+  const [estadoBoton, setEstadoBoton] = useState(false);
+  const [initialPrice] = useState({ min: 50, max: 500 }); // Valores iniciales del precio
 
   const [combinedFilters, setCombinedFilters] = useState({
     category: null,
     gender: null,
     morePopular: null,
-    price: { min: 50, max: 500 },
+    price: { ...initialPrice },
   });
 
   //   const handlerSlider = (event) => {
@@ -63,6 +67,19 @@ const Filtros = () => {
     }));
   };
 
+  const limpiarFiltros = () => {
+    setCombinedFilters({
+      category: null,
+      gender: null,
+      morePopular: null,
+      price: { ...initialPrice },
+    });
+    // restablecemos manualmente porque los valores que fueron seleccionados quedaban guardados visualmente
+    setCategoriaSeleccionada(null);
+    setGeneroSeleccionado(null);
+    setMorePopular(false);
+  };
+
   // const applyFilters = (combinedFilters) => {
   //   // Verifica si todos los valores son null
 
@@ -70,6 +87,19 @@ const Filtros = () => {
   //   }
   //   dispatch();
   // };
+
+  useEffect(() => {
+    const { category, gender, morePopular, price } = combinedFilters;
+    const filtersNull = category === null && gender === null && !morePopular;
+    const priceChanged =
+      price.min !== initialPrice.min || price.max !== initialPrice.max;
+
+    setEstadoBoton(!(!filtersNull || priceChanged));
+  }, [combinedFilters, initialPrice]);
+
+  const handleApplyFilter = () => {
+    dispatch(apllyFilters(combinedFilters));
+  };
 
   return (
     <Box>
@@ -126,18 +156,34 @@ const Filtros = () => {
         max={valorMaximo} // Ajusta según tus necesidades
       />
 
-      <p>Valor min: {combinedFilters.price.min}</p>
-      <p>Valor max: {combinedFilters.price.max}</p>
+      <Typography variant="subtitle2">
+        Valor min: {combinedFilters.price.min}
+      </Typography>
+      <Typography variant="subtitle2">
+        Valor max: {combinedFilters.price.max}
+      </Typography>
 
-      <Box sx={{ display: "flex", justifyContent: "center" }}>
-        <Button
-          variant="contained"
-          disabled={Object.keys(combinedFilters)
-            .filter((key) => key !== "price")
-            .every((key) => combinedFilters[key] === null)}
-        >
+      <Box
+        sx={{ display: "flex", justifyContent: "center" }}
+        onClick={handleApplyFilter}
+      >
+        <Button variant="contained" disabled={estadoBoton}>
           Aplicar filtros
         </Button>
+      </Box>
+
+      <Box
+        sx={{
+          cursor: "pointer", // Añadí esto para que el cursor indique que es un elemento clickeable
+          "&:hover": {
+            color: "primary.main", // Cambia el color al pasar el mouse sobre el texto
+          },
+
+          textAlign: "center",
+        }}
+        onClick={() => limpiarFiltros()}
+      >
+        <Typography variant="subtitle2">Limpiar Filtros</Typography>
       </Box>
     </Box>
   );

@@ -8,7 +8,7 @@ import {
   MOVE_TO_ACTIVE,
   MOVE_TO_DEACTIVATE,
   CREATE_PRODUCT,
-  PRODUCT_FILTERED,
+  APPLY_FILTERS,
 } from "../actionsTypes/ProductsActionTypes";
 
 export const getProducts = () => {
@@ -78,8 +78,16 @@ export const createProduct = (product) => {
   };
 };
 
-export const applyFilter = (filtro) => {
-  return function (dispatch) {
-    dispatch({ type: PRODUCT_FILTERED, payload: filtro });
+export const apllyFilters = (combinedFilters) => {
+  return async function (dispatch) {
+    const config = configureHeaders();
+
+    const response = await axios.post(
+      `http://localhost:13050/filters`,
+      combinedFilters,
+      config
+    );
+
+    dispatch({ type: APPLY_FILTERS, payload: response.data });
   };
 };

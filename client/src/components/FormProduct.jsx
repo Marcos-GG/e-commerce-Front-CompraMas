@@ -94,7 +94,7 @@ const FormProduct = () => {
               <option value="">Genero</option>
               {genders &&
                 genders.map((gender) => (
-                  <option key={gender.id} value={gender.id}>
+                  <option key={gender.id} value={gender.gender}>
                     {gender.gender}
                   </option>
                 ))}
@@ -110,7 +110,7 @@ const FormProduct = () => {
               <option value="">Categoria</option>
               {categories &&
                 categories.map((category) => (
-                  <option key={category.id} value={category.id}>
+                  <option key={category.id} value={category.name}>
                     {category.name}
                   </option>
                 ))}

@@ -12,6 +12,7 @@ const postProductHandler = require("../Handlers/Productos/postProduct");
 const getProductHandler = require("../Handlers/Productos/getProduct");
 const putProductHandler = require("../Handlers/Productos/putProduct");
 const deleteProductHandler = require("../Handlers/Productos/deleteProduct");
+const handlerApplyFilters = require("../Handlers/Productos/handlerFilterProducts");
 
 // handlers likes
 const postLikeHandler = require("../Handlers/Like/postLikeHandler");
@@ -58,6 +59,7 @@ router.post("/createProduct", postProductHandler);
 router.get("/products", getProductHandler);
 router.put("/products/:id", putProductHandler);
 router.delete("/products/:id", deleteProductHandler);
+router.post("/filters", handlerApplyFilters);
 
 //likes
 router.post("/likes", postLikeHandler);

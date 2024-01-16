@@ -8,6 +8,7 @@ import {
   MOVE_TO_ACTIVE,
   MOVE_TO_DEACTIVATE,
   CREATE_PRODUCT,
+  PRODUCT_FILTERED,
 } from "../actionsTypes/ProductsActionTypes";
 
 export const getProducts = () => {
@@ -19,19 +20,6 @@ export const getProducts = () => {
         config
       );
       const products = response.data;
-
-      // const Products = products.map((product) => ({
-      //   id: product.id,
-      //   category: product.category,
-      //   gender: product.gender,
-      //   image: product.image,
-      //   likes: product.likes,
-      //   price: product.price,
-      //   status: product.status,
-      //   title: product.title,
-      //   description: product.description,
-      //   stock: product.stock,
-      // }));
 
       dispatch({ type: GET_PRODUCTS, payload: products });
     } catch (error) {
@@ -87,5 +75,11 @@ export const createProduct = (product) => {
     );
 
     dispatch({ type: CREATE_PRODUCT, payload: response.data });
+  };
+};
+
+export const applyFilter = (filtro) => {
+  return function (dispatch) {
+    dispatch({ type: PRODUCT_FILTERED, payload: filtro });
   };
 };

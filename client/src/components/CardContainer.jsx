@@ -7,16 +7,23 @@ function CardContainer({ products }) {
     <Box
       sx={{
         display: "flex",
-        flexWrap: "wrap",
-        gap: 2,
+        justifyContent: "center",
       }}
     >
-      {products &&
-        products.map((product) => (
-          <div key={product?.id}>
-            <Card product={product} />
-          </div>
-        ))}
+      <Box
+        sx={{
+          display: "flex",
+          flexWrap: "wrap",
+          gap: 2,
+        }}
+      >
+        {products &&
+          products.map((product) => (
+            <Box key={product?.id}>
+              <Card product={product} />
+            </Box>
+          ))}
+      </Box>
     </Box>
   );
 }

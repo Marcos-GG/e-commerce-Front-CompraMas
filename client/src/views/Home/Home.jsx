@@ -3,6 +3,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { getProducts } from "../../Redux/actions/productsActions";
 import CardContainer from "../../components/CardContainer";
+import Filtros from "../../components/Filtros";
+import { Box } from "@mui/material";
 // import { persistor } from "../../Redux/store";
 
 function Home() {
@@ -19,7 +21,7 @@ function Home() {
   //     try {
   //       const purgeResult = await persistor.purge();
   //       ("Resultado de purgar datos persistidos:", purgeResult);
-  //       const persistResult = await persistor.persist();
+  //       cnull,persistResult = await persistor.persist();
   //       ("Resultado de persistir datos:", persistResult);
   //       // Aquí puedes realizar cualquier otra lógica necesaria después de purgar y persistir los datos
   //     } catch (error) {
@@ -32,10 +34,35 @@ function Home() {
   // }, []);
 
   return (
-    <div className={Style}>
+    <Box className={Style}>
       <h1>home</h1>
-      <CardContainer products={products} />
-    </div>
+      <Box
+        sx={{
+          display: "flex",
+        }}
+      >
+        <Box
+          sx={{
+            backgroundColor: "aquamarine",
+            padding: "0 15px 0 15px",
+            width: "19rem",
+            minWidth: "12rem",
+          }}
+        >
+          <Filtros />
+        </Box>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            width: "1",
+            margin: "0 auto",
+          }}
+        >
+          <CardContainer products={products} />
+        </Box>
+      </Box>
+    </Box>
   );
 }
 

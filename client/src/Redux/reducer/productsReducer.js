@@ -7,12 +7,14 @@ import {
   CREATE_PRODUCT,
   POST_COMMENT_PRODUCT_ID,
   POST_ANSWER_PRODUCT_ID,
+  PRODUCT_FILTERED,
 } from "../actionsTypes/ProductsActionTypes";
 
 const initialState = {
   products: [],
   productId: [],
   desactivatedproducts: [],
+  productsFiltered: [],
 };
 
 const reducer = (state = initialState, action) => {
@@ -116,6 +118,10 @@ const reducer = (state = initialState, action) => {
         ...state,
         products: [...state.products, action.payload],
       };
+    }
+
+    case PRODUCT_FILTERED: {
+      return;
     }
 
     default:

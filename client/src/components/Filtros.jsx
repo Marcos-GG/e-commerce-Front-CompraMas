@@ -2,7 +2,14 @@
 import { useEffect, useState } from "react";
 import { getCategory, getGender } from "../Redux/actions/CategoryGender";
 import { useDispatch, useSelector } from "react-redux";
-import { Autocomplete, Box, Slider, TextField } from "@mui/material";
+import {
+  Autocomplete,
+  Box,
+  Button,
+  Checkbox,
+  Slider,
+  TextField,
+} from "@mui/material";
 
 const Filtros = () => {
   const dispatch = useDispatch();
@@ -18,10 +25,12 @@ const Filtros = () => {
 
   const [categoriaSeleccionada, setCategoriaSeleccionada] = useState(null);
   const [generoSeleccionado, setGeneroSeleccionado] = useState(null);
+  const [morePopular, setMorePopular] = useState(false);
 
   const [combinedFilters, setCombinedFilters] = useState({
     category: null,
     gender: null,
+    morePopular: null,
     price: { min: 50, max: 500 },
   });
 
@@ -45,6 +54,22 @@ const Filtros = () => {
       price: { min: newPrice[0], max: newPrice[1] },
     });
   };
+
+  const handleChangeCheckbox = (event) => {
+    setMorePopular(event.target.checked);
+    setCombinedFilters((prevFiltros) => ({
+      ...prevFiltros,
+      morePopular: event.target.checked,
+    }));
+  };
+
+  // const applyFilters = (combinedFilters) => {
+  //   // Verifica si todos los valores son null
+
+  //   if (allNull) {
+  //   }
+  //   dispatch();
+  // };
 
   return (
     <Box>
@@ -84,6 +109,14 @@ const Filtros = () => {
         />
       </Box>
 
+      <Checkbox
+        checked={morePopular}
+        onChange={handleChangeCheckbox}
+        name="morePopular"
+        inputProps={{ "aria-label": "controlled" }}
+      />
+      <label htmlFor="morePopular">Los más gustados</label>
+
       <Slider
         value={[combinedFilters.price.min, combinedFilters.price.max]}
         onChange={handlePriceChange}
@@ -95,6 +128,17 @@ const Filtros = () => {
 
       <p>Valor min: {combinedFilters.price.min}</p>
       <p>Valor max: {combinedFilters.price.max}</p>
+
+      <Box sx={{ display: "flex", justifyContent: "center" }}>
+        <Button
+          variant="contained"
+          disabled={Object.keys(combinedFilters)
+            .filter((key) => key !== "price")
+            .every((key) => combinedFilters[key] === null)}
+        >
+          Aplicar filtros
+        </Button>
+      </Box>
     </Box>
   );
 };

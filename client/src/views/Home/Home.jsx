@@ -1,6 +1,6 @@
 import Style from "./Home.module.css";
 import { useSelector, useDispatch } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { getProducts } from "../../Redux/actions/productsActions";
 import CardContainer from "../../components/CardContainer";
 import Filtros from "../../components/Filtros";
@@ -8,13 +8,24 @@ import { Box } from "@mui/material";
 // import { persistor } from "../../Redux/store";
 
 function Home() {
-  const products = useSelector((state) => state.products.products);
   const dispatch = useDispatch();
+
+  const products = useSelector((state) => state.products.products);
+  const productosFiltrados = useSelector(
+    (state) => state.products.productsFiltered
+  );
+
+  const [productsFiltered, setProductsFiltered] = useState([]);
 
   useEffect(() => {
     dispatch(getProducts());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    setProductsFiltered(productosFiltrados);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [productosFiltrados]);
 
   // useEffect(() => {
   //   const handlePersistingData = async () => {
@@ -59,7 +70,13 @@ function Home() {
             margin: "0 auto",
           }}
         >
-          <CardContainer products={products} />
+          <CardContainer
+            products={
+              productsFiltered && productsFiltered.length > 0
+                ? productosFiltrados
+                : products
+            }
+          />
         </Box>
       </Box>
     </Box>

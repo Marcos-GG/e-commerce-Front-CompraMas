@@ -7,7 +7,8 @@ import {
   CREATE_PRODUCT,
   POST_COMMENT_PRODUCT_ID,
   POST_ANSWER_PRODUCT_ID,
-  PRODUCT_FILTERED,
+  APPLY_FILTERS,
+  CLEAR_FILTERED_PRODUCTS,
 } from "../actionsTypes/ProductsActionTypes";
 
 const initialState = {
@@ -120,8 +121,18 @@ const reducer = (state = initialState, action) => {
       };
     }
 
-    case PRODUCT_FILTERED: {
-      return;
+    case APPLY_FILTERS: {
+      return {
+        ...state,
+        productsFiltered: action.payload,
+      };
+    }
+
+    case CLEAR_FILTERED_PRODUCTS: {
+      return {
+        ...state,
+        productsFiltered: [],
+      };
     }
 
     default:

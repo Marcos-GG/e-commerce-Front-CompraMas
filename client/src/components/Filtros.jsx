@@ -19,17 +19,7 @@ import {
 const Filtros = () => {
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(getCategory());
-    dispatch(getGender());
-  }, []);
-
   const products = useSelector((state) => state.products.products);
-
-  const valorMinimo = 0;
-  const valorMaximo = products.reduce((maxPrice, product) => {
-    return Math.max(maxPrice, product.price);
-  }, 0);
 
   const genders = useSelector((state) => state.categoryGender.gender);
   const categorias = useSelector((state) => state.categoryGender.category);
@@ -38,7 +28,7 @@ const Filtros = () => {
   const [generoSeleccionado, setGeneroSeleccionado] = useState(null);
   const [morePopular, setMorePopular] = useState(false);
   const [estadoBoton, setEstadoBoton] = useState(false);
-  const [initialPrice] = useState({ min: 50, max: valorMaximo }); // Valores iniciales del precio
+  const [initialPrice, setInitialPrice] = useState({ min: 0, max: 1500 }); // Valores iniciales del precio
 
   const [combinedFilters, setCombinedFilters] = useState({
     category: null,
@@ -47,14 +37,20 @@ const Filtros = () => {
     price: { ...initialPrice },
   });
 
-  //   const handlerSlider = (event) => {
-  //     const { name, value } = event.target;
+  useEffect(() => {
+    dispatch(getCategory());
+    dispatch(getGender());
+  }, []);
 
-  //     setCombinedFilters({
-  //       ...combinedFilters,
-  //       [name]: value,
-  //     });
-  //   };
+  useEffect(() => {
+    if (products && products.length > 0) {
+      const valorMaximo = products.reduce((maxPrice, product) => {
+        return Math.max(maxPrice, product.price);
+      }, 0);
+
+      setInitialPrice({ ...initialPrice, max: valorMaximo });
+    }
+  }, [products]);
 
   const handlePriceChange = (event, newPrice) => {
     setCombinedFilters({
@@ -85,14 +81,6 @@ const Filtros = () => {
 
     dispatch(clearProductosFiltrados());
   };
-
-  // const applyFilters = (combinedFilters) => {
-  //   // Verifica si todos los valores son null
-
-  //   if (allNull) {
-  //   }
-  //   dispatch();
-  // };
 
   useEffect(() => {
     const { category, gender, morePopular, price } = combinedFilters;
@@ -158,8 +146,8 @@ const Filtros = () => {
         onChange={handlePriceChange}
         valueLabelDisplay="auto"
         aria-labelledby="range-slider"
-        min={valorMinimo}
-        max={valorMaximo} // Ajusta según tus necesidades
+        min={initialPrice.min}
+        max={initialPrice.max}
       />
 
       <Typography variant="subtitle2">

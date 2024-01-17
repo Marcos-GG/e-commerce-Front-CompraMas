@@ -11,7 +11,10 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { apllyFilters } from "../Redux/actions/productsActions";
+import {
+  apllyFilters,
+  clearProductosFiltrados,
+} from "../Redux/actions/productsActions";
 
 const Filtros = () => {
   const dispatch = useDispatch();
@@ -22,6 +25,12 @@ const Filtros = () => {
   }, []);
 
   const products = useSelector((state) => state.products.products);
+
+  const valorMinimo = 0;
+  const valorMaximo = products.reduce((maxPrice, product) => {
+    return Math.max(maxPrice, product.price);
+  }, 0);
+
   const genders = useSelector((state) => state.categoryGender.gender);
   const categorias = useSelector((state) => state.categoryGender.category);
 
@@ -29,7 +38,7 @@ const Filtros = () => {
   const [generoSeleccionado, setGeneroSeleccionado] = useState(null);
   const [morePopular, setMorePopular] = useState(false);
   const [estadoBoton, setEstadoBoton] = useState(false);
-  const [initialPrice] = useState({ min: 50, max: 500 }); // Valores iniciales del precio
+  const [initialPrice] = useState({ min: 50, max: valorMaximo }); // Valores iniciales del precio
 
   const [combinedFilters, setCombinedFilters] = useState({
     category: null,
@@ -46,11 +55,6 @@ const Filtros = () => {
   //       [name]: value,
   //     });
   //   };
-
-  const valorMinimo = 0;
-  const valorMaximo = products.reduce((maxPrice, product) => {
-    return Math.max(maxPrice, product.price);
-  }, 0);
 
   const handlePriceChange = (event, newPrice) => {
     setCombinedFilters({
@@ -78,6 +82,8 @@ const Filtros = () => {
     setCategoriaSeleccionada(null);
     setGeneroSeleccionado(null);
     setMorePopular(false);
+
+    dispatch(clearProductosFiltrados());
   };
 
   // const applyFilters = (combinedFilters) => {
@@ -112,7 +118,7 @@ const Filtros = () => {
             setGeneroSeleccionado(newValue);
             setCombinedFilters((prevFiltros) => ({
               ...prevFiltros,
-              gender: newValue ? newValue.nombre : null,
+              gender: newValue ? newValue.gender : null,
             }));
           }}
           getOptionLabel={(option) => option.gender}
@@ -128,7 +134,7 @@ const Filtros = () => {
             setCategoriaSeleccionada(newValue);
             setCombinedFilters((prevFiltros) => ({
               ...prevFiltros,
-              category: newValue ? newValue.nombre : null,
+              category: newValue ? newValue.name : null,
             }));
           }}
           getOptionLabel={(option) => option.name}

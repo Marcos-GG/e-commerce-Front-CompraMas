@@ -9,6 +9,7 @@ import {
   MOVE_TO_DEACTIVATE,
   CREATE_PRODUCT,
   APPLY_FILTERS,
+  CLEAR_FILTERED_PRODUCTS,
 } from "../actionsTypes/ProductsActionTypes";
 
 export const getProducts = () => {
@@ -89,5 +90,11 @@ export const apllyFilters = (combinedFilters) => {
     );
 
     dispatch({ type: APPLY_FILTERS, payload: response.data });
+  };
+};
+
+export const clearProductosFiltrados = () => {
+  return function (dispatch) {
+    dispatch({ type: CLEAR_FILTERED_PRODUCTS });
   };
 };

@@ -10,12 +10,14 @@ import {
   APPLY_FILTERS,
   CLEAR_FILTERED_PRODUCTS,
 } from "../actionsTypes/ProductsActionTypes";
+import { ADD_LIKE, REMOVE_LIKE } from "../actionsTypes/LikesTypes";
 
 const initialState = {
   products: [],
   productId: [],
   desactivatedproducts: [],
   productsFiltered: [],
+  favoritos: [],
 };
 
 const reducer = (state = initialState, action) => {
@@ -132,6 +134,38 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         productsFiltered: [],
+      };
+    }
+
+    case ADD_LIKE: {
+      const product = state.products.find(
+        (product) => product.id === action.payload.productId
+      );
+
+      product.Likes = [
+        ...product.Likes,
+        {
+          userId: action.payload.userId,
+        },
+      ];
+
+      return {
+        ...state,
+        favoritos: [...state.favoritos, product],
+      };
+    }
+
+    case REMOVE_LIKE: {
+      console.log(action.payload, "como llega a removeLIke");
+      const updatedFavoritos = state.favoritos.filter(
+        (product) => product.id !== action.payload.like.productId
+      );
+
+      console.log(updatedFavoritos, "favoritos sin el eliminado");
+
+      return {
+        ...state,
+        favoritos: updatedFavoritos,
       };
     }
 

@@ -19,7 +19,7 @@ const removeLikeController = async ({ productId, userId }) => {
       await product.save();
     }
 
-    return like;
+    return { productId, like };
   } catch (error) {
     return { error: error.message };
   }

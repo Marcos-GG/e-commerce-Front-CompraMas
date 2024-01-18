@@ -12,6 +12,8 @@ export const addLike = (productId) => {
       config
     );
 
+    console.log(response.data, "estructura del like");
+
     dispatch({ type: ADD_LIKE, payload: response.data });
   };
 };
@@ -24,6 +26,8 @@ export const removeLike = (productId) => {
       { productId },
       config
     );
+
+    console.log(response.data, "estructura del removelike");
 
     dispatch({ type: REMOVE_LIKE, payload: response.data });
   };

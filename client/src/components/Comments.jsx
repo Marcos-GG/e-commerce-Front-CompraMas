@@ -1,19 +1,17 @@
-import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
-import { allComments } from "../Redux/actions/CommentsAction";
+/* eslint-disable react/prop-types */
 import AnswerComment from "./AnswerComment";
+import { Box } from "@mui/material";
 
-const Comments = () => {
-  const dispatch = useDispatch();
-  const comments = useSelector((state) => state.comments.comments);
-
-  useEffect(() => {
-    dispatch(allComments());
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dispatch]);
-
+const Comments = ({ comments }) => {
   return (
-    <div>
+    <Box sx={{ display: "flex", justifyContent: "center" }}>
+      <Box sx={{ width: "35rem", bgcolor: "beige" }}>
+        {comments.map((comment) => (
+          <Box key={comment.id} sx={{ display: "flex", bgcolor: "green" }}>
+            <p>{comment?.Answers?.slice(-1)[0]?.answer}</p>
+          </Box>
+        ))}
+      </Box>
       <div>
         {comments.map((comment) => (
           <div key={comment.id}>
@@ -45,7 +43,7 @@ const Comments = () => {
           </div>
         ))}
       </div>
-    </div>
+    </Box>
   );
 };
 

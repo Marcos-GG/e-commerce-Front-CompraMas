@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import Style from "./Home.module.css";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
@@ -5,7 +6,9 @@ import { getProducts } from "../../Redux/actions/productsActions";
 import CardContainer from "../../components/CardContainer";
 import Filtros from "../../components/Filtros";
 import { Box } from "@mui/material";
-// import { persistor } from "../../Redux/store";
+import { allComments } from "../../Redux/actions/CommentsAction";
+import { ALL_COMMENTS } from "../../Redux/actionsTypes/CommentsTypes";
+import { GET_PRODUCTS } from "../../Redux/actionsTypes/ProductsActionTypes";
 
 function Home() {
   const dispatch = useDispatch();
@@ -19,31 +22,42 @@ function Home() {
   const [productsFiltered, setProductsFiltered] = useState([]);
 
   useEffect(() => {
-    dispatch(getProducts());
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    const persistedData = localStorage.getItem("persist:root");
+
+    if (persistedData) {
+      const parsedData = JSON.parse(persistedData);
+
+      const localProducts =
+        parsedData.products && JSON.parse(parsedData.products).products;
+
+      console.log(localProducts, "local products");
+
+      if (localProducts || localProducts.length > 0) {
+        dispatch({ type: GET_PRODUCTS, payload: localProducts });
+      } else {
+        dispatch(getProducts());
+      }
+
+      const localComments =
+        parsedData.comments && JSON.parse(parsedData.comments).comments;
+
+      console.log(localComments, "local comments");
+
+      if (localComments || localComments.length > 0) {
+        dispatch({ type: ALL_COMMENTS, payload: localComments });
+      } else {
+        dispatch(allComments());
+      }
+    } else {
+      dispatch(getProducts());
+      dispatch(allComments());
+    }
   }, []);
 
   useEffect(() => {
     setProductsFiltered(productosFiltrados);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [productosFiltrados]);
-
-  // useEffect(() => {
-  //   const handlePersistingData = async () => {
-  //     try {
-  //       const purgeResult = await persistor.purge();
-  //       ("Resultado de purgar datos persistidos:", purgeResult);
-  //       cnull,persistResult = await persistor.persist();
-  //       ("Resultado de persistir datos:", persistResult);
-  //       // Aquí puedes realizar cualquier otra lógica necesaria después de purgar y persistir los datos
-  //     } catch (error) {
-  //       console.error("Error al purgar o persistir datos:", error);
-  //     }
-  //   };
-
-  //   handlePersistingData();
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, []);
 
   return (
     <Box className={Style}>

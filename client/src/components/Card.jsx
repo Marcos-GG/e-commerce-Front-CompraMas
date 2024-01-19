@@ -19,7 +19,6 @@ function Card({ product }) {
     // Likes es un array de objetos que son los usuarios que le dieron like , si "alguno" de esos objetos es del userId devuelve true
     (like) => like.userId === userId
   );
-  console.log(productosLikeados, "productos likeados");
 
   useEffect(() => {
     setLiked(productosLikeados); // cargamos con true o false dependieno lo que devuelva some

@@ -138,16 +138,7 @@ const reducer = (state = initialState, action) => {
     }
 
     case ADD_LIKE: {
-      const product = state.products.find(
-        (product) => product.id === action.payload.productId
-      );
-
-      product.Likes = [
-        ...product.Likes,
-        {
-          userId: action.payload.userId,
-        },
-      ];
+      const product = action.payload.product;
 
       return {
         ...state,
@@ -156,16 +147,27 @@ const reducer = (state = initialState, action) => {
     }
 
     case REMOVE_LIKE: {
-      console.log(action.payload, "como llega a removeLIke");
       const updatedFavoritos = state.favoritos.filter(
         (product) => product.id !== action.payload.like.productId
       );
 
-      console.log(updatedFavoritos, "favoritos sin el eliminado");
+      const updatedProducts = state.products.map((product) => {
+        if (product.id === action.payload.like.productId) {
+          const updatedLikes = product.Likes.filter(
+            (like) => like.userId !== action.payload.userId
+          );
+          return {
+            ...product,
+            Likes: updatedLikes,
+          };
+        }
+        return product;
+      });
 
       return {
         ...state,
         favoritos: updatedFavoritos,
+        products: updatedProducts,
       };
     }
 

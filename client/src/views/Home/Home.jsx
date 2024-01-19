@@ -11,7 +11,7 @@ function Home() {
   const dispatch = useDispatch();
 
   const products = useSelector((state) => state.products.products);
-  console.log(products);
+
   const productosFiltrados = useSelector(
     (state) => state.products.productsFiltered
   );

@@ -28,16 +28,11 @@ const Favoritos = () => {
       product.Likes && product.Likes.some((like) => like.userId === userId)
   );
 
-  console.log(favoriteProducts, "como llega a favoritos");
-
   const handleClickAdd = (product) => {
     dispatch(addProduct(product));
   };
 
   const handleClickLike = (productId) => {
-    // por el momento no entiendo bien porque aca llega el id del producto
-    console.log(productId, "estamos en click");
-
     if (productId) dispatch(removeLike(productId));
   };
 

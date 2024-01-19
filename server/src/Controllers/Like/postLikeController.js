@@ -10,6 +10,7 @@ const postLikeController = async ({ productId, userId }) => {
   // traemos el prodcuto para luego actualizar el valor
   const product = await Products.findOne({
     where: { id: productId },
+    include: { model: Like },
   });
 
   // actualizamos el valor
@@ -19,7 +20,7 @@ const postLikeController = async ({ productId, userId }) => {
     await product.save();
   }
 
-  return createLike;
+  return { product, createLike };
 };
 
 module.exports = postLikeController;

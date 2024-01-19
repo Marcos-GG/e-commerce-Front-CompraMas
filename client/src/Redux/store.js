@@ -12,11 +12,6 @@ import tokenReducer from "./reducer/tokenReducer";
 import shoppingCartReducer from "./reducer/ShoppingCartReducer";
 
 // persistConfig
-const persistConfig = {
-  key: "root",
-  storage,
-  whiteList: ["products"],
-};
 
 const rootReducer = combineReducers({
   products: productsReducer,
@@ -26,6 +21,12 @@ const rootReducer = combineReducers({
   token: tokenReducer,
   shoppingCart: shoppingCartReducer,
 });
+
+const persistConfig = {
+  key: "root",
+  storage,
+  whitelist: ["products", "comments"],
+};
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 

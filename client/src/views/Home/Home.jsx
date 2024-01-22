@@ -6,8 +6,6 @@ import { getProducts } from "../../Redux/actions/productsActions";
 import CardContainer from "../../components/CardContainer";
 import Filtros from "../../components/Filtros";
 import { Box } from "@mui/material";
-import { allComments } from "../../Redux/actions/CommentsAction";
-import { ALL_COMMENTS } from "../../Redux/actionsTypes/CommentsTypes";
 import { GET_PRODUCTS } from "../../Redux/actionsTypes/ProductsActionTypes";
 
 function Home() {
@@ -21,42 +19,33 @@ function Home() {
 
   const [productsFiltered, setProductsFiltered] = useState([]);
 
+  const [, setError] = useState(null);
+
   useEffect(() => {
-    const persistedData = localStorage.getItem("persist:root");
+    try {
+      const persistedData = localStorage.getItem("persist:root");
 
-    if (persistedData) {
-      const parsedData = JSON.parse(persistedData);
+      if (persistedData) {
+        const parsedData = JSON.parse(persistedData);
 
-      const localProducts =
-        parsedData.products && JSON.parse(parsedData.products).products;
+        const localProducts =
+          parsedData.products && JSON.parse(parsedData.products).products;
 
-      console.log(localProducts, "local products");
+        console.log(localProducts, "local products");
 
-      if (localProducts || localProducts.length > 0) {
-        dispatch({ type: GET_PRODUCTS, payload: localProducts });
-      } else {
-        dispatch(getProducts());
+        if (localProducts || localProducts.length > 0) {
+          dispatch({ type: GET_PRODUCTS, payload: localProducts });
+        }
       }
 
-      const localComments =
-        parsedData.comments && JSON.parse(parsedData.comments).comments;
-
-      console.log(localComments, "local comments");
-
-      if (localComments || localComments.length > 0) {
-        dispatch({ type: ALL_COMMENTS, payload: localComments });
-      } else {
-        dispatch(allComments());
-      }
-    } else {
       dispatch(getProducts());
-      dispatch(allComments());
+    } catch (error) {
+      setError(error.message);
     }
   }, []);
 
   useEffect(() => {
     setProductsFiltered(productosFiltrados);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [productosFiltrados]);
 
   return (

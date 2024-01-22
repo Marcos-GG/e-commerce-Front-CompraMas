@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect } from "react";
 import Comments from "../../components/Comments";
 import { useDispatch, useSelector } from "react-redux";
@@ -6,9 +7,11 @@ import { allComments } from "../../Redux/actions/CommentsAction";
 
 const Admin = () => {
   const dispatch = useDispatch();
+  const comments = useSelector((state) => state.comments.comments);
 
   useEffect(() => {
     const persistedData = localStorage.getItem("persist:root");
+
     if (persistedData) {
       const parsedData = JSON.parse(persistedData);
 
@@ -17,15 +20,11 @@ const Admin = () => {
 
       if (localComments || localComments.length > 0) {
         dispatch({ type: ALL_COMMENTS, payload: localComments });
-      } else {
-        dispatch(allComments());
       }
-    } else {
-      dispatch(allComments());
     }
-  }, [dispatch]);
 
-  const comments = useSelector((state) => state.comments.comments);
+    dispatch(allComments());
+  }, []);
 
   return (
     <>

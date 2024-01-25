@@ -55,13 +55,15 @@ const reducer = (state = initialState, action) => {
     case POST_ANSWER_PRODUCT_ID: {
       const commentId = action.payload.commentId;
 
-      // encontramos el comentario especifico para agregarle answer
+      // Encuentra el comentario específico para agregarle la respuesta
       const updatedComments = state.productId.Comments.map((comment) => {
         if (comment.id === commentId) {
-          // actualizamos Answers y le agregamos el nuevo
+          // Actualiza Answers y le agrega la nueva respuesta
           return {
             ...comment,
-            Answers: [...comment.Answers, action.payload],
+            Answers: comment.Answers
+              ? [...comment.Answers, action.payload]
+              : [action.payload],
           };
         }
         return comment;

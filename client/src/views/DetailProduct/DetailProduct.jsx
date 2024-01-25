@@ -13,6 +13,7 @@ function DetailProduct() {
   const dispatch = useDispatch();
 
   const productId = useSelector((state) => state.products.productId);
+  console.log(productId, "se acutliza el answer desde el detail");
   const products = useSelector((state) => state.products.products);
 
   const token = localStorage.getItem("token");
@@ -24,7 +25,7 @@ function DetailProduct() {
   useEffect(() => {
     dispatch(getProductId(id));
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id]);
+  }, []);
 
   // productos relacionados :
   const category = productId?.category;

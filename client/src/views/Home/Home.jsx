@@ -31,8 +31,6 @@ function Home() {
         const localProducts =
           parsedData.products && JSON.parse(parsedData.products).products;
 
-        console.log(localProducts, "local products");
-
         if (localProducts || localProducts.length > 0) {
           dispatch({ type: GET_PRODUCTS, payload: localProducts });
         }

@@ -4,6 +4,7 @@ import Comments from "../../components/Comments";
 import { useDispatch, useSelector } from "react-redux";
 // import { ALL_COMMENTS } from "../../Redux/actionsTypes/CommentsTypes";
 import { allComments } from "../../Redux/actions/CommentsAction";
+import { Box } from "@mui/material";
 
 const Admin = () => {
   const dispatch = useDispatch();
@@ -33,11 +34,29 @@ const Admin = () => {
   }, []);
 
   return (
-    <div style={{ overflow: "hidden" }}>
-      <h1>Panel del admin</h1>
-
-      <div> {<Comments comments={comments} />} </div>
-    </div>
+    <Box
+      sx={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        height: "53rem",
+      }}
+    >
+      <Box
+        sx={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          right: 0,
+          width: "100%",
+          height: "100%",
+          backgroundImage: `url("/fondoChat.jpg")`, // URL de la imagen de fondo
+          filter: "blur(3px)", // Aplicar desenfoque al fondo
+          zIndex: -1,
+        }}
+      />
+      <Comments comments={comments} />
+    </Box>
   );
 };
 

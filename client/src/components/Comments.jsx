@@ -2,7 +2,7 @@
 import AnswerComment from "./AnswerComment";
 import UserAvatar from "./UserAvatar";
 import { jwtDecode } from "jwt-decode";
-import { Box, Divider, Typography } from "@mui/material";
+import { Badge, Box, Divider, Typography } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
 import FormatoHora from "./FormatoHora";
 
@@ -97,6 +97,7 @@ const Comments = ({ comments }) => {
                 marginLeft: "10%", // centrar la línea horizontalmente
               }}
             />
+            <Badge color="secondary" variant="dot"></Badge>
           </Box>
         ))}
       </Box>

@@ -11,20 +11,18 @@ const initialState = {
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case ALL_COMMENTS: {
-      return { ...state, comments: action.payload };
+      return { ...state, comments: action.payload }; // Reemplaza los comentarios existentes con los nuevos
     }
 
     case POST_COMMENTS: {
-      return { ...state, comments: [...state.comments, action.payload] };
+      return { ...state, comments: [action.payload, ...state.comments] }; // Agrega el nuevo comentario al principio de la lista
     }
 
     case POST_ANSWER_COMMENT_ID: {
       const commentId = action.payload.commentId;
-
-      // encontramos el comentario especifico para agregarle answer
+      // Actualiza los comentarios con la nueva respuesta
       const updatedComments = state.comments.map((comment) => {
         if (comment.id === commentId) {
-          // actualizamos Answers y le agregamos el nuevo
           return {
             ...comment,
             Answers: [...comment.Answers, action.payload],

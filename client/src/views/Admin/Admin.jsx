@@ -2,7 +2,7 @@
 import { useEffect } from "react";
 import Comments from "../../components/Comments";
 import { useDispatch, useSelector } from "react-redux";
-// import { ALL_COMMENTS } from "../../Redux/actionsTypes/CommentsTypes";
+import { ALL_COMMENTS } from "../../Redux/actionsTypes/CommentsTypes";
 import { allComments } from "../../Redux/actions/CommentsAction";
 import { Box } from "@mui/material";
 
@@ -15,20 +15,20 @@ const Admin = () => {
   console.log(comments);
 
   useEffect(() => {
-    // const persistedData = localStorage.getItem("persist:root");
+    const persistedData = localStorage.getItem("persist:root");
 
-    // if (persistedData) {
-    //   const parsedData = JSON.parse(persistedData);
+    if (persistedData) {
+      const parsedData = JSON.parse(persistedData);
 
-    //   const localComments =
-    //     parsedData.comments && JSON.parse(parsedData.comments).comments;
+      const localComments =
+        parsedData.comments && JSON.parse(parsedData.comments).comments;
 
-    //   if (localComments || localComments.length > 0) {
-    //     if (!comments || comments.length === 0) {
-    //       dispatch({ type: ALL_COMMENTS, payload: localComments });
-    //     }
-    //   }
-    // }
+      if (localComments || localComments.length > 0) {
+        if (!comments || comments.length === 0) {
+          dispatch({ type: ALL_COMMENTS, payload: localComments });
+        }
+      }
+    }
 
     dispatch(allComments());
   }, []);

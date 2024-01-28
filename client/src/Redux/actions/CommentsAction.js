@@ -3,7 +3,7 @@ import { configureHeaders } from "../auth/configureHeaders";
 
 import {
   ALL_COMMENTS,
-  POST_ANSWER_COMMENT_ID,
+  // POST_ANSWER_COMMENT_ID,
 } from "../actionsTypes/CommentsTypes";
 import {
   POST_COMMENT_PRODUCT_ID,
@@ -63,21 +63,21 @@ export const postAnswer = (form, commentId) => {
   };
 };
 
-export const postAnswerAdmin = (form, commentId) => {
-  return async function (dispatch) {
-    try {
-      const config = configureHeaders();
-      const body = { ...form, commentId };
+// export const postAnswerAdmin = (form, commentId) => {
+//   return async function (dispatch) {
+//     try {
+//       const config = configureHeaders();
+//       const body = { ...form, commentId };
 
-      const response = await axios.post(
-        "http://localhost:13050/answer",
-        body,
-        config
-      );
+//       const response = await axios.post(
+//         "http://localhost:13050/answer",
+//         body,
+//         config
+//       );
 
-      dispatch({ type: POST_ANSWER_COMMENT_ID, payload: response.data });
-    } catch (error) {
-      return error.message;
-    }
-  };
-};
+//       dispatch({ type: POST_ANSWER_COMMENT_ID, payload: response.data });
+//     } catch (error) {
+//       return error.message;
+//     }
+//   };
+// };

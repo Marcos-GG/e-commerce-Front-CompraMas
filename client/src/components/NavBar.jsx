@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 
@@ -10,45 +10,55 @@ const NavBar = () => {
   return (
     <Box
       sx={{
+        bgcolor: "#F5F5F5",
+        height: "3.2rem",
         display: "flex",
+        alignItems: "center",
         justifyContent: "space-between",
+        boxShadow: "0px 5px 15px #888888;",
         position: "sticky",
-        top: 0,
-        width: 1,
-        py: 2,
       }}
     >
-      <div>
-        {admin && (
-          <NavLink to="/admin">
-            <button> Administador </button>
-          </NavLink>
-        )}
+      <Box sx={{ display: "flex", gap: "15px", ml: "20px" }}>
         <NavLink to="/">
-          <button> Home </button>
+          <Button variant="contained" size="small">
+            Home
+          </Button>
         </NavLink>
 
+        {admin && (
+          <NavLink to="/admin">
+            <Button variant="contained" size="small">
+              Administador
+            </Button>
+          </NavLink>
+        )}
+
         <NavLink to="/carrito">
-          <button>
-            {" "}
-            Carrito{" "}
+          <Button variant="contained" size="small">
+            Carrito
             {ShoppingCart?.products?.length > 0
               ? `(${ShoppingCart?.products?.reduce(function (acc, obj) {
                   return acc + (obj?.cantidad || 1);
                 }, 0)})`
               : ""}
-          </button>
+          </Button>
         </NavLink>
 
         <NavLink to="/favoritos">
-          <button> Favoritos </button>
+          <Button variant="contained" size="small">
+            Favoritos
+          </Button>
         </NavLink>
-      </div>
-      <div>
+      </Box>
+
+      <Box sx={{ mr: "20px" }}>
         <NavLink to="/logout">
-          <button> LogOut </button>
+          <Button variant="contained" size="small">
+            LogOut
+          </Button>
         </NavLink>
-      </div>
+      </Box>
     </Box>
   );
 };

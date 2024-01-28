@@ -11,6 +11,7 @@ const NavBarAdmin = () => {
         alignItems: "center",
         justifyContent: "space-between",
         boxShadow: "0px 5px 15px #888888;",
+        position: "sticky",
       }}
     >
       <Box sx={{ display: "flex", gap: "15px", ml: "20px" }}>

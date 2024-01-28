@@ -14,6 +14,7 @@ export const getUsers = () => {
         id: user.id,
         name: user.name,
         lastname: user.lastname,
+        active: user.active,
       }));
 
       dispatch({ type: GET_USERS, payload: users });

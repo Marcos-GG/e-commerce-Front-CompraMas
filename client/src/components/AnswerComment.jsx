@@ -50,9 +50,9 @@ const AnswerComment = ({ commentId }) => {
         onSubmit={handleSubmit}
         style={{
           display: "flex",
-          maxHeight: "3.5rem",
+          maxHeight: "3.6rem",
           margin: "10px",
-          backgroundColor: "orange",
+          justifyContent: "space-between",
         }}
       >
         {/* <Box
@@ -71,11 +71,23 @@ const AnswerComment = ({ commentId }) => {
           multiline
           maxRows={2}
           fullWidth
-          sx={{ overflow: "hidden" }}
+          sx={{
+            overflow: "hidden",
+            width: "91%",
+            ml: "5px",
+          }}
         />
         {/* </Box> */}
 
-        <Button type="submit" variant="text" endIcon={<SendIcon />}></Button>
+        <Button
+          sx={{
+            borderRadius: "10px",
+            bgcolor: "white",
+          }}
+          type="submit"
+          variant="text"
+          endIcon={<SendIcon sx={{ mr: "9px" }} />}
+        ></Button>
       </form>
     </Box>
   );

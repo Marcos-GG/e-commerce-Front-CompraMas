@@ -6,7 +6,7 @@ export const postUsers = (form) => {
   return async function (dispatch) {
     try {
       const response = await axios.post(
-        `http://localhost:13050/register`,
+        `http://localhost:55878/register`,
         form
       );
 
@@ -20,7 +20,7 @@ export const postUsers = (form) => {
 export const postLogin = (form) => {
   return async function (dispatch) {
     try {
-      const response = await axios.post(`http://localhost:13050/login`, form);
+      const response = await axios.post(`http://localhost:55878/login`, form);
 
       dispatch({ type: LOGIN, payload: response.data });
     } catch (error) {

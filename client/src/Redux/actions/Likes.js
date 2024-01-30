@@ -7,7 +7,7 @@ export const addLike = (productId) => {
   return async function (dispatch) {
     const config = configureHeaders();
     const response = await axios.post(
-      "http://localhost:13050/likes",
+      "http://localhost:55878/likes",
       { productId },
       config
     );
@@ -22,7 +22,7 @@ export const removeLike = (productId) => {
   return async function (dispatch) {
     const config = configureHeaders();
     const response = await axios.put(
-      "http://localhost:13050/likes",
+      "http://localhost:55878/likes",
       { productId },
       config
     );

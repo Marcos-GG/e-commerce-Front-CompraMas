@@ -15,7 +15,7 @@ export const allComments = () => {
     try {
       const config = configureHeaders();
       const response = await axios.get(
-        "http://localhost:13050/comments",
+        "http://localhost:55878/comments",
         config
       );
 
@@ -32,7 +32,7 @@ export const postComment = (form, token, productId) => {
       const config = configureHeaders(token);
       const body = { ...form, productId };
       const response = await axios.post(
-        "http://localhost:13050/comments",
+        "http://localhost:55878/comments",
         body,
         config
       );
@@ -51,7 +51,7 @@ export const postAnswer = (form, commentId) => {
       const body = { ...form, commentId };
 
       const response = await axios.post(
-        "http://localhost:13050/answer",
+        "http://localhost:55878/answer",
         body,
         config
       );
@@ -70,7 +70,7 @@ export const postAnswer = (form, commentId) => {
 //       const body = { ...form, commentId };
 
 //       const response = await axios.post(
-//         "http://localhost:13050/answer",
+//         "http://localhost:55878/answer",
 //         body,
 //         config
 //       );

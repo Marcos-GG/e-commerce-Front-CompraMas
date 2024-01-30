@@ -17,7 +17,7 @@ export const getProducts = () => {
     try {
       const config = configureHeaders();
       const response = await axios.get(
-        "http://localhost:13050/products",
+        "http://localhost:55878/products",
         config
       );
       const products = response.data;
@@ -33,7 +33,7 @@ export const getProductId = (id) => {
   return async function (dispatch) {
     const config = configureHeaders();
     const response = await axios.get(
-      `http://localhost:13050/products/${id}`,
+      `http://localhost:55878/products/${id}`,
       config
     );
     dispatch({ type: GET_PRODUCT_ID, payload: response.data });
@@ -44,7 +44,7 @@ export const putProduct = (id, product) => {
   return async function (dispatch) {
     const config = configureHeaders();
     const response = await axios.put(
-      `http://localhost:13050/products/${id}`,
+      `http://localhost:55878/products/${id}`,
       product,
       config
     );
@@ -70,7 +70,7 @@ export const createProduct = (product) => {
     const config = configureHeaders();
 
     const response = await axios.post(
-      `http://localhost:13050/createProduct`,
+      `http://localhost:55878/createProduct`,
       product,
       config
     );
@@ -84,7 +84,7 @@ export const apllyFilters = (combinedFilters) => {
     const config = configureHeaders();
 
     const response = await axios.post(
-      `http://localhost:13050/filters`,
+      `http://localhost:55878/filters`,
       combinedFilters,
       config
     );

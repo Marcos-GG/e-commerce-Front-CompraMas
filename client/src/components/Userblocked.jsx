@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { getUsers } from "../Redux/actions/UsersAction";
+import { blockUser, getUsers, unlockUser } from "../Redux/actions/UsersAction";
 import { useEffect } from "react";
 import { Box, Button, Typography } from "@mui/material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
@@ -11,9 +11,19 @@ const UserBlocked = () => {
   console.log(users);
 
   useEffect(() => {
-    dispatch(getUsers());
+    if (users.length === 0) {
+      dispatch(getUsers());
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const handleUserBlocked = (user) => {
+    if (user.active) {
+      dispatch(blockUser(user));
+    } else {
+      dispatch(unlockUser(user));
+    }
+  };
 
   return (
     <Box>
@@ -35,12 +45,12 @@ const UserBlocked = () => {
             sx={{
               height: "18rem",
               width: "14rem",
-              bgcolor: "beige",
+              bgcolor: "#F5F5F5",
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
               m: "15px",
-              borderRadius: "10px",
+              borderRadius: "5px",
             }}
             key={user.id}
           >
@@ -48,7 +58,6 @@ const UserBlocked = () => {
               sx={{
                 display: "flex",
                 justifyContent: "space-evenly",
-                bgcolor: "white",
                 flexWrap: "wrap",
                 // width: "8rem",
                 height: "68%",
@@ -57,9 +66,9 @@ const UserBlocked = () => {
               }}
             >
               {user?.active ? (
-                <AccountCircleIcon sx={{ color: "gray", fontSize: "7rem" }} />
+                <AccountCircleIcon sx={{ color: "gray", fontSize: "8rem" }} />
               ) : (
-                <NoAccountsIcon sx={{ color: "gray", fontSize: "7rem" }} />
+                <NoAccountsIcon sx={{ color: "gray", fontSize: "8rem" }} />
               )}
 
               <Typography
@@ -67,7 +76,6 @@ const UserBlocked = () => {
                 component="p"
                 sx={{
                   textAlign: "center",
-                  bgcolor: "red",
                   width: "12rem",
                 }}
               >
@@ -81,6 +89,7 @@ const UserBlocked = () => {
                 variant="contained"
                 sx={{ marginBottom: "15px", width: "8rem" }}
                 size="small"
+                onClick={() => handleUserBlocked(user)}
               >
                 {user?.active ? "Bloquear" : "Desbloquear"}
               </Button>

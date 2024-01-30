@@ -70,7 +70,6 @@ const ProductItem = ({
           >
             ${product?.price}
           </Typography>
-          <p style={{ marginTop: "0" }}>likes</p>
         </Box>
 
         <Box

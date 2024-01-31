@@ -13,10 +13,17 @@ import {
   InputAdornment,
   TextField,
   Typography,
+  useMediaQuery,
+  useTheme,
 } from "@mui/material";
 import PasswordIcon from "@mui/icons-material/Password";
 
 function Login() {
+  const theme = useTheme();
+  const isMdScreen = useMediaQuery(theme.breakpoints.down("md"));
+  const isLessThanOrEqual762 = useMediaQuery(theme.breakpoints.down(762));
+  const isLessThanOrEqual507 = useMediaQuery(theme.breakpoints.down(507));
+
   const dispatch = useDispatch();
   const [form, setForm] = useState({
     email: "",
@@ -65,7 +72,7 @@ function Login() {
         <Box
           sx={{
             display: "flex",
-            flexDirection: "column",
+            flexDirection: isLessThanOrEqual762 ? "column" : "row",
             // width: "35rem",
             justifyContent: "center",
             // height: "30rem",
@@ -89,6 +96,8 @@ function Login() {
               src="/logonegro.svg"
               sx={{
                 display: "flex",
+                mr: isLessThanOrEqual507 ? "10px" : "50px",
+                width: isLessThanOrEqual507 ? "17rem" : "24rem",
               }}
             />
             <Typography variant="subtitle2">
@@ -101,7 +110,13 @@ function Login() {
                 display: "flex",
                 flexDirection: "column",
                 justifyContent: "space-around",
-                width: "28rem",
+                width: isLessThanOrEqual507
+                  ? "16rem"
+                  : isLessThanOrEqual762
+                  ? "27rem"
+                  : isMdScreen
+                  ? "15rem"
+                  : "27rem",
                 maxWidth: "90vw",
                 gap: 2,
                 maxHeight: "80vh",
@@ -118,6 +133,7 @@ function Login() {
                   fullWidth
                   sx={{
                     backgroundColor: "transparent",
+                    width: "100%",
                   }}
                   InputProps={{
                     endAdornment: (

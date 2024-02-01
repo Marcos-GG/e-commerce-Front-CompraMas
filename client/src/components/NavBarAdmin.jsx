@@ -8,12 +8,17 @@ import {
   Drawer,
   List,
   ListItem,
+  useMediaQuery,
+  useTheme,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import { NavLink } from "react-router-dom";
 
 const NavBarAdmin = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
+
+  const theme = useTheme();
+  const isLgScreen = useMediaQuery(theme.breakpoints.down("lg")); // controlamos los breakpoints con usetheme
 
   const handleDrawerToggle = () => {
     setDrawerOpen(!drawerOpen);
@@ -29,21 +34,23 @@ const NavBarAdmin = () => {
         justifyContent: "space-between",
         boxShadow: "0px 5px 15px #888888",
         position: "sticky",
+        width: "100%",
       }}
     >
       <Box>
         <Hidden
-          mdUp //manejamos la vida del componente desplegable
+          lgUp //manejamos la vida del componente desplegable
         >
           <IconButton
             edge="start"
             color="inherit"
             aria-label="menu"
             onClick={handleDrawerToggle}
+            sx={{ ml: "15px" }}
           >
             <MenuIcon />
           </IconButton>
-          <Drawer anchor="top" open={drawerOpen} onClose={handleDrawerToggle}>
+          <Drawer anchor="left" open={drawerOpen} onClose={handleDrawerToggle}>
             {" "}
             {/* modificamos el estado */}
             <List
@@ -95,7 +102,7 @@ const NavBarAdmin = () => {
         </Hidden>
 
         <Hidden // controlamos la vida del componente
-          mdDown
+          lgDown
         >
           <Box
             sx={{
@@ -104,7 +111,13 @@ const NavBarAdmin = () => {
               justifyContent: "space-between",
             }}
           >
-            <Box sx={{ ml: "20px", display: "flex", gap: "15px" }}>
+            <Box
+              sx={{
+                ml: "20px",
+                display: "flex",
+                gap: isLgScreen ? "10px" : "15px",
+              }}
+            >
               <Button
                 variant="contained"
                 component={NavLink}

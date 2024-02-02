@@ -2,12 +2,25 @@
 import AnswerComment from "./AnswerComment";
 import UserAvatar from "./UserAvatar";
 import { jwtDecode } from "jwt-decode";
-import { Badge, Box, Divider, Typography } from "@mui/material";
+import {
+  Badge,
+  Box,
+  Divider,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 import { useEffect, useRef, useState } from "react";
 import FormatoHora from "./FormatoHora";
 
 const Comments = ({ comments }) => {
-  console.log(comments, "comentario");
+  const theme = useTheme();
+  const isLessThanOrEqual430 = useMediaQuery(theme.breakpoints.down(430));
+  const isLessThanOrEqual820 = useMediaQuery(theme.breakpoints.down(820));
+  const isLessThanOrEqual980 = useMediaQuery(theme.breakpoints.down(980));
+  const isLessThanOrEqual1268 = useMediaQuery(theme.breakpoints.down(1268));
+  const isLessThanOrEqual1662 = useMediaQuery(theme.breakpoints.down(1662));
+
   const token = localStorage.getItem("token");
   const decodeToken = jwtDecode(token);
   const userId = decodeToken.id;
@@ -26,18 +39,33 @@ const Comments = ({ comments }) => {
     <Box
       sx={{
         display: "flex",
-        justifyContent: "center",
+        justifyContent: isLessThanOrEqual430 ? "" : "center",
+        flexDirection: isLessThanOrEqual430 ? "column" : "row",
+        mt: isLessThanOrEqual430 ? "" : "20px",
       }}
     >
       <Box
         sx={{
-          width: "33.5rem",
+          width: isLessThanOrEqual430
+            ? "100%"
+            : isLessThanOrEqual980
+            ? "20rem"
+            : isLessThanOrEqual1268
+            ? "20rem"
+            : isLessThanOrEqual1662
+            ? "28rem"
+            : "33.5rem",
+          minWidth: "20rem",
           background:
             "linear-gradient(0deg, rgba(1,46,84,1) 0%, rgba(0,205,254,1) 100%)",
-          height: "48rem",
-          borderRadius: "20px 0 0 20px",
+          height:
+            isLessThanOrEqual430 && !selectedComment
+              ? `calc(100vh - 3.2rem)`
+              : "45rem",
+          borderRadius: isLessThanOrEqual430 ? "" : "20px 0 0 20px",
           overflow: "auto",
           boxShadow: "14px 10px 15px #888888;",
+          display: isLessThanOrEqual430 && selectedComment ? "none" : "block",
         }}
       >
         {comments.map((comment) => (
@@ -46,6 +74,7 @@ const Comments = ({ comments }) => {
             sx={{
               display: "flex",
               height: "4.5rem",
+              width: "100%",
               alignItems: "center",
               justifyContent: "space-between",
               paddingX: "10px",
@@ -61,31 +90,19 @@ const Comments = ({ comments }) => {
           >
             <UserAvatar user={comment.User} />
 
-            {comment?.Answers.length > 0 ? (
-              <Typography
-                sx={{
-                  width: "21rem",
-                  overflow: "hidden",
-                  whiteSpace: "nowrap",
-                  textOverflow: "ellipsis",
-                  marginLeft: "5px",
-                }}
-              >
-                {comment?.Answers?.slice(-1)[0]?.answer}
-              </Typography>
-            ) : (
-              <Typography
-                sx={{
-                  width: "21rem",
-                  overflow: "hidden",
-                  whiteSpace: "nowrap",
-                  textOverflow: "ellipsis",
-                  marginLeft: "5px",
-                }}
-              >
-                {comment?.text}
-              </Typography>
-            )}
+            <Typography
+              sx={{
+                width: "21rem",
+                overflow: "hidden",
+                whiteSpace: "nowrap",
+                textOverflow: "ellipsis",
+                marginLeft: "5px",
+              }}
+            >
+              {comment?.Answers.length > 0
+                ? comment?.Answers?.slice(-1)[0]?.answer
+                : comment?.text}
+            </Typography>
 
             <FormatoHora hora={comment.createdAt} />
 
@@ -105,10 +122,20 @@ const Comments = ({ comments }) => {
         {selectedComment ? (
           <Box
             sx={{
-              width: "68rem",
-              height: "48rem",
-              borderRadius: " 0 20px 20px 0 ",
-              backgroundColor: "#F5F5F5",
+              width: isLessThanOrEqual430
+                ? "100vw"
+                : isLessThanOrEqual820
+                ? "25rem"
+                : isLessThanOrEqual980
+                ? "30rem"
+                : isLessThanOrEqual1268
+                ? "40rem"
+                : isLessThanOrEqual1662
+                ? "50rem"
+                : "68rem",
+              height: isLessThanOrEqual430 ? `calc(100vh - 3.2rem)` : "45rem",
+              borderRadius: isLessThanOrEqual430 ? "" : " 0 20px 20px 0 ",
+              backgroundColor: "#f5f5f5",
               boxShadow: "10px 10px 15px #888888;",
               backgroundImage: 'url("/logoblanco.svg")',
               backgroundSize: "contain",
@@ -123,13 +150,17 @@ const Comments = ({ comments }) => {
                   display: "flex",
                   flexDirection: "column",
                   height: "43rem",
-                  maxHeight: "48rem", // Establecer la altura máxima para activar el scroll
+                  maxHeight: isLessThanOrEqual430 ? "" : "40rem", // Establecer la altura máxima para activar el scroll
                   overflowY: "auto", // Habilitar el scroll vertical cuando el contenido excede la altura máxima
                 }}
               >
                 <Typography
                   sx={{
-                    width: "24rem",
+                    width: isLessThanOrEqual430
+                      ? "17rem"
+                      : isLessThanOrEqual1268
+                      ? "18rem"
+                      : "24rem",
                     borderRadius: "0 15px 15px 15px",
                     margin: "15px",
                     // margin: "4px",
@@ -186,7 +217,6 @@ const Comments = ({ comments }) => {
                 sx={{
                   display: "flex",
                   alignItems: "center",
-                  height: "5rem",
                 }}
               >
                 <AnswerComment commentId={selectedComment.id} />
@@ -196,8 +226,20 @@ const Comments = ({ comments }) => {
         ) : (
           <Box
             sx={{
-              width: "68rem",
-              height: "48rem",
+              display: isLessThanOrEqual430 ? "none" : "block",
+              width: isLessThanOrEqual430
+                ? "100vw"
+                : isLessThanOrEqual820
+                ? "25rem"
+                : isLessThanOrEqual980
+                ? "30rem"
+                : isLessThanOrEqual1268
+                ? "40rem"
+                : isLessThanOrEqual1662
+                ? "50rem"
+                : "68rem",
+              height: "45rem",
+
               borderRadius: " 0 20px 20px 0 ",
               backgroundColor: "#F5F5F5",
               boxShadow: "10px 10px 15px #888888",

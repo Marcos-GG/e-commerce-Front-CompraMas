@@ -9,6 +9,7 @@ import {
   POST_ANSWER_PRODUCT_ID,
   APPLY_FILTERS,
   CLEAR_FILTERED_PRODUCTS,
+  SET_FAVORITES,
 } from "../actionsTypes/ProductsActionTypes";
 import { ADD_LIKE, REMOVE_LIKE } from "../actionsTypes/LikesTypes";
 
@@ -139,12 +140,19 @@ const reducer = (state = initialState, action) => {
       };
     }
 
-    case ADD_LIKE: {
-      const product = action.payload.product;
+    // case ADD_LIKE: {
+    //   const product = action.payload.product;
 
+    //   return {
+    //     ...state,
+    //     favoritos: [...state.favoritos, product],
+    //   };
+    // }
+
+    case SET_FAVORITES: {
       return {
         ...state,
-        favoritos: [...state.favoritos, product],
+        favoritos: action.payload,
       };
     }
 

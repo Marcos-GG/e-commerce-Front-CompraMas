@@ -40,6 +40,7 @@ const postGenderHandler = require("../Handlers/Gender/postGender");
 
 //handler login
 const loginHandler = require("../Handlers/Login/loginHandler");
+const getFavoritesHandler = require("../Handlers/Productos/getFavorites");
 
 const router = Router();
 
@@ -64,6 +65,7 @@ router.post("/filters", handlerApplyFilters);
 //likes
 router.post("/likes", postLikeHandler);
 router.put("/likes", removeLikeHandler);
+router.get("/likes/getFavorites", getFavoritesHandler);
 
 //Category
 router.get("/categories", getCategoryHandler);

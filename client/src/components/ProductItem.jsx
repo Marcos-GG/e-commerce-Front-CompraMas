@@ -16,7 +16,7 @@ const ProductItem = ({
       sx={{
         margin: "10px",
         width: "12rem",
-        height: "15rem",
+        height: "17rem",
         position: "relative",
         cursor: "pointer",
         transition: "0.1s",
@@ -39,11 +39,10 @@ const ProductItem = ({
             justifyContent: "center",
           }}
         >
-          <img src="https://placehold.co/158x128" alt={product?.title} />
+          <Box component="img" src={product.image} alt={product?.title} />
         </Box>
         <Box mt={1}>
           <Typography
-            variant="h6"
             title={product?.title}
             sx={{
               display: "-webkit-box",
@@ -51,7 +50,8 @@ const ProductItem = ({
               WebkitBoxOrient: "vertical",
               overflow: "hidden",
               textOverflow: "ellipsis",
-              lineHeight: "23px",
+              lineHeight: "30px",
+              fontSize: "19px",
             }}
           >
             {product?.title}

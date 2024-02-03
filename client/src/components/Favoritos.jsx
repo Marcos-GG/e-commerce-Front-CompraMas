@@ -3,7 +3,7 @@ import ProductItem from "./ProductItem";
 import { addProduct } from "../Redux/actions/ShoppingCartAction";
 import { useDispatch, useSelector } from "react-redux";
 import { jwtDecode } from "jwt-decode";
-import { removeLike } from "../Redux/actions/Likes";
+import { getFavorites, removeLike } from "../Redux/actions/Likes";
 import { useEffect } from "react";
 
 const Favoritos = () => {
@@ -17,11 +17,10 @@ const Favoritos = () => {
   const favoriteProducts = useSelector((state) => state.products.favoritos);
 
   useEffect(() => {
-    if (favoriteProducts.length === 0) {
-      navigate("/");
-    }
+    dispatch(getFavorites());
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [favoriteProducts]);
+  }, []);
 
   const liked = favoriteProducts.some(
     (product) =>

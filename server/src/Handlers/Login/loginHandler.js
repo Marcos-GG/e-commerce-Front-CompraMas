@@ -14,7 +14,7 @@ const loginHandler = async (req, res) => {
       .status(200)
       .json({ message: "Inicio de sesión exitoso", token: token });
   } catch (error) {
-    return res.status(400).json({ error: error.message });
+    return res.status(200).json({ error: error.message });
   }
 };
 

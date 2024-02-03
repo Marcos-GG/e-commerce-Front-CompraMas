@@ -15,6 +15,8 @@ const loginController = async (email, password) => {
 
     if (!isValidPassword) throw new Error("contraseña incorrecta.");
 
+    if (!user.active) throw new Error("El usuario esta bloqueado!");
+
     //si es valido generamos token JWT
     const token = jwt.sign({ id: user.id }, "secretKey", {
       expiresIn: "2h",
@@ -22,7 +24,7 @@ const loginController = async (email, password) => {
 
     return { token, admin: user.admin };
   } catch (error) {
-    return { error: error };
+    throw new Error(error.message);
   }
 };
 

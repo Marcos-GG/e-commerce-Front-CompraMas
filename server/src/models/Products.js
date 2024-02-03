@@ -28,7 +28,7 @@ module.exports = (sequelize) => {
       },
 
       image: {
-        type: DataTypes.STRING,
+        type: DataTypes.TEXT,
         allowNull: true, // despues tiene que estar si o si en false
       },
 

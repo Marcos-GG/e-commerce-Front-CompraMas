@@ -35,12 +35,16 @@ const Admin = () => {
 
   return (
     <Box
-      sx={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        height: "53rem",
-      }}
+      sx={
+        // cuando son las resoluciones mas chicas tengo que comentar todo para que ocupe el 100% sin scroll porque quiero ver solo los mns para responder
+        {
+          // display: "flex",
+          // justifyContent: "center",
+          // alignItems: "center",
+          // bgcolor: "red",
+          // height: "53rem",
+        }
+      }
     >
       <Box
         sx={{

@@ -52,7 +52,7 @@ function DetailProduct() {
         <div key={productId?.id}>
           <p>id : {productId?.id}</p>
           <p>title: {productId?.title}</p>
-          <p>image: {productId?.image}</p>
+          <img src={productId?.image}></img>
           <p>description:{productId?.description}</p>
           <p>price: {productId?.price}</p>
           <p>gender: {productId?.gender}</p>

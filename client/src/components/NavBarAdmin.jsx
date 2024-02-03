@@ -51,7 +51,6 @@ const NavBarAdmin = () => {
             <MenuIcon />
           </IconButton>
           <Drawer anchor="left" open={drawerOpen} onClose={handleDrawerToggle}>
-            {" "}
             {/* modificamos el estado */}
             <List
               sx={{

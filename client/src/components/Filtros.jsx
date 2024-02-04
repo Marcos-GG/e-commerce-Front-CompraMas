@@ -28,13 +28,13 @@ const Filtros = () => {
   const [generoSeleccionado, setGeneroSeleccionado] = useState(null);
   const [morePopular, setMorePopular] = useState(false);
   const [estadoBoton, setEstadoBoton] = useState(false);
-  const [initialPrice, setInitialPrice] = useState({ min: 0, max: 1500 }); // Valores iniciales del precio
+  const [initialPrice, setInitialPrice] = useState({ min: 0, max: 0 }); // Valores iniciales del precio
 
   const [combinedFilters, setCombinedFilters] = useState({
     category: null,
     gender: null,
     morePopular: null,
-    price: { ...initialPrice },
+    price: { min: initialPrice.min, max: initialPrice.max },
   });
 
   useEffect(() => {
@@ -43,13 +43,12 @@ const Filtros = () => {
   }, []);
 
   useEffect(() => {
-    if (products && products.length > 0) {
-      const valorMaximo = products.reduce((maxPrice, product) => {
-        return Math.max(maxPrice, product.price);
-      }, 0);
-
-      setInitialPrice({ ...initialPrice, max: valorMaximo });
-    }
+    const maxPrice = Math.max(...products.map((product) => product.price));
+    setInitialPrice({ min: 0, max: maxPrice });
+    setCombinedFilters((prevFilters) => ({
+      ...prevFilters,
+      price: { min: 0, max: maxPrice },
+    }));
   }, [products]);
 
   const handlePriceChange = (event, newPrice) => {

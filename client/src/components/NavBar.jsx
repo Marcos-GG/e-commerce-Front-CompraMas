@@ -46,7 +46,7 @@ const NavBar = () => {
           >
             <MenuIcon></MenuIcon>
           </IconButton>
-          <Drawer anchor="left" open={drawerOpen} onClose={handleDrawerToggle}>
+          <Drawer anchor="top" open={drawerOpen} onClose={handleDrawerToggle}>
             <List
               sx={{
                 bgcolor: "#f5f5f5",
@@ -108,6 +108,15 @@ const NavBar = () => {
           >
             <Button variant="contained" component={NavLink} to="/" size="small">
               Home
+            </Button>
+
+            <Button
+              variant="contained"
+              component={NavLink}
+              to="/admin"
+              size="small"
+            >
+              Administrador
             </Button>
 
             <Button

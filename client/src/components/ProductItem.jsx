@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, useMediaQuery } from "@mui/material";
 import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
 import ThumbUpAltIcon from "@mui/icons-material/ThumbUpAlt";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
@@ -11,12 +11,17 @@ const ProductItem = ({
   liked,
   navigate,
 }) => {
+  const isLTE426 = useMediaQuery("(max-width:442px)");
+  const isLTE490 = useMediaQuery("(max-width:490px)");
+  const isLTE918 = useMediaQuery("(max-width:918px)");
+
   return (
     <Box
       sx={{
-        margin: "10px",
-        width: "12rem",
-        height: "17rem",
+        margin: isLTE918 ? "1px" : "10px",
+        marginY: isLTE426 ? "8px" : isLTE490 ? "8px" : "",
+        width: isLTE490 ? "11.5rem" : "12rem",
+        height: isLTE490 ? "16.5rem" : "17rem",
         position: "relative",
         cursor: "pointer",
         transition: "0.1s",

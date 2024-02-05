@@ -140,15 +140,14 @@ const reducer = (state = initialState, action) => {
       };
     }
 
-    // case ADD_LIKE: {
-    //   const product = action.payload.product;
+    case ADD_LIKE: {
+      const product = action.payload.product;
 
-    //   return {
-    //     ...state,
-    //     favoritos: [...state.favoritos, product],
-    //   };
-    // }
-
+      return {
+        ...state,
+        favoritos: [...state.favoritos, product],
+      };
+    }
     case SET_FAVORITES: {
       return {
         ...state,

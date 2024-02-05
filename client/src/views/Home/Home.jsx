@@ -5,12 +5,16 @@ import { useEffect, useState } from "react";
 import { getProducts } from "../../Redux/actions/productsActions";
 import CardContainer from "../../components/CardContainer";
 import Filtros from "../../components/Filtros";
-import { Box } from "@mui/material";
+import { Box, useMediaQuery /* useTheme */ } from "@mui/material";
 import { GET_PRODUCTS } from "../../Redux/actionsTypes/ProductsActionTypes";
 
 function Home() {
-  const dispatch = useDispatch();
+  // const theme = useTheme();
+  const isLTE1000 = useMediaQuery("(max-width:1000px)");
+  const isLTE1700 = useMediaQuery("(max-width:1700px)");
+  const isLTE1025 = useMediaQuery("(max-width:1025px)");
 
+  const dispatch = useDispatch();
   const products = useSelector((state) => state.products.products);
 
   const productosFiltrados = useSelector(
@@ -46,24 +50,51 @@ function Home() {
     setProductsFiltered(productosFiltrados);
   }, [productosFiltrados]);
 
+  // vida del boton filtros
+  const [open, setOpen] = useState(false);
+
+  const handleDrawerToggle = () => {
+    setOpen((prevOpen) => !prevOpen);
+  };
+
   return (
     <Box className={Style}>
       <h1>home</h1>
       <Box
         sx={{
           display: "flex",
+          flexDirection: isLTE1000 ? "column" : "",
         }}
       >
-        <Box
-          sx={{
-            backgroundColor: "aquamarine",
-            padding: "0 15px 0 15px",
-            width: "19rem",
-            minWidth: "12rem",
-          }}
-        >
-          <Filtros />
-        </Box>
+        {isLTE1000 ? (
+          <Box
+            sx={{
+              bgcolor: "#f5f5f5",
+              boxShadow: "0px 5px 15px #888888;",
+              mb: "2rem",
+              width: open ? "100vw" : "12rem",
+              transition: "width 0.6s ease",
+            }}
+          >
+            <Filtros open={open} handleDrawerToggle={handleDrawerToggle} />
+          </Box>
+        ) : (
+          <Box
+            sx={{
+              background: "#f5f5f5",
+              padding: "0 15px 0 15px",
+              width: "19rem",
+              borderRadius: "0 5px 5px 0",
+              border: "1px solid #00CCFD",
+              minWidth: "12rem",
+              maxHeight: "37rem",
+              minHeight: "37rem",
+              marginRight: isLTE1025 ? "3.5rem" : isLTE1700 ? "3.5rem" : "",
+            }}
+          >
+            <Filtros open={open} handleDrawerToggle={handleDrawerToggle} />
+          </Box>
+        )}
         <Box
           sx={{
             display: "flex",

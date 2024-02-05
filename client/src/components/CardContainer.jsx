@@ -1,19 +1,41 @@
 /* eslint-disable react/prop-types */
-import { Box } from "@mui/material";
+import { Box, useMediaQuery } from "@mui/material";
 import Card from "./Card";
 
 function CardContainer({ products }) {
+  const isLTE403 = useMediaQuery("(max-width:403px)");
+  const isLTE490 = useMediaQuery("(max-width:490px)");
+  const isLTE666 = useMediaQuery("(max-width:666px)");
+  const isLTE707 = useMediaQuery("(max-width:707px)");
+  const isLTE769 = useMediaQuery("(max-width:769px)");
+  const isLTE914 = useMediaQuery("(max-width:914px)");
+  const isLTE996 = useMediaQuery("(max-width:995px)");
+
   return (
     <Box
       sx={{
         display: "flex",
         justifyContent: "center",
+        ml: isLTE490
+          ? "1rem"
+          : isLTE666
+          ? "1rem"
+          : isLTE707
+          ? "2rem"
+          : isLTE769
+          ? "4.2rem"
+          : isLTE914
+          ? "3rem"
+          : isLTE996
+          ? "1.4rem"
+          : "",
       }}
     >
       <Box
         sx={{
           display: "flex",
           flexWrap: "wrap",
+          justifyContent: isLTE403 && "center",
           gap: 2,
         }}
       >

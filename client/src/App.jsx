@@ -24,6 +24,7 @@ import { useDispatch, useSelector } from "react-redux";
 import LogOut from "./views/Logout/LogOut";
 import "./App.css";
 import { SET_INITIAL_CART } from "./Redux/actionsTypes/ShoppingCartActionTypes";
+// import SelectedComment from "./components/SelectedComment";
 
 function App() {
   const location = useLocation();
@@ -89,6 +90,13 @@ function App() {
           path="/admin"
           element={token && admin ? <Admin /> : <Navigate to="/login" />} // Si no hay un token o si no es admin, redirigir a Login
         />
+
+        {/* <Route
+          path="/admin/comments/:id"
+          element={
+            token && admin ? <SelectedComment /> : <Navigate to="/login" />
+          }
+        /> */}
 
         <Route
           path="/admin/desactivatedProducts"

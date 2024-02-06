@@ -12,6 +12,7 @@ const SelectedComment = ({
   isLessThanOrEqual1662,
   scrollContainerRef,
   userId,
+  // setSelectedComment,
 }) => {
   useEffect(() => {
     if (scrollContainerRef.current && selectedComment) {
@@ -55,8 +56,10 @@ const SelectedComment = ({
             overflowY: "auto", // Habilitar el scroll vertical cuando el contenido excede la altura máxima
           }}
         >
-          <Typography
+          <Box
             sx={{
+              display: "flex",
+              flexDirection: "column",
               width: isLessThanOrEqual430
                 ? "17rem"
                 : isLessThanOrEqual1268
@@ -69,12 +72,27 @@ const SelectedComment = ({
               border: "1px solid #00CCFD",
               bgcolor: "#F5F5F5",
               boxShadow: "10px 10px 15px #888888;",
+              gap: 1,
             }}
           >
-            {selectedComment.text}
-          </Typography>
+            <Typography
+              variant="body2"
+              sx={{
+                textAlign: "start",
+                fontWeight: "bold",
+              }}
+            >
+              {selectedComment.User.name || ""}{" "}
+              {selectedComment.User.lastname || ""}
+            </Typography>
+            <Typography>{selectedComment.text}</Typography>
+          </Box>
 
-          {selectedComment.Answers.map((answer) => (
+          {selectedComment.Answers.sort((a, b) => {
+            if (a.createdAt < b.createdAt) return -1;
+            else if (a.createdAt > b.createdAt) return 1;
+            return 0;
+          }).map((answer) => (
             <Box
               key={answer.id}
               sx={{
@@ -93,12 +111,23 @@ const SelectedComment = ({
                       ? "15px 15px 0px 15px;"
                       : "0 15px 15px 15px",
                   mx: "15px",
-                  justifyContent: "center",
+                  alignItems: "start",
+                  flexDirection: "column",
                   padding: "10px",
                   my: "5px",
                   boxShadow: "10px 10px 15px #888888;",
+                  gap: 1,
                 }}
               >
+                <Typography
+                  variant="body2"
+                  sx={{
+                    textAlign: "start",
+                    fontWeight: "bold",
+                  }}
+                >
+                  {answer.User.name || ""} {answer.User.lastname || ""}
+                </Typography>
                 <Typography
                   sx={{
                     width: "100%",

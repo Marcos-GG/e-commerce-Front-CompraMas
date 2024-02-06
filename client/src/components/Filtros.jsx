@@ -22,6 +22,7 @@ import {
 } from "../Redux/actions/productsActions";
 
 const Filtros = ({ open, handleDrawerToggle }) => {
+  const isLTE640 = useMediaQuery("(max-width:640px)");
   const isLTE1000 = useMediaQuery("(max-width:1000px)");
   const dispatch = useDispatch();
 
@@ -127,15 +128,19 @@ const Filtros = ({ open, handleDrawerToggle }) => {
             sx={{
               display: "flex",
               flexDirection: isLTE1000 ? "row" : "column",
-              gap: isLTE1000 ? "35px" : "15px",
+              gap: isLTE640 ? "" : isLTE1000 ? "35px" : "15px",
               justifyContent: "center",
               alignItems: isLTE1000 ? "center" : null,
               width: "100%",
+              flexWrap: isLTE640 && "wrap",
               mt: "20px",
             }}
           >
             <Autocomplete
-              sx={{ width: isLTE1000 ? "30%" : "12rem" }}
+              sx={{
+                width: isLTE640 ? "40%" : isLTE1000 ? "30%" : "12rem",
+                margin: isLTE640 ? "0 5px 5px 0" : "",
+              }}
               value={generoSeleccionado}
               onChange={(event, newValue) => {
                 setGeneroSeleccionado(newValue);
@@ -152,7 +157,10 @@ const Filtros = ({ open, handleDrawerToggle }) => {
             />
 
             <Autocomplete
-              sx={{ width: isLTE1000 ? "30%" : "12rem" }}
+              sx={{
+                width: isLTE640 ? "40%" : isLTE1000 ? "30%" : "12rem",
+                margin: isLTE640 ? "0 0px 5px 5px" : "",
+              }}
               value={categoriaSeleccionada}
               onChange={(event, newValue) => {
                 setCategoriaSeleccionada(newValue);
@@ -168,7 +176,7 @@ const Filtros = ({ open, handleDrawerToggle }) => {
               )}
             />
 
-            <Box sx={{ mt: "2px", width: "11rem" }}>
+            <Box sx={{ mt: isLTE640 ? "" : "2px", width: "11rem" }}>
               <Checkbox
                 checked={morePopular}
                 onChange={handleChangeCheckbox}
@@ -182,10 +190,11 @@ const Filtros = ({ open, handleDrawerToggle }) => {
           <Box
             sx={{
               display: isLTE1000 ? "flex" : null,
+              flexDirection: isLTE640 ? "column" : "",
               justifyContent: isLTE1000 ? "space-evenly" : null,
               alignItems: isLTE1000 ? "center" : null,
               gap: isLTE1000 ? "10px" : null,
-              mt: isLTE1000 ? "15px" : null,
+              mt: isLTE640 ? "" : isLTE1000 ? "15px" : null,
             }}
           >
             <Slider
@@ -214,7 +223,7 @@ const Filtros = ({ open, handleDrawerToggle }) => {
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
-              mt: "20px",
+              mt: isLTE640 ? "10px" : "20px",
               gap: "20px",
             }}
             onClick={handleApplyFilter}

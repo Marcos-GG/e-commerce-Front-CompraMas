@@ -123,6 +123,7 @@ const Comments = ({ comments }) => {
       <Box>
         {selectedComment ? (
           <SelectedComment
+            setSelectedComment={setSelectedComment}
             selectedComment={selectedComment}
             isLessThanOrEqual430={isLessThanOrEqual430}
             isLessThanOrEqual820={isLessThanOrEqual820}

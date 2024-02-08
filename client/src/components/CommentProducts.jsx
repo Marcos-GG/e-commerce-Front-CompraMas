@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { postComment } from "../Redux/actions/CommentsAction";
 
 // eslint-disable-next-line react/prop-types
-const CommetProducts = ({ productId }) => {
+const CommentProducts = ({ productId }) => {
   const dispatch = useDispatch();
   const token = localStorage.getItem("token");
 
@@ -51,4 +51,4 @@ const CommetProducts = ({ productId }) => {
   );
 };
 
-export default CommetProducts;
+export default CommentProducts;

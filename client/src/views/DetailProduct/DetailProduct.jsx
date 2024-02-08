@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { getProductId, getProducts } from "../../Redux/actions/productsActions";
 import { useEffect } from "react";
 import RelatedProducts from "../../components/RelatedProducts";
-import CommetProducts from "../../components/CommentProducts";
+import CommentProducts from "../../components/CommentProducts";
 import AnswerComment from "../../components/AnswerComment";
 import { addProduct } from "../../Redux/actions/ShoppingCartAction";
 import { jwtDecode } from "jwt-decode";
@@ -182,59 +182,174 @@ function DetailProduct() {
           </Box>
         </Box>
 
-        {productId.Comments && productId.Comments.length > 0 ? (
-          <Box style={{ backgroundColor: "green" }}>
-            <h3>Comentarios:</h3>
+        <Box>
+          <RelatedProducts
+            id={id}
+            products={products}
+            category={category}
+            gender={gender}
+          />
+        </Box>
 
-            {productId.Comments.map((comment) => (
-              <Box key={comment.id}>
-                <Box
-                  style={{
-                    margin: "10px",
-                    backgroundColor: "aqua",
-                    border: "solid 2px",
-                  }}
-                >
-                  <p>{comment.text}</p>
+        <Box>
+          {productId.Comments &&
+            productId.Comments.length >= 0 &&
+            productId.Comments.every(
+              (comment) => comment.userId !== userId
+            ) && (
+              <div>
+                <h3>Generar Comentario</h3>
+                <CommentProducts productId={productId.id} />
+              </div>
+            )}
+        </Box>
 
-                  <Box style={{ backgroundColor: "yellow" }}>
-                    <p>Respuestas:</p>
-                    {comment.Answers && comment.Answers.length > 0 ? (
-                      comment.Answers.map((answer) => (
-                        <div key={answer.id}>
-                          <p>{answer.answer}</p>
-                          <p>
-                            Respondido por: {answer.User?.name}{" "}
-                            {answer.User?.lastname}
-                          </p>
-                        </div>
-                      ))
-                    ) : (
-                      <p>No hay respuestas para este comentario.</p>
-                    )}
+        <Box>
+          {productId.Comments && productId.Comments.length > 0 && (
+            <Box
+              sx={{
+                width: "60rem",
+                display: "flex",
+                justifyContent: "center",
+                mb: "50px",
+                border: "1px solid #F5F5F5 ",
+                ml: "20px",
+                boxShadow: "10px 10px 15px #888888;",
+              }}
+            >
+              <Box
+                sx={{
+                  width: "100%",
+                }}
+              >
+                {productId.Comments.map((comment) => (
+                  <Box key={comment.id} sx={{}}>
+                    <Box
+                      sx={{
+                        overflow: "auto",
+                        maxHeight: "12rem",
+                        backgroundColor: "#f5f5f5",
+                        backgroundImage: 'url("/logoblanco.svg")',
+                        backgroundSize: "contain",
+                        backgroundPosition: "center",
+                        backgroundRepeat: "no-repeat",
+                      }}
+                    >
+                      {comment.userId === userId && (
+                        <Box sx={{ display: "flex", flexDirection: "column" }}>
+                          <Box
+                            sx={{
+                              display: "flex",
+                              alignSelf: "flex-end",
+                              bgcolor: "#00CCFD",
+                              width: "24rem",
+                              borderRadius: "15px 15px 0px 15px;",
+                              mx: "10px",
+                              padding: "10px",
+                              my: "5px",
+                              border: "1px solid #00CCFD",
+                              boxShadow: "10px 10px 15px #888888;",
+                              gap: 1,
+                            }}
+                          >
+                            <Typography>{comment.text}</Typography>
+                          </Box>
+
+                          <Box
+                            sx={{
+                              display: "flex",
+                              flexDirection: "column",
+                            }}
+                          >
+                            {comment.Answers &&
+                              comment.Answers.length > 0 &&
+                              comment.Answers.map((answer) => (
+                                <Box
+                                  key={answer.id}
+                                  sx={{
+                                    display: "flex",
+                                    bgcolor:
+                                      userId === answer.userId
+                                        ? "#00CCFD"
+                                        : "#F5F5F5",
+                                    width: "24rem",
+                                    borderRadius:
+                                      userId === answer.userId
+                                        ? "15px 15px 0px 15px;"
+                                        : "0 15px 15px 15px",
+                                    mx: "10px",
+                                    alignSelf:
+                                      userId === answer.userId
+                                        ? "flex-end"
+                                        : "flex-start",
+                                    flexDirection: "column",
+                                    padding: "10px",
+                                    my: "5px",
+                                    border: "1px solid #00CCFD",
+                                    boxShadow: "10px 10px 15px #888888;",
+                                    gap: 1,
+                                  }}
+                                >
+                                  <Typography>{answer.answer}</Typography>
+                                </Box>
+                              ))}
+                          </Box>
+                        </Box>
+                      )}
+                    </Box>
+
+                    <Box>
+                      {userId === comment.userId && (
+                        <AnswerComment commentId={comment.id} />
+                      )}
+                    </Box>
                   </Box>
-                  {(isAdmin || userId === comment.userId) && (
-                    <AnswerComment commentId={comment.id} />
+                ))}
+              </Box>
+            </Box>
+          )}
+        </Box>
+        {/* <Box>
+          {productId.Comments && productId.Comments.length > 0 ? (
+            <Box style={{ backgroundColor: "green" }}>
+              <Typography>Comentarios de la comunidad</Typography>
+              {productId.Comments.map((comment) => (
+                <Box key={comment.id}>
+                  {comment.userId !== userId && (
+                    <Box
+                      style={{
+                        margin: "10px",
+                        backgroundColor: "aqua",
+                        border: "solid 2px",
+                      }}
+                    >
+                      <p>{comment.text}</p>
+
+                      <Box style={{ backgroundColor: "yellow" }}>
+                        <p>Respuestas:</p>
+                        {comment.Answers && comment.Answers.length > 0 ? (
+                          comment.Answers.map((answer) => (
+                            <div key={answer.id}>
+                              <p>{answer.answer}</p>
+                              <p>
+                                Respondido por: {answer.User?.name}
+                                {answer.User?.lastname}
+                              </p>
+                            </div>
+                          ))
+                        ) : (
+                          <p>No hay respuestas para este comentario.</p>
+                        )}
+                      </Box>
+                    </Box>
                   )}
                 </Box>
-              </Box>
-            ))}
-          </Box>
-        ) : (
-          <p>No hay comentarios para este producto.</p>
-        )}
-      </Box>
-      <Box>
-        <h3>generar comentario</h3>
-        <CommetProducts productId={productId?.id} />
-      </Box>
-      <Box>
-        <RelatedProducts
-          id={id}
-          products={products}
-          category={category}
-          gender={gender}
-        />
+              ))}
+            </Box>
+          ) : (
+            <p>No hay comentarios para este producto. Se el primero</p>
+          )}
+        </Box> */}
       </Box>
     </Box>
   );

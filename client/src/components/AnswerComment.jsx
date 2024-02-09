@@ -83,6 +83,7 @@ const AnswerComment = ({ commentId }) => {
           sx={{
             borderRadius: "10px",
             bgcolor: "white",
+            border: "2px solid #F5F5F5",
           }}
           type="submit"
           variant="text"

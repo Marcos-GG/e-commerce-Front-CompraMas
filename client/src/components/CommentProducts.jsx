@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { postComment } from "../Redux/actions/CommentsAction";
+import { Box, Button, TextField } from "@mui/material";
+import SendIcon from "@mui/icons-material/Send";
 
 // eslint-disable-next-line react/prop-types
 const CommentProducts = ({ productId }) => {
@@ -34,20 +36,42 @@ const CommentProducts = ({ productId }) => {
   };
 
   return (
-    <>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="text">comentario</label>
-        <input
+    <Box sx={{ width: "100%" }}>
+      <form
+        onSubmit={handleSubmit}
+        style={{
+          display: "flex",
+          maxHeight: "3.6rem",
+          margin: "10px",
+          justifyContent: "space-between",
+        }}
+      >
+        <TextField
           type="text"
           name="text"
           value={form.text}
           onChange={formHandler}
+          multiline
+          maxRows={2}
+          fullWidth
+          sx={{
+            overflow: "hidden",
+            width: "91%",
+            ml: "5px",
+          }}
         />
-        <div>
-          <input type="submit" value="comentar" />
-        </div>
+        <Button
+          sx={{
+            borderRadius: "10px",
+            bgcolor: "white",
+            border: "2px solid #F5F5F5",
+          }}
+          type="submit"
+          variant="text"
+          endIcon={<SendIcon sx={{ mr: "9px" }} />}
+        ></Button>
       </form>
-    </>
+    </Box>
   );
 };
 

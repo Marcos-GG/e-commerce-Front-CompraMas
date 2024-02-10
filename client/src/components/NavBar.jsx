@@ -110,14 +110,16 @@ const NavBar = () => {
               Home
             </Button>
 
-            <Button
-              variant="contained"
-              component={NavLink}
-              to="/admin"
-              size="small"
-            >
-              Administrador
-            </Button>
+            {admin && (
+              <Button
+                variant="contained"
+                component={NavLink}
+                to="/admin"
+                size="small"
+              >
+                Administrador
+              </Button>
+            )}
 
             <Button
               variant="contained"

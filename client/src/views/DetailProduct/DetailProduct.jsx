@@ -199,9 +199,10 @@ function DetailProduct() {
         <Box
           sx={{
             width: "60rem",
-            height: "16.5rem",
             display: "flex",
             justifyContent: "center",
+            mt: "10px",
+            maxHeight: "30rem",
             mb: "50px",
             border: "1px solid #F5F5F5",
             ml: "20px",
@@ -216,13 +217,15 @@ function DetailProduct() {
           >
             {productId.Comments &&
               productId.Comments.length > 0 &&
+              productId.Comments.some((comment) => comment.userId === userId) &&
               productId.Comments.map((comment) => (
                 <Box key={comment.id} sx={{}}>
                   <Box
                     sx={{
                       overflow: "auto",
-                      height: "12rem",
-                      maxHeight: "12rem",
+                      width: "100%",
+                      height: "100%",
+                      bgcolor: "beige",
                       backgroundColor: "#f5f5f5",
                       backgroundImage: 'url("/logoblanco.svg")',
                       backgroundSize: "contain",
@@ -231,7 +234,14 @@ function DetailProduct() {
                     }}
                   >
                     {comment.userId === userId && (
-                      <Box sx={{ display: "flex", flexDirection: "column" }}>
+                      <Box
+                        sx={{
+                          display: "flex",
+                          flexDirection: "column",
+                          width: "100%",
+                          height: "13rem",
+                        }}
+                      >
                         <Box
                           sx={{
                             display: "flex",
@@ -329,7 +339,7 @@ function DetailProduct() {
           </Box>
         </Box>
 
-        {/* <Box>
+        <Box>
           {productId.Comments && productId.Comments.length > 0 ? (
             <Box style={{ backgroundColor: "green" }}>
               <Typography>Comentarios de la comunidad</Typography>
@@ -346,8 +356,8 @@ function DetailProduct() {
                       <p>{comment.text}</p>
 
                       <Box style={{ backgroundColor: "yellow" }}>
-                        <p>Respuestas:</p>
-                        {comment.Answers && comment.Answers.length > 0 ? (
+                        {comment.Answers &&
+                          comment.Answers.length > 0 &&
                           comment.Answers.map((answer) => (
                             <div key={answer.id}>
                               <p>{answer.answer}</p>
@@ -356,10 +366,7 @@ function DetailProduct() {
                                 {answer.User?.lastname}
                               </p>
                             </div>
-                          ))
-                        ) : (
-                          <p>No hay respuestas para este comentario.</p>
-                        )}
+                          ))}
                       </Box>
                     </Box>
                   )}
@@ -369,7 +376,7 @@ function DetailProduct() {
           ) : (
             <p>No hay comentarios para este producto. Se el primero</p>
           )}
-        </Box> */}
+        </Box>
         <Box>
           <CompleteOutfits
             IdProduct={IdProduct}

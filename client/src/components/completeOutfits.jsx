@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 
 const CompleteOutfits = ({ IdProduct, gender, category, products }) => {
@@ -38,13 +38,58 @@ const CompleteOutfits = ({ IdProduct, gender, category, products }) => {
   }, [IdProduct, gender, category, products]); // Dependencias del useEffect
 
   return (
-    <Box>
-      {productsOutfits &&
-        productsOutfits.map((product) => (
-          <Box key={product.id}>
-            <img src={product.image} alt={product.title} />
-          </Box>
-        ))}
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        bgcolor: "aquamarine",
+        width: "100%",
+        alignItems: "center",
+      }}
+    >
+      <Typography
+        variant="h4"
+        sx={{ textAlign: "center", mt: "50px", mb: "20px" }}
+      >
+        COMPLETA TU OUTFIT
+      </Typography>
+      <Box
+        sx={{
+          display: "flex",
+          flexWrap: "wrap",
+          bgcolor: "pink",
+          width: "90%",
+          justifyContent: "center",
+          gap: "10px",
+        }}
+      >
+        {productsOutfits &&
+          productsOutfits.map((product) => (
+            <Box
+              key={product.id}
+              sx={{
+                display: "flex",
+                width: "49%",
+                height: "auto",
+                bgcolor: "darkgreen",
+                padding: "10px",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Box
+                component="img"
+                src={product.image}
+                alt={product.title}
+                sx={{
+                  maxWidth: "100%",
+                  maxHeight: "100%",
+                  objectFit: "contain",
+                }}
+              />
+            </Box>
+          ))}
+      </Box>
     </Box>
   );
 };

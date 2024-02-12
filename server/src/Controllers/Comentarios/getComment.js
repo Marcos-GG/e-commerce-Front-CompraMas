@@ -7,7 +7,7 @@ const getCommentController = async (id) => {
         { model: User, attributes: ["name", "lastname"] },
         {
           model: Answer,
-          include: { model: User, attributes: ["name", "lastname"] },
+          include: { model: User, attributes: ["name", "lastname", "admin"] },
         },
       ],
     });
@@ -17,10 +17,10 @@ const getCommentController = async (id) => {
 
   const allComments = await Comment.findAll({
     include: [
-      { model: User, attributes: ["name", "lastname"] },
+      { model: User, attributes: ["name", "lastname", "admin"] },
       {
         model: Answer,
-        include: { model: User, attributes: ["name", "lastname"] },
+        include: { model: User, attributes: ["name", "lastname", "admin"] },
       },
     ],
   });

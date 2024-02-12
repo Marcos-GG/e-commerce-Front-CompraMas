@@ -11,10 +11,13 @@ const getProductController = async (id) => {
         {
           model: Comment,
           include: [
-            { model: User, attributes: ["name", "lastname"] },
+            { model: User, attributes: ["name", "lastname", "admin"] },
             {
               model: Answer,
-              include: { model: User, attributes: ["name", "lastname"] },
+              include: {
+                model: User,
+                attributes: ["name", "lastname", "admin"],
+              },
             },
           ],
         },
@@ -33,10 +36,10 @@ const getProductController = async (id) => {
       {
         model: Comment,
         include: [
-          { model: User, attributes: ["name", "lastname"] },
+          { model: User, attributes: ["name", "lastname", "admin"] },
           {
             model: Answer,
-            include: { model: User, attributes: ["name", "lastname"] },
+            include: { model: User, attributes: ["name", "lastname", "admin"] },
           },
         ],
       },

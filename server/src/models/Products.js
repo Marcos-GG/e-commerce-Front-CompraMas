@@ -36,7 +36,7 @@ module.exports = (sequelize) => {
         type: DataTypes.TEXT,
         allowNull: false,
         validate: {
-          len: [20, 1000], // Longitud entre 20 y 1000 caracteres
+          len: [20, 2000], // Longitud entre 20 y 1000 caracteres
         },
       },
 

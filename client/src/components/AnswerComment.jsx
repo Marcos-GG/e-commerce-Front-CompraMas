@@ -45,7 +45,7 @@ const AnswerComment = ({ commentId }) => {
   };
 
   return (
-    <Box sx={{ width: "100%" }}>
+    <Box sx={{ width: "100%", gap: "10px" }}>
       <form
         onSubmit={handleSubmit}
         style={{
@@ -53,15 +53,9 @@ const AnswerComment = ({ commentId }) => {
           maxHeight: "3.6rem",
           margin: "10px",
           justifyContent: "space-between",
+          gap: "10px",
         }}
       >
-        {/* <Box
-          sx={{
-            width: "100%",
-            maxHeight: "3.5rem",
-            overflow: "hidden",
-          }}
-        > */}
         <TextField
           type="text"
           name="answer"
@@ -73,11 +67,10 @@ const AnswerComment = ({ commentId }) => {
           fullWidth
           sx={{
             overflow: "hidden",
-            width: "91%",
+            width: "90%",
             ml: "5px",
           }}
         />
-        {/* </Box> */}
 
         <Button
           sx={{
@@ -87,7 +80,7 @@ const AnswerComment = ({ commentId }) => {
           }}
           type="submit"
           variant="text"
-          endIcon={<SendIcon sx={{ mr: "9px" }} />}
+          endIcon={<SendIcon sx={{ mr: "px" }} />}
         ></Button>
       </form>
     </Box>

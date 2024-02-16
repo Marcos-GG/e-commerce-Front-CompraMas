@@ -3,6 +3,9 @@ import { Box, Typography, useMediaQuery } from "@mui/material";
 import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
 import ThumbUpAltIcon from "@mui/icons-material/ThumbUpAlt";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
+import ProductPrice from "./ProductPrice";
+import { useLocation } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 const ProductItem = ({
   product,
@@ -10,18 +13,39 @@ const ProductItem = ({
   handleClickLike,
   liked,
   navigate,
+  priceStyle,
+  handleProductClick,
 }) => {
+  const location = useLocation();
+  const currentPath = location.pathname;
+
+  const [enDetail, setEnDetail] = useState(false);
+
+  useEffect(() => {
+    if (currentPath.includes("detail/")) {
+      setEnDetail(true);
+    }
+  }, [currentPath, enDetail]);
+
   const isLTE426 = useMediaQuery("(max-width:442px)");
   const isLTE490 = useMediaQuery("(max-width:490px)");
   const isLTE918 = useMediaQuery("(max-width:918px)");
+
+  const handleBoxClick = () => {
+    // Llamar a ambas funciones aquí
+    navigate(`/detail/${product?.id}`);
+    if (typeof handleProductClick === "function") {
+      handleProductClick(product?.id);
+    }
+  };
 
   return (
     <Box
       sx={{
         margin: isLTE918 ? "1px" : "10px",
         marginY: isLTE426 ? "8px" : isLTE490 ? "8px" : "",
-        width: isLTE490 ? "11.5rem" : "12rem",
-        height: isLTE490 ? "16.5rem" : "17rem",
+        width: enDetail ? "10rem" : isLTE490 ? "11.5rem" : "12rem",
+        height: enDetail ? "15rem" : isLTE490 ? "16.5rem" : "17rem",
         position: "relative",
         cursor: "pointer",
         transition: "0.1s",
@@ -33,7 +57,7 @@ const ProductItem = ({
           transform: "scale(1.002)",
         },
       }}
-      onClick={() => navigate(`/detail/${product?.id}`)}
+      onClick={handleBoxClick}
     >
       <Box p={2} sx={{}}>
         <Box
@@ -56,7 +80,7 @@ const ProductItem = ({
               overflow: "hidden",
               textOverflow: "ellipsis",
               lineHeight: "30px",
-              fontSize: "19px",
+              fontSize: enDetail ? "15.5px" : "19px",
             }}
           >
             {product?.title}
@@ -73,75 +97,77 @@ const ProductItem = ({
               fontWeight: 700,
             }}
           >
-            ${product?.price}
+            <ProductPrice price={product?.price} style={priceStyle} />
           </Typography>
         </Box>
 
-        <Box
-          sx={{
-            position: "absolute",
-            bottom: "-12px",
-            right: "10px",
-            display: "flex",
-            gap: 2,
-          }}
-        >
+        {!enDetail && (
           <Box
             sx={{
-              backgroundColor: "white",
-              border: "1px solid black",
-              borderRadius: "5px",
-              boxShadow: 2,
-              p: 0.2,
-              cursor: "pointer",
-              "&:hover": {
-                boxShadow: 3,
-              },
-            }}
-            onClick={(e) => {
-              e.stopPropagation(); // esto previene que al hacer click en like redireccione a la pagina del producto.
-              handleClickLike(product?.id);
+              position: "absolute",
+              bottom: "-12px",
+              right: "10px",
+              display: "flex",
+              gap: 2,
             }}
           >
-            {liked ? (
-              <ThumbUpAltIcon
-                sx={{
-                  verticalAlign: "middle",
-                }}
-              />
-            ) : (
-              <ThumbUpOffAltIcon
-                sx={{
-                  verticalAlign: "middle",
-                }}
-              />
-            )}
-          </Box>
-
-          <Box
-            sx={{
-              backgroundColor: "white",
-              border: "1px solid black",
-              borderRadius: "5px",
-              boxShadow: 2,
-              p: 0.2,
-              cursor: "pointer",
-              "&:hover": {
-                boxShadow: 3,
-              },
-            }}
-            onClick={(e) => {
-              e.stopPropagation();
-              handleClickAdd(product);
-            }}
-          >
-            <AddShoppingCartIcon
+            <Box
               sx={{
-                verticalAlign: "middle",
+                backgroundColor: "white",
+                border: "1px solid black",
+                borderRadius: "5px",
+                boxShadow: 2,
+                p: 0.2,
+                cursor: "pointer",
+                "&:hover": {
+                  boxShadow: 3,
+                },
               }}
-            />
+              onClick={(e) => {
+                e.stopPropagation(); // esto previene que al hacer click en like redireccione a la pagina del producto.
+                handleClickLike(product?.id);
+              }}
+            >
+              {liked ? (
+                <ThumbUpAltIcon
+                  sx={{
+                    verticalAlign: "middle",
+                  }}
+                />
+              ) : (
+                <ThumbUpOffAltIcon
+                  sx={{
+                    verticalAlign: "middle",
+                  }}
+                />
+              )}
+            </Box>
+
+            <Box
+              sx={{
+                backgroundColor: "white",
+                border: "1px solid black",
+                borderRadius: "5px",
+                boxShadow: 2,
+                p: 0.2,
+                cursor: "pointer",
+                "&:hover": {
+                  boxShadow: 3,
+                },
+              }}
+              onClick={(e) => {
+                e.stopPropagation();
+                handleClickAdd(product);
+              }}
+            >
+              <AddShoppingCartIcon
+                sx={{
+                  verticalAlign: "middle",
+                }}
+              />
+            </Box>
           </Box>
-        </Box>
+        )}
       </Box>
     </Box>
   );

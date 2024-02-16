@@ -1,12 +1,9 @@
 /* eslint-disable react/prop-types */
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, useMediaQuery } from "@mui/material";
 import { useEffect, useState } from "react";
 
 const CompleteOutfits = ({ IdProduct, gender, category, products }) => {
-  console.log("idProduct ", IdProduct);
-  console.log("gender", gender);
-  console.log("category", category);
-  console.log("products", products);
+  const isLTE1520 = useMediaQuery("(max-width:1520px)");
 
   const [productsOutfits, setProductsOutfits] = useState([]); // Inicializa productsOutfits
 
@@ -42,7 +39,6 @@ const CompleteOutfits = ({ IdProduct, gender, category, products }) => {
       sx={{
         display: "flex",
         flexDirection: "column",
-        bgcolor: "aquamarine",
         width: "100%",
         alignItems: "center",
       }}
@@ -57,7 +53,6 @@ const CompleteOutfits = ({ IdProduct, gender, category, products }) => {
         sx={{
           display: "flex",
           flexWrap: "wrap",
-          bgcolor: "pink",
           width: "90%",
           justifyContent: "center",
           gap: "10px",
@@ -69,10 +64,9 @@ const CompleteOutfits = ({ IdProduct, gender, category, products }) => {
               key={product.id}
               sx={{
                 display: "flex",
-                width: "49%",
+                width: isLTE1520 ? "45%" : "49%",
                 height: "auto",
-                bgcolor: "darkgreen",
-                padding: "10px",
+                padding: isLTE1520 ? "7px" : "10px",
                 justifyContent: "center",
                 alignItems: "center",
               }}

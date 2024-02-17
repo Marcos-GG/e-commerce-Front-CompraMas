@@ -27,10 +27,10 @@ module.exports = (sequelize) => {
         },
       },
 
-      image: {
-        type: DataTypes.TEXT,
-        allowNull: true, // despues tiene que estar si o si en false
-      },
+      // image: {
+      //   type: DataTypes.TEXT,
+      //   allowNull: true, // despues tiene que estar si o si en false
+      // },
 
       description: {
         type: DataTypes.TEXT,

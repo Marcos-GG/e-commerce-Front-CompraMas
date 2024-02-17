@@ -40,7 +40,7 @@ let capsEntries = entries.map((entry) => [
 ]);
 sequelize.models = Object.fromEntries(capsEntries);
 
-const { Products, Like, User, Category, Comment, Answer, Gender } =
+const { Products, Like, User, Category, Comment, Answer, Gender, Image } =
   sequelize.models;
 
 // Products.belongsTo(Category, { foreignKey: "category" });
@@ -66,6 +66,10 @@ Gender.hasMany(Products, { foreignKey: "genderId" });
 
 Products.belongsTo(Category, { foreignKey: "categoryId" });
 Category.hasMany(Products, { foreignKey: "categoryId" });
+
+// relaciones de image
+Products.hasMany(Image, { foreignKey: "productId" });
+Image.belongsTo(Products, { foreignKey: "productId" });
 
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');

@@ -1,9 +1,12 @@
-const { Products, Like, User, Comment, Answer } = require("../../db");
+const { Products, Like, User, Comment, Answer, Image } = require("../../db");
 
 const getProductController = async (id) => {
   if (id) {
     const idProduct = await Products.findByPk(id, {
       include: [
+        {
+          model: Image,
+        },
         {
           model: Like,
           include: { model: User, attributes: ["name", "lastname"] },
@@ -29,6 +32,9 @@ const getProductController = async (id) => {
 
   const allProducts = await Products.findAll({
     include: [
+      {
+        model: Image,
+      },
       {
         model: Like,
         include: { model: User, attributes: ["name", "lastname"] },

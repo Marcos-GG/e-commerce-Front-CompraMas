@@ -6,6 +6,7 @@ const CompleteOutfits = ({ IdProduct, gender, category, products }) => {
   const isLTE1520 = useMediaQuery("(max-width:1520px)");
 
   const [productsOutfits, setProductsOutfits] = useState([]); // Inicializa productsOutfits
+  console.log(productsOutfits, "productsOutfits");
 
   useEffect(() => {
     const obtenerProductosCoincidentes = () => {
@@ -73,8 +74,8 @@ const CompleteOutfits = ({ IdProduct, gender, category, products }) => {
             >
               <Box
                 component="img"
-                src={product.image}
-                alt={product.title}
+                src={product?.image2}
+                alt={product?.title}
                 sx={{
                   maxWidth: "100%",
                   maxHeight: "100%",

@@ -32,7 +32,7 @@ const ProductsAdmin = () => {
         <h3>Productos</h3>
         {products.map((product) => (
           <div key={product.id}>
-            <p>{product.image}</p>
+            <p>{product?.image1}</p>
             <p>{product.title}</p>
             <p>{product.price}</p>
             {/* hay que dar funcionalidad botones para detalle del producto y para suspender/desactivar/eliminar publicacion */}

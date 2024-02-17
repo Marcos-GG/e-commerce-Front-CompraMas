@@ -68,7 +68,7 @@ const ProductItem = ({
             justifyContent: "center",
           }}
         >
-          <Box component="img" src={product.image} alt={product?.title} />
+          <Box component="img" src={product?.image2} alt={product?.title} />
         </Box>
         <Box mt={1}>
           <Typography

@@ -15,7 +15,7 @@ const CommentDesplegable = ({ productId, userId }) => {
   };
 
   return (
-    <Box sx={{ width: "100%", m: "10px" }}>
+    <Box sx={{ width: "100%" }}>
       {productId?.Comments &&
       productId.Comments.length > 0 &&
       productId.Comments.userId !== userId ? (
@@ -151,9 +151,19 @@ const CommentDesplegable = ({ productId, userId }) => {
               display: "flex",
             }}
           >
-            <Typography sx={{ margin: "auto" }}>
-              No hay comentarios para este producto. ¡Sé el primero!
-            </Typography>
+            {productId.Comments.length > 1 &&
+            productId.Comments.every((comment) => comment.userId === userId) &&
+            productId.Comments.Answers.every(
+              (answer) => answer.userId === userId
+            ) ? (
+              <Typography sx={{ margin: "auto" }}>
+                ¡Gracias por dejarnos tu comentario!
+              </Typography>
+            ) : (
+              <Typography sx={{ margin: "auto" }}>
+                No hay comentarios para este producto. ¡Sé el primero!
+              </Typography>
+            )}
           </Box>
         )
       )}

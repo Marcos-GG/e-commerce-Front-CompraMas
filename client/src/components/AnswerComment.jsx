@@ -80,7 +80,7 @@ const AnswerComment = ({ commentId }) => {
           }}
           type="submit"
           variant="text"
-          endIcon={<SendIcon sx={{ mr: "px" }} />}
+          endIcon={<SendIcon sx={{ mr: "9px" }} />}
         ></Button>
       </form>
     </Box>

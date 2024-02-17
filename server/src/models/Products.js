@@ -27,10 +27,26 @@ module.exports = (sequelize) => {
         },
       },
 
-      // image: {
-      //   type: DataTypes.TEXT,
-      //   allowNull: true, // despues tiene que estar si o si en false
-      // },
+      image1: {
+        type: DataTypes.TEXT,
+        allowNull: true, // despues tiene que estar si o si en false
+      },
+      image2: {
+        type: DataTypes.TEXT,
+        allowNull: true, // despues tiene que estar si o si en false
+      },
+      image3: {
+        type: DataTypes.TEXT,
+        allowNull: true, // despues tiene que estar si o si en false
+      },
+      image4: {
+        type: DataTypes.TEXT,
+        allowNull: true, // despues tiene que estar si o si en false
+      },
+      image5: {
+        type: DataTypes.TEXT,
+        allowNull: true, // despues tiene que estar si o si en false
+      },
 
       description: {
         type: DataTypes.TEXT,

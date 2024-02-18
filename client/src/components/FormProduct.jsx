@@ -5,6 +5,8 @@ import { createProduct } from "../Redux/actions/productsActions";
 import { getCategory, getGender } from "../Redux/actions/CategoryGender";
 
 const FormProduct = () => {
+  // const [additionalImages, setAdditionalImages] = useState([]);
+
   const dispatch = useDispatch();
   const categories = useSelector((state) => state.categoryGender.category);
   const genders = useSelector((state) => state.categoryGender.gender);
@@ -16,7 +18,10 @@ const FormProduct = () => {
 
   const [form, setForm] = useState({
     title: "",
-    image: "",
+    image1: "",
+    image2: "",
+    image3: "",
+    image4: "",
     description: "",
     stock: "",
     price: "",
@@ -33,8 +38,16 @@ const FormProduct = () => {
     });
   };
 
+  // const addImageInput = () => {
+  //   setAdditionalImages([...additionalImages, ""]);
+  // };
+
   const handlerSubmit = (event) => {
     event.preventDefault();
+    // const formData = {
+    //   ...form,
+    //   image: additionalImages, // Incluir todas las imágenes, incluida la imagen principal, en el array "image"
+    // };
     dispatch(createProduct(form));
   };
 
@@ -55,10 +68,71 @@ const FormProduct = () => {
           <div>
             <input
               type="text"
-              name="image"
-              value={form.image}
+              name="image1"
+              value={form.image1}
               onChange={formHandler}
-              placeholder="URL de la imagen"
+              placeholder="imagen Principal"
+            />
+            {/* <input
+            type="text"
+            name="image"
+            value={additionalImages[0]} // El primer input se utiliza como la imagen principal
+            onChange={(event) => {
+              const newImages = [...additionalImages];
+              newImages[0] = event.target.value; // Actualizar el valor del primer input
+              setAdditionalImages(newImages);
+            }}
+            placeholder="URL de la imagen principal"
+          />
+          <div>
+            {additionalImages.slice(1).map(
+              (
+                image,
+                index // Recorrer los inputs adicionales a partir del segundo elemento
+              ) => (
+                <div key={index}>
+                  <input
+                    type="text"
+                    value={image}
+                    onChange={(event) => {
+                      const newImages = [...additionalImages];
+                      newImages[index + 1] = event.target.value; // Index + 1 para evitar el primer input
+                      setAdditionalImages(newImages);
+                    }}
+                    placeholder={`URL de la imagen ${index + 2}`}
+                  />
+                </div>
+              )
+            )}
+            <button type="button" onClick={addImageInput}>
+              Agregar más imágenes
+            </button> */}
+          </div>
+          <div>
+            <input
+              type="text"
+              name="image2"
+              value={form.image2}
+              onChange={formHandler}
+              placeholder="segunda imagen"
+            />
+          </div>
+          <div>
+            <input
+              type="text"
+              name="image3"
+              value={form.image3}
+              onChange={formHandler}
+              placeholder="tercera imagen"
+            />
+          </div>
+          <div>
+            <input
+              type="text"
+              name="image4"
+              value={form.image4}
+              onChange={formHandler}
+              placeholder="ultima imagen"
             />
           </div>
           <textarea

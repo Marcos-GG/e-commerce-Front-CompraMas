@@ -3,6 +3,9 @@ import { Box, Typography, useMediaQuery } from "@mui/material";
 import { useEffect, useState } from "react";
 
 const CompleteOutfits = ({ IdProduct, gender, category, products }) => {
+  const isLTE454 = useMediaQuery("(max-width:454px)");
+  const isLTE768 = useMediaQuery("(max-width:768px)");
+  const isLTE1000 = useMediaQuery("(max-width:1000px)");
   const isLTE1520 = useMediaQuery("(max-width:1520px)");
 
   const [productsOutfits, setProductsOutfits] = useState([]); // Inicializa productsOutfits
@@ -46,7 +49,12 @@ const CompleteOutfits = ({ IdProduct, gender, category, products }) => {
     >
       <Typography
         variant="h4"
-        sx={{ textAlign: "center", mt: "50px", mb: "20px" }}
+        sx={{
+          textAlign: "center",
+          mt: "50px",
+          mb: "20px",
+          fontSize: isLTE454 ? "30px" : isLTE768 ? "35px" : isLTE1000 && "45px",
+        }}
       >
         COMPLETA TU OUTFIT
       </Typography>
@@ -56,7 +64,7 @@ const CompleteOutfits = ({ IdProduct, gender, category, products }) => {
           flexWrap: "wrap",
           width: "90%",
           justifyContent: "center",
-          gap: "10px",
+          gap: isLTE768 ? "5px" : "10px",
         }}
       >
         {productsOutfits &&
@@ -65,20 +73,36 @@ const CompleteOutfits = ({ IdProduct, gender, category, products }) => {
               key={product.id}
               sx={{
                 display: "flex",
-                width: isLTE1520 ? "45%" : "49%",
+                bgcolor: "orange",
+                width: isLTE768 ? "49%" : isLTE1520 ? "45%" : "49%",
                 height: "auto",
-                padding: isLTE1520 ? "7px" : "10px",
-                justifyContent: "center",
-                alignItems: "center",
+                position: "relative",
+                cursor: "pointer",
+                overflow: "hidden",
+
+                "&:hover img": {
+                  transform: "scale(1.03)",
+                  transition: "transform 0.5s ease",
+                },
+                "&:hover::before": {
+                  content: "''",
+                  position: "absolute",
+                  top: 0,
+                  left: 0,
+                  width: "100%",
+                  height: "100%",
+                  backgroundColor: "rgba(0, 0, 0, 0.5)",
+                  zIndex: 1,
+                },
               }}
             >
-              <Box
-                component="img"
-                src={product?.image2}
-                alt={product?.title}
-                sx={{
+              <img
+                src={product.image2}
+                alt={product.title}
+                style={{
                   maxWidth: "100%",
-                  maxHeight: "100%",
+                  height: "auto",
+
                   objectFit: "contain",
                 }}
               />

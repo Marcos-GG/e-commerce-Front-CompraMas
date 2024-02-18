@@ -1,9 +1,17 @@
 /* eslint-disable react/prop-types */
-import { Box, Divider, IconButton, Typography } from "@mui/material";
+import {
+  Box,
+  Divider,
+  IconButton,
+  Typography,
+  useMediaQuery,
+} from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { useState } from "react";
 
 const CommentDesplegable = ({ productId, userId }) => {
+  const isLTE768 = useMediaQuery("(max-width:768px)");
+
   const [expandedCommentId, setExpandedCommentId] = useState(null);
 
   const toggleExpandedComment = (commentId) => {
@@ -149,6 +157,8 @@ const CommentDesplegable = ({ productId, userId }) => {
               boxShadow: "10px 10px 15px #888888",
               height: "5rem",
               display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
             }}
           >
             {productId.Comments.length > 1 &&
@@ -156,11 +166,11 @@ const CommentDesplegable = ({ productId, userId }) => {
             productId.Comments.Answers.every(
               (answer) => answer.userId === userId
             ) ? (
-              <Typography sx={{ margin: "auto" }}>
+              <Typography sx={{ fontSize: isLTE768 && "14px" }}>
                 ¡Gracias por dejarnos tu comentario!
               </Typography>
             ) : (
-              <Typography sx={{ margin: "auto" }}>
+              <Typography sx={{ fontSize: isLTE768 && "14px" }}>
                 No hay comentarios para este producto. ¡Sé el primero!
               </Typography>
             )}

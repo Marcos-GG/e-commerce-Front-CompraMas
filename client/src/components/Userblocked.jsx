@@ -1,5 +1,10 @@
 import { useDispatch, useSelector } from "react-redux";
-import { blockUser, getUsers, unlockUser } from "../Redux/actions/UsersAction";
+import {
+  blockUser,
+  getUsers,
+  unlockUser,
+  deleteUser,
+} from "../Redux/actions/UsersAction";
 import { useEffect } from "react";
 import { Box, Button, Typography } from "@mui/material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
@@ -25,6 +30,10 @@ const UserBlocked = () => {
     }
   };
 
+  const handlerDeleteUser = (user) => {
+    dispatch(deleteUser(user));
+  };
+
   return (
     <Box>
       <Typography variant="h1" sx={{ fontSize: "35px" }}>
@@ -35,69 +44,87 @@ const UserBlocked = () => {
         sx={{
           display: "flex",
           flexWrap: "wrap",
-          bgcolor: "red",
-          width: "80%",
+          width: "90%",
           m: "auto",
         }}
       >
         {users.map((user) => (
           <Box
             sx={{
-              height: "18rem",
-              width: "14rem",
+              height: "14rem",
+              width: "10rem",
               bgcolor: "#F5F5F5",
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
               m: "15px",
               borderRadius: "5px",
+              boxShadow: "10px 10px 15px #888888",
             }}
             key={user.id}
           >
             <Box
               sx={{
-                display: "flex",
-                justifyContent: "space-evenly",
-                flexWrap: "wrap",
-                // width: "8rem",
                 height: "68%",
-                alignItems: "center",
+                display: "flex",
                 flexDirection: "column",
+                justifyContent: "space-evenly",
               }}
             >
-              {user?.active ? (
-                <AccountCircleIcon sx={{ color: "gray", fontSize: "8rem" }} />
-              ) : (
-                <NoAccountsIcon sx={{ color: "gray", fontSize: "8rem" }} />
-              )}
-
-              <Typography
-                variant="body1"
-                component="p"
+              <Box
                 sx={{
-                  textAlign: "center",
-                  width: "12rem",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  height: "50%",
+                  flexDirection: "column",
                 }}
               >
-                {user.name} {user.lastname}
-              </Typography>
-            </Box>
+                {user?.active ? (
+                  <AccountCircleIcon sx={{ color: "gray", fontSize: "6rem" }} />
+                ) : (
+                  <NoAccountsIcon sx={{ color: "gray", fontSize: "8rem" }} />
+                )}
+              </Box>
 
-            <Box>
+              <Box
+                sx={{
+                  maxHeight: "40px",
+                  overflow: "break-word",
+                  wordWrap: "break-word",
+                }}
+              >
+                <Typography
+                  variant="body1"
+                  component="p"
+                  sx={{
+                    textAlign: "center",
+                  }}
+                >
+                  {user.name} {user.lastname}
+                </Typography>
+              </Box>
+            </Box>
+            <Box
+              sx={{
+                width: "100%",
+                display: "flex",
+                alignItems: "center",
+                flexDirection: "column",
+                gap: "5px",
+              }}
+            >
               {/* faltan botones para bloquear y desbloquear clientes */}
               <Button
                 variant="contained"
-                sx={{ marginBottom: "15px", width: "8rem" }}
+                sx={{ width: "80%" }}
                 size="small"
                 onClick={() => handleUserBlocked(user)}
               >
                 {user?.active ? "Bloquear" : "Desbloquear"}
               </Button>
-              <br />
               <Button
                 variant="contained"
-                sx={{ marginButton: "15px", width: "100%" }}
+                sx={{ width: "80%", mb: "5px" }}
                 size="small"
+                onClick={() => handlerDeleteUser(user)}
               >
                 eliminar
               </Button>

@@ -5,6 +5,7 @@ import {
   GET_USERS,
   UNLOCK_USER,
   BLOCK_USER,
+  DELETE_USER,
 } from "../actionsTypes/UsersActionTypes";
 
 export const getUsers = () => {
@@ -56,6 +57,19 @@ export const unlockUser = (user) => {
       );
 
       dispatch({ type: UNLOCK_USER, payload: user });
+    } catch (error) {
+      return { error: error.message };
+    }
+  };
+};
+
+export const deleteUser = (user) => {
+  return async function (dispatch) {
+    try {
+      const config = configureHeaders();
+      await axios.delete(`http://localhost:55878/users/${user.id}`, config);
+
+      dispatch({ type: DELETE_USER, payload: user });
     } catch (error) {
       return { error: error.message };
     }

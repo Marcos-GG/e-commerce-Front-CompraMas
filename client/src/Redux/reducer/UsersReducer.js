@@ -3,6 +3,7 @@ import {
   GET_USERS,
   BLOCK_USER,
   UNLOCK_USER,
+  DELETE_USER,
 } from "../actionsTypes/UsersActionTypes";
 
 const initialState = {
@@ -41,6 +42,15 @@ const reducer = (state = initialState, action) => {
 
       return { ...state, users: updatedUser };
     }
+
+    case DELETE_USER: {
+      console.log(action.payload, "payload");
+      const usuariosSinEliminar = state.users.filter(
+        (user) => user.id !== action.payload.id
+      );
+      return { ...state, users: usuariosSinEliminar };
+    }
+
     default:
       return { ...state };
   }

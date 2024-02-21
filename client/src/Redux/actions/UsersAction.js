@@ -6,6 +6,7 @@ import {
   UNLOCK_USER,
   BLOCK_USER,
   DELETE_USER,
+  GET_USERS_NAME,
 } from "../actionsTypes/UsersActionTypes";
 
 export const getUsers = () => {
@@ -70,6 +71,23 @@ export const deleteUser = (user) => {
       await axios.delete(`http://localhost:55878/users/${user.id}`, config);
 
       dispatch({ type: DELETE_USER, payload: user });
+    } catch (error) {
+      return { error: error.message };
+    }
+  };
+};
+
+export const getUsersName = (string) => {
+  return async function (dispatch) {
+    try {
+      const config = configureHeaders();
+      console.log(string, "string que llega al action");
+      const response = await axios.get(
+        `http://localhost:55878/users?search=${string}`,
+        config
+      );
+      console.log(response.data, "action response getUsersName");
+      dispatch({ type: GET_USERS_NAME, payload: response.data });
     } catch (error) {
       return { error: error.message };
     }

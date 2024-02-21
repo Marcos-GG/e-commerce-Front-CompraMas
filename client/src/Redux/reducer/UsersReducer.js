@@ -4,6 +4,7 @@ import {
   BLOCK_USER,
   UNLOCK_USER,
   DELETE_USER,
+  GET_USERS_NAME,
 } from "../actionsTypes/UsersActionTypes";
 
 const initialState = {
@@ -44,11 +45,15 @@ const reducer = (state = initialState, action) => {
     }
 
     case DELETE_USER: {
-      console.log(action.payload, "payload");
       const usuariosSinEliminar = state.users.filter(
         (user) => user.id !== action.payload.id
       );
       return { ...state, users: usuariosSinEliminar };
+    }
+
+    case GET_USERS_NAME: {
+      console.log(action.payload, "reducer");
+      return { ...state, users: action.payload };
     }
 
     default:

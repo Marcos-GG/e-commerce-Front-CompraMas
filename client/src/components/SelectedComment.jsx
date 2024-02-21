@@ -72,6 +72,8 @@ const SelectedComment = ({
               border: "1px solid #00CCFD",
               bgcolor: "#F5F5F5",
               boxShadow: "10px 10px 15px #888888;",
+              wordBreak: "break-all",
+
               gap: 1,
             }}
           >
@@ -116,6 +118,7 @@ const SelectedComment = ({
                   padding: "10px",
                   my: "5px",
                   boxShadow: "10px 10px 15px #888888;",
+                  wordBreak: "break-all",
                   gap: 1,
                 }}
               >

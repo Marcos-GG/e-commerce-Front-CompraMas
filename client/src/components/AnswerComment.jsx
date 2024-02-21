@@ -3,11 +3,13 @@ import { useDispatch } from "react-redux";
 import {
   postAnswer /* postAnswerAdmin  */,
 } from "../Redux/actions/CommentsAction";
-import { Box, Button, TextField } from "@mui/material";
+import { Box, Button, TextField, useMediaQuery } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
 
 // eslint-disable-next-line react/prop-types
 const AnswerComment = ({ commentId }) => {
+  const isLTE768 = useMediaQuery("(max-width:768px)");
+
   const dispatch = useDispatch();
 
   const [form, setForm] = useState({
@@ -45,42 +47,67 @@ const AnswerComment = ({ commentId }) => {
   };
 
   return (
-    <Box sx={{ width: "100%", gap: "10px" }}>
+    <Box
+      sx={{
+        width: "100%",
+        height: isLTE768 ? "3rem" : "4rem",
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center",
+      }}
+    >
       <form
         onSubmit={handleSubmit}
         style={{
           display: "flex",
-          maxHeight: "3.6rem",
-          margin: "10px",
-          justifyContent: "space-between",
-          gap: "10px",
+          width: "100%",
+          alignItems: "center",
         }}
       >
-        <TextField
-          type="text"
-          name="answer"
-          value={form.answer}
-          onChange={formHandler}
-          onKeyPress={handleKeyPress}
-          multiline
-          maxRows={2}
-          fullWidth
+        <Box
           sx={{
+            width: "100%",
+            mx: "10px",
             overflow: "hidden",
-            width: "90%",
-            ml: "5px",
+            maxHeight: isLTE768 ? "3rem" : "3.8rem",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
           }}
-        />
-
+        >
+          <TextField
+            type="text"
+            name="answer"
+            value={form.answer}
+            onKeyPress={handleKeyPress}
+            onChange={formHandler}
+            multiline
+            fullWidth
+            sx={{
+              width: "100%",
+              mt: "5px",
+            }}
+            InputProps={{
+              sx: {
+                textAlign: "center",
+                fontSize: isLTE768 ? "15px" : "18px",
+              },
+            }}
+          />
+        </Box>
         <Button
           sx={{
             borderRadius: "10px",
-            bgcolor: "white",
             border: "2px solid #F5F5F5",
+            mr: "10px", // Ajuste de margen para separar el TextField del botón
           }}
           type="submit"
           variant="text"
-          endIcon={<SendIcon sx={{ mr: "9px" }} />}
+          endIcon={
+            <SendIcon
+              sx={{ m: isLTE768 ? "4px 9px 4px 0" : "7px 9px 7px 0" }}
+            />
+          }
         ></Button>
       </form>
     </Box>

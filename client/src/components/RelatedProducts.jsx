@@ -81,7 +81,7 @@ function RelatedProducts({ products, category, gender }) {
 
   return (
     <Box>
-      {filteredProducts && filteredProducts?.length > 0 && (
+      {filteredProducts && filteredProducts?.length === 5 && (
         <Box
           sx={{
             display: "flex",

@@ -1,19 +1,37 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useDispatch, useSelector } from "react-redux";
 import {
   blockUser,
   getUsers,
   unlockUser,
   deleteUser,
+  getUsersName,
 } from "../Redux/actions/UsersAction";
-import { useEffect } from "react";
-import { Box, Button, Typography } from "@mui/material";
+import { useEffect, useState } from "react";
+import { Box, Divider, TextField, Typography } from "@mui/material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import NoAccountsIcon from "@mui/icons-material/NoAccounts";
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import LockIcon from "@mui/icons-material/Lock";
+import LockOpenIcon from "@mui/icons-material/LockOpen";
+import SearchIcon from "@mui/icons-material/Search";
 
 const UserBlocked = () => {
   const dispatch = useDispatch();
   const users = useSelector((state) => state.users.users);
-  console.log(users);
+
+  const [nameUser, setNameUser] = useState({
+    string: "",
+  });
+  console.log(nameUser, "nameUser estado");
+
+  const handlerName = (event) => {
+    setNameUser({ string: event.target.value });
+  };
+
+  useEffect(() => {
+    dispatch(getUsersName(nameUser.string));
+  }, [nameUser.string]);
 
   useEffect(() => {
     if (users.length === 0) {
@@ -22,7 +40,7 @@ const UserBlocked = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const handleUserBlocked = (user) => {
+  const handlerUserBlocked = (user) => {
     if (user.active) {
       dispatch(blockUser(user));
     } else {
@@ -43,94 +61,170 @@ const UserBlocked = () => {
       <Box
         sx={{
           display: "flex",
-          flexWrap: "wrap",
-          width: "90%",
-          m: "auto",
+          width: "100%",
+          justifyContent: "end",
+          mb: "15px",
+          p: "10px",
         }}
       >
-        {users.map((user) => (
-          <Box
-            sx={{
-              height: "14rem",
-              width: "10rem",
-              bgcolor: "#F5F5F5",
-              m: "15px",
-              borderRadius: "5px",
-              boxShadow: "10px 10px 15px #888888",
-            }}
-            key={user.id}
-          >
-            <Box
-              sx={{
-                height: "68%",
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "space-evenly",
-              }}
-            >
+        <TextField
+          id="search"
+          label="Buscar usuario"
+          variant="outlined"
+          onChange={handlerName}
+          InputProps={{
+            endAdornment: <SearchIcon />,
+            sx: {
+              fontSize: "16px",
+              width: "15rem",
+              height: "3rem",
+              mr: "15px",
+            },
+          }}
+          sx={{
+            "& label": {
+              fontSize: "15px",
+              color: "gray",
+            },
+          }}
+        />
+      </Box>
+      <Box
+        sx={{
+          width: "80%",
+          m: "auto",
+          height: "45rem",
+          maxHeight: "50rem",
+          overflow: "auto",
+        }}
+      >
+        <Box sx={{ width: "95%", m: "auto" }}>
+          {users &&
+            users.map((user) => (
               <Box
                 sx={{
+                  // height: "14rem",
+                  width: "100%",
+                  borderRadius: "5px",
                   display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  height: "50%",
-                  flexDirection: "column",
+                  mt: "3px",
+                  border: "1px solid gray",
                 }}
+                key={user.id}
               >
-                {user?.active ? (
-                  <AccountCircleIcon sx={{ color: "gray", fontSize: "6rem" }} />
-                ) : (
-                  <NoAccountsIcon sx={{ color: "gray", fontSize: "8rem" }} />
-                )}
-              </Box>
-
-              <Box
-                sx={{
-                  maxHeight: "40px",
-                  overflow: "break-word",
-                  wordWrap: "break-word",
-                }}
-              >
-                <Typography
-                  variant="body1"
-                  component="p"
+                <Box
                   sx={{
-                    textAlign: "center",
+                    width: "90%",
+                    height: "3.5rem",
+                    display: "flex",
+                    alignItems: "center",
                   }}
                 >
-                  {user.name} {user.lastname}
-                </Typography>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      height: "50%",
+                      ml: "5px",
+                      flexDirection: "column",
+                    }}
+                  >
+                    {user?.active ? (
+                      <AccountCircleIcon
+                        sx={{ color: "gray", fontSize: "3rem" }}
+                      />
+                    ) : (
+                      <NoAccountsIcon
+                        sx={{ color: "gray", fontSize: "3rem" }}
+                      />
+                    )}
+                  </Box>
+
+                  <Box
+                    sx={{
+                      maxHeight: "40px",
+                      overflow: "break-word",
+                      wordWrap: "break-word",
+                      ml: "1.5rem",
+                    }}
+                  >
+                    <Typography
+                      variant="body1"
+                      component="p"
+                      sx={{
+                        textAlign: "center",
+                      }}
+                    >
+                      {user.name} {user.lastname}
+                    </Typography>
+                  </Box>
+                </Box>
+                <Box sx={{ width: "10%" }}>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      flexDirection: "column",
+                      gap: "5px",
+                    }}
+                  >
+                    <Box
+                      sx={{
+                        width: "80%",
+                        cursor: "pointer",
+                      }}
+                      size="small"
+                      onClick={() => handlerUserBlocked(user)}
+                    >
+                      {user?.active ? (
+                        <Box
+                          sx={{
+                            display: "flex",
+                            width: "100%",
+                            alignItems: "center",
+                            justifyContent: "space-evenly",
+                          }}
+                        >
+                          <LockOpenIcon fontSize="small" />
+                          Bloquear
+                        </Box>
+                      ) : (
+                        <Box
+                          sx={{
+                            display: "flex",
+                            width: "100%",
+
+                            alignItems: "center",
+                            justifyContent: "space-evenly",
+                          }}
+                        >
+                          <LockIcon fontSize="small" />
+                          Desbloquear
+                        </Box>
+                      )}
+                    </Box>
+
+                    <Divider sx={{ bgcolor: "#F5F5F5", width: "80%" }} />
+                    <Box
+                      sx={{
+                        width: "80%",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "space-evenly",
+                        cursor: "pointer",
+                      }}
+                      size="small"
+                      onClick={() => handlerDeleteUser(user)}
+                    >
+                      <DeleteForeverIcon fontSize="small" /> Eliminar
+                    </Box>
+                  </Box>
+                </Box>
               </Box>
-            </Box>
-            <Box
-              sx={{
-                width: "100%",
-                display: "flex",
-                alignItems: "center",
-                flexDirection: "column",
-                gap: "5px",
-              }}
-            >
-              {/* faltan botones para bloquear y desbloquear clientes */}
-              <Button
-                variant="contained"
-                sx={{ width: "80%" }}
-                size="small"
-                onClick={() => handleUserBlocked(user)}
-              >
-                {user?.active ? "Bloquear" : "Desbloquear"}
-              </Button>
-              <Button
-                variant="contained"
-                sx={{ width: "80%", mb: "5px" }}
-                size="small"
-                onClick={() => handlerDeleteUser(user)}
-              >
-                eliminar
-              </Button>
-            </Box>
-          </Box>
-        ))}
+            ))}
+        </Box>
       </Box>
     </Box>
   );

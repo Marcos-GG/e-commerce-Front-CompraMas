@@ -10,6 +10,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { useState } from "react";
 
 const CommentDesplegable = ({ productId, userId }) => {
+  const isLTE454 = useMediaQuery("(max-width:454px)");
   const isLTE768 = useMediaQuery("(max-width:768px)");
 
   const [expandedCommentId, setExpandedCommentId] = useState(null);
@@ -31,14 +32,11 @@ const CommentDesplegable = ({ productId, userId }) => {
           sx={{
             height: "25rem",
             boxShadow: "10px 10px 15px #888888",
-            mb: "3rem",
+            mb: "2.5rem",
             width: "100%",
           }}
         >
-          <Typography
-            variant="h5"
-            sx={{ letterSpacing: "0.1em", m: "10px 0 10px 10px" }}
-          >
+          <Typography variant="h5" sx={{ m: "10px 0 10px 10px" }}>
             Comentarios de la comunidad
           </Typography>
           <Box sx={{ overflow: "auto", maxHeight: "87%" }}>
@@ -85,6 +83,7 @@ const CommentDesplegable = ({ productId, userId }) => {
                             overflow: "hidden",
                             textOverflow: "ellipsis",
                             width: "95%",
+                            fontSize: isLTE454 && "14px",
                           }}
                         >
                           {comment.text}
@@ -133,10 +132,14 @@ const CommentDesplegable = ({ productId, userId }) => {
                                 alignSelf: answer.User.admin ? "end" : "start",
                                 textAlign: answer.User.admin ? "end" : "start",
                                 mx: "15px",
-                                width: "35%",
+                                maxWidth: "50%",
+                                overflow: "break-word",
+                                wordWrap: "break-word",
                               }}
                             >
-                              <Typography>{answer.answer}</Typography>
+                              <Typography sx={{ fontSize: isLTE454 && "14px" }}>
+                                {answer.answer}
+                              </Typography>
                             </Box>
                           ))}
                       </Box>

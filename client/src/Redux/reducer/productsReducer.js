@@ -10,6 +10,7 @@ import {
   APPLY_FILTERS,
   CLEAR_FILTERED_PRODUCTS,
   SET_FAVORITES,
+  GET_TERM_PRODUCTS,
 } from "../actionsTypes/ProductsActionTypes";
 import { ADD_LIKE, REMOVE_LIKE } from "../actionsTypes/LikesTypes";
 
@@ -19,6 +20,8 @@ const initialState = {
   desactivatedproducts: [],
   productsFiltered: [],
   favoritos: [],
+  isSearchFilterUsed: false,
+  isApplyFilterUsed: false,
 };
 
 const reducer = (state = initialState, action) => {
@@ -51,6 +54,42 @@ const reducer = (state = initialState, action) => {
           Comments: [action.payload, ...state.productId.Comments],
         },
       };
+    }
+
+    case GET_TERM_PRODUCTS: {
+      console.log(action.payload, "case GET_TERM_PRODUCT");
+      if (state.isApplyFilterUsed) {
+        const filteredProducts = state.productsFiltered.filter((product) => {
+          const products = action.payload.some(
+            (payloadProduct) => payloadProduct.id === product.id
+          );
+
+          console.log(products, "productos dentro de getTerm");
+          return products && products.status;
+        });
+        if (filteredProducts.length > 0) {
+          return {
+            ...state,
+            productsFiltered: filteredProducts,
+            isSearchFilterUsed: true,
+          };
+        } else {
+          // Devolver un mensaje que se mostrará al cliente
+          alert(
+            "No se encontraron coincidencias con los filtros aplicados previamente."
+          );
+          return { ...state };
+        }
+      } else {
+        const productStatusTrue = action.payload.filter(
+          (product) => product.status === true
+        );
+        return {
+          ...state,
+          productsFiltered: productStatusTrue,
+          isSearchFilterUsed: true,
+        };
+      }
     }
 
     case POST_ANSWER_PRODUCT_ID: {
@@ -116,6 +155,9 @@ const reducer = (state = initialState, action) => {
         products: state.products.filter(
           (product) => product.id !== action.payload
         ),
+        productsFiltered: state.productsFiltered.filter(
+          (product) => product.id !== action.payload
+        ),
       };
     }
 
@@ -127,16 +169,41 @@ const reducer = (state = initialState, action) => {
     }
 
     case APPLY_FILTERS: {
-      return {
-        ...state,
-        productsFiltered: action.payload,
-      };
+      console.log(action.payload, "case APPLY_FILTERS");
+
+      if (state.isSearchFilterUsed) {
+        const filterProducts = state.productsFiltered.filter((product) => {
+          return action.payload.some(
+            (payloadProduct) => payloadProduct.id === product.id
+          );
+        });
+        if (filterProducts.length > 0) {
+          return {
+            ...state,
+            productsFiltered: filterProducts,
+            isApplyFilterUsed: true,
+          };
+        } else {
+          alert(
+            "No se encontraron coincidencias con los filtros aplicados previamente."
+          );
+          return { ...state };
+        }
+      } else {
+        return {
+          ...state,
+          productsFiltered: action.payload,
+          isApplyFilterUsed: true,
+        };
+      }
     }
 
     case CLEAR_FILTERED_PRODUCTS: {
       return {
         ...state,
         productsFiltered: [],
+        isSearchFilterUsed: false,
+        isApplyFilterUsed: false,
       };
     }
 

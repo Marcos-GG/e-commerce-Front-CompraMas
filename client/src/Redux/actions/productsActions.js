@@ -10,6 +10,7 @@ import {
   CREATE_PRODUCT,
   APPLY_FILTERS,
   CLEAR_FILTERED_PRODUCTS,
+  GET_TERM_PRODUCTS,
 } from "../actionsTypes/ProductsActionTypes";
 
 export const getProducts = () => {
@@ -37,6 +38,23 @@ export const getProductId = (id) => {
       config
     );
     dispatch({ type: GET_PRODUCT_ID, payload: response.data });
+  };
+};
+
+export const getTermProducts = (string) => {
+  return async function (dispatch) {
+    try {
+      const config = configureHeaders();
+      const response = await axios.get(
+        `http://localhost:55878/products?search=${string}`,
+        config
+      );
+      const products = response.data;
+
+      dispatch({ type: GET_TERM_PRODUCTS, payload: products });
+    } catch (error) {
+      return error;
+    }
   };
 };
 

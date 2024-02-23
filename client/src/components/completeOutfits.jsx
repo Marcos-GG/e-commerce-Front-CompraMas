@@ -51,9 +51,8 @@ const CompleteOutfits = ({ IdProduct, gender, category, products }) => {
         variant="h4"
         sx={{
           textAlign: "center",
-          mt: "50px",
           mb: "20px",
-          fontSize: isLTE454 ? "30px" : isLTE768 ? "35px" : isLTE1000 && "45px",
+          fontSize: isLTE454 ? "24px" : isLTE768 ? "35px" : isLTE1000 && "45px",
         }}
       >
         COMPLETA TU OUTFIT

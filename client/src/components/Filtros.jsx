@@ -44,6 +44,8 @@ const Filtros = ({ open, handleDrawerToggle }) => {
     price: { min: initialPrice.min, max: initialPrice.max },
   });
 
+  console.log(combinedFilters, "combinedFilters");
+
   useEffect(() => {
     dispatch(getCategory());
     dispatch(getGender());
@@ -74,18 +76,21 @@ const Filtros = ({ open, handleDrawerToggle }) => {
   };
 
   const limpiarFiltros = () => {
+    dispatch(clearProductosFiltrados());
+
     setCombinedFilters({
       category: null,
       gender: null,
       morePopular: null,
-      price: { ...initialPrice },
+      price: { min: initialPrice.min, max: initialPrice.max },
     });
     // restablecemos manualmente porque los valores que fueron seleccionados quedaban guardados visualmente
     setCategoriaSeleccionada(null);
     setGeneroSeleccionado(null);
+    setEstadoBoton(false);
     setMorePopular(false);
 
-    dispatch(clearProductosFiltrados());
+    console.log(combinedFilters, "vemos si se limpiaron");
   };
 
   useEffect(() => {
@@ -98,7 +103,14 @@ const Filtros = ({ open, handleDrawerToggle }) => {
   }, [combinedFilters, initialPrice]);
 
   const handleApplyFilter = () => {
-    dispatch(apllyFilters(combinedFilters));
+    if (!estadoBoton) {
+      console.log(
+        combinedFilters,
+        "combinedFilters para ver el estado en cada dispatch"
+      );
+      dispatch(apllyFilters(combinedFilters));
+      limpiarFiltros();
+    }
   };
 
   return (
@@ -235,7 +247,6 @@ const Filtros = ({ open, handleDrawerToggle }) => {
             >
               Aplicar filtros
             </Button>
-
             <Box
               sx={{
                 cursor: "pointer", // Añadí esto para que el cursor indique que es un elemento clickeable

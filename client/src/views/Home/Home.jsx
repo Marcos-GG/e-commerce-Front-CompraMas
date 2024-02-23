@@ -7,6 +7,7 @@ import CardContainer from "../../components/CardContainer";
 import Filtros from "../../components/Filtros";
 import { Box, useMediaQuery /* useTheme */ } from "@mui/material";
 import { GET_PRODUCTS } from "../../Redux/actionsTypes/ProductsActionTypes";
+import SearchBarProduct from "../../components/SearchBarProduct";
 
 function Home() {
   // const theme = useTheme();
@@ -16,12 +17,20 @@ function Home() {
 
   const dispatch = useDispatch();
   const products = useSelector((state) => state.products.products);
+  console.log(products, "products");
 
   const productosFiltrados = useSelector(
     (state) => state.products.productsFiltered
   );
 
+  console.log(productosFiltrados, "home productosFiltrados");
+
   const [productsFiltered, setProductsFiltered] = useState([]);
+
+  console.log(
+    productsFiltered,
+    "estado cargado con los productos para filtrar"
+  );
 
   const [, setError] = useState(null);
 
@@ -60,6 +69,10 @@ function Home() {
   return (
     <Box className={Style}>
       <h1>home</h1>
+
+      <Box>
+        <SearchBarProduct />
+      </Box>
       <Box
         sx={{
           display: "flex",
@@ -105,9 +118,9 @@ function Home() {
         >
           <CardContainer
             products={
-              productsFiltered && productsFiltered.length > 0
-                ? productosFiltrados
-                : products
+              productsFiltered && productsFiltered.length === 0
+                ? products
+                : productosFiltrados
             }
           />
         </Box>

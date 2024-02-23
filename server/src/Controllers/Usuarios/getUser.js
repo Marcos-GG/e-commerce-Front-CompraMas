@@ -14,12 +14,12 @@ const getUserController = async (id, search) => {
         [Op.or]: [
           {
             name: {
-              [Op.like]: `%${search}%`,
+              [Op.like]: `${search}%`,
             },
           },
           {
             lastname: {
-              [Op.like]: `%${search}%`,
+              [Op.like]: `${search}%`,
             },
           },
         ],

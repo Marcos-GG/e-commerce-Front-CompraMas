@@ -105,7 +105,7 @@ const NavBarAdmin = () => {
         >
           <Box
             sx={{
-              width: "100vw",
+              width: "99vw",
               display: "flex",
               justifyContent: "space-between",
             }}

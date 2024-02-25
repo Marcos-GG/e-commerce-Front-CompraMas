@@ -52,7 +52,6 @@ const reducer = (state = initialState, action) => {
     }
 
     case GET_USERS_NAME: {
-      console.log(action.payload, "reducer");
       return { ...state, users: action.payload };
     }
 

@@ -23,7 +23,6 @@ const UserBlocked = () => {
   const [nameUser, setNameUser] = useState({
     string: "",
   });
-  console.log(nameUser, "nameUser estado");
 
   const handlerName = (event) => {
     setNameUser({ string: event.target.value });

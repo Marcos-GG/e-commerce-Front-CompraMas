@@ -4,8 +4,6 @@ const getFavoritesHandler = async (req, res) => {
   try {
     const userId = req.userId;
 
-    console.log("oka");
-
     const products = await getFavoritesController(userId);
     if (!products)
       throw new Error("El usuario no tiene productos en favoritos.");

@@ -57,14 +57,12 @@ const reducer = (state = initialState, action) => {
     }
 
     case GET_TERM_PRODUCTS: {
-      console.log(action.payload, "case GET_TERM_PRODUCT");
       if (state.isApplyFilterUsed) {
         const filteredProducts = state.productsFiltered.filter((product) => {
           const products = action.payload.some(
             (payloadProduct) => payloadProduct.id === product.id
           );
 
-          console.log(products, "productos dentro de getTerm");
           return products && products.status;
         });
         if (filteredProducts.length > 0) {
@@ -169,8 +167,6 @@ const reducer = (state = initialState, action) => {
     }
 
     case APPLY_FILTERS: {
-      console.log(action.payload, "case APPLY_FILTERS");
-
       if (state.isSearchFilterUsed) {
         const filterProducts = state.productsFiltered.filter((product) => {
           return action.payload.some(

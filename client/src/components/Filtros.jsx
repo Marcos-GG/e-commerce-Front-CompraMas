@@ -44,8 +44,6 @@ const Filtros = ({ open, handleDrawerToggle }) => {
     price: { min: initialPrice.min, max: initialPrice.max },
   });
 
-  console.log(combinedFilters, "combinedFilters");
-
   useEffect(() => {
     dispatch(getCategory());
     dispatch(getGender());
@@ -89,8 +87,6 @@ const Filtros = ({ open, handleDrawerToggle }) => {
     setGeneroSeleccionado(null);
     setEstadoBoton(false);
     setMorePopular(false);
-
-    console.log(combinedFilters, "vemos si se limpiaron");
   };
 
   useEffect(() => {
@@ -104,10 +100,6 @@ const Filtros = ({ open, handleDrawerToggle }) => {
 
   const handleApplyFilter = () => {
     if (!estadoBoton) {
-      console.log(
-        combinedFilters,
-        "combinedFilters para ver el estado en cada dispatch"
-      );
       dispatch(apllyFilters(combinedFilters));
       limpiarFiltros();
     }

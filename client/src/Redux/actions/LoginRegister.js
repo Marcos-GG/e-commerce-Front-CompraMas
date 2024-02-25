@@ -29,7 +29,6 @@ export const postLogin = (form) => {
 
       dispatch({ type: LOGIN, payload: response.data });
     } catch (error) {
-      console.log(error);
       return window.alert("Ocurrio un error inesperado");
     }
   };

@@ -9,10 +9,6 @@ import { Box } from "@mui/material";
 const Admin = () => {
   const dispatch = useDispatch();
   const comments = useSelector((state) => state.comments.comments);
-  const productId = useSelector((state) => state.products.productId);
-  console.log(productId, "se actualizo correctamente la nueva resusta");
-
-  console.log(comments);
 
   useEffect(() => {
     const persistedData = localStorage.getItem("persist:root");

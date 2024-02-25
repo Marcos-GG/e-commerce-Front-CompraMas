@@ -81,12 +81,10 @@ export const getUsersName = (string) => {
   return async function (dispatch) {
     try {
       const config = configureHeaders();
-      console.log(string, "string que llega al action");
       const response = await axios.get(
         `http://localhost:55878/users?search=${string}`,
         config
       );
-      console.log(response.data, "action response getUsersName");
       dispatch({ type: GET_USERS_NAME, payload: response.data });
     } catch (error) {
       return { error: error.message };

@@ -56,8 +56,6 @@ function App() {
     if (cart) {
       const parseCart = JSON.parse(cart);
 
-      console.log(parseCart, "cart parseado");
-
       dispatch({
         type: SET_INITIAL_CART,
         payload: parseCart,

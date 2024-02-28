@@ -2,14 +2,20 @@
 import { Box, Typography, useMediaQuery } from "@mui/material";
 import { useEffect, useState } from "react";
 
-const CompleteOutfits = ({ IdProduct, gender, category, products }) => {
+const CompleteOutfits = ({
+  product,
+  IdProduct,
+  gender,
+  category,
+  products,
+}) => {
   const isLTE454 = useMediaQuery("(max-width:454px)");
   const isLTE768 = useMediaQuery("(max-width:768px)");
   const isLTE1000 = useMediaQuery("(max-width:1000px)");
+  const isLTE1200 = useMediaQuery("(max-width:1200px)");
   const isLTE1520 = useMediaQuery("(max-width:1520px)");
 
   const [productsOutfits, setProductsOutfits] = useState([]); // Inicializa productsOutfits
-  console.log(productsOutfits, "productsOutfits");
 
   useEffect(() => {
     const obtenerProductosCoincidentes = () => {
@@ -52,7 +58,15 @@ const CompleteOutfits = ({ IdProduct, gender, category, products }) => {
         sx={{
           textAlign: "center",
           mb: "20px",
-          fontSize: isLTE454 ? "24px" : isLTE768 ? "35px" : isLTE1000 && "45px",
+          fontSize: product
+            ? isLTE1200
+              ? "25px"
+              : "30px"
+            : isLTE454
+            ? "24px"
+            : isLTE768
+            ? "35px"
+            : isLTE1000 && "45px",
         }}
       >
         COMPLETA TU OUTFIT
@@ -72,7 +86,6 @@ const CompleteOutfits = ({ IdProduct, gender, category, products }) => {
               key={product.id}
               sx={{
                 display: "flex",
-                bgcolor: "orange",
                 width: isLTE768 ? "49%" : isLTE1520 ? "45%" : "49%",
                 height: "auto",
                 position: "relative",

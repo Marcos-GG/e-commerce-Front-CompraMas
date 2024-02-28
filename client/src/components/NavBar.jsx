@@ -9,13 +9,11 @@ import {
   Typography,
 } from "@mui/material";
 import { useState } from "react";
-import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import MenuIcon from "@mui/icons-material/Menu";
 
 const NavBar = () => {
   const admin = localStorage.getItem("admin");
-  const ShoppingCart = useSelector((state) => state.shoppingCart);
 
   const [drawerOpen, setDrawerOpen] = useState(false);
   const handleDrawerToggle = () => {
@@ -64,16 +62,7 @@ const NavBar = () => {
                   </Typography>
                 </ListItem>
               )}
-              <ListItem button component={NavLink} to="/carrito">
-                <Typography variant="body1" sx={{ textDecoration: "none" }}>
-                  Carrito{" "}
-                  {ShoppingCart?.products?.length > 0
-                    ? `(${ShoppingCart?.products?.reduce(function (acc, obj) {
-                        return acc + (obj?.cantidad || 1);
-                      }, 0)})`
-                    : ""}
-                </Typography>
-              </ListItem>
+
               <ListItem button component={NavLink} to="/favoritos">
                 <Typography variant="body1" sx={{ textDecoration: "none" }}>
                   Favoritos
@@ -120,20 +109,6 @@ const NavBar = () => {
                 Administrador
               </Button>
             )}
-
-            <Button
-              variant="contained"
-              component={NavLink}
-              to="/carrito"
-              size="small"
-            >
-              Carrito
-              {ShoppingCart?.products?.length > 0
-                ? `(${ShoppingCart?.products?.reduce(function (acc, obj) {
-                    return acc + (obj?.cantidad || 1);
-                  }, 0)})`
-                : ""}
-            </Button>
 
             <Button
               variant="contained"

@@ -8,6 +8,7 @@ import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 const ProductItem = ({
+  productAdmin,
   product,
   handleClickAdd,
   handleClickLike,
@@ -32,7 +33,6 @@ const ProductItem = ({
   const isLTE918 = useMediaQuery("(max-width:918px)");
 
   const handleBoxClick = () => {
-    // Llamar a ambas funciones aquí
     navigate(`/detail/${product?.id}`);
     if (typeof handleProductClick === "function") {
       handleProductClick(product?.id);
@@ -42,10 +42,16 @@ const ProductItem = ({
   return (
     <Box
       sx={{
-        margin: isLTE918 ? "1px" : "10px",
+        margin: productAdmin ? "5px" : isLTE918 ? "1px" : "10px",
         marginY: isLTE426 ? "8px" : isLTE490 ? "8px" : "",
         width: enDetail ? "10rem" : isLTE490 ? "11.5rem" : "12rem",
-        height: enDetail ? "15rem" : isLTE490 ? "16.5rem" : "17rem",
+        height: productAdmin
+          ? "15rem"
+          : enDetail
+          ? "15rem"
+          : isLTE490
+          ? "16.5rem"
+          : "17rem",
         position: "relative",
         cursor: "pointer",
         transition: "0.1s",

@@ -13,7 +13,7 @@ import {
 } from "@mui/material";
 import ProductItem from "./ProductItem";
 
-function RelatedProducts({ products, category, gender }) {
+function RelatedProducts({ productAdmin, products, category, gender }) {
   const isLTE426 = useMediaQuery("(max-width:426px)");
   const isLTE800 = useMediaQuery("(max-width:800px)");
   const isLTE1250 = useMediaQuery("(max-width:1250px)");
@@ -70,7 +70,7 @@ function RelatedProducts({ products, category, gender }) {
     "& > div": {
       whiteSpace: "nowrap",
       display: "flex",
-      animation: `${slideAnimation} 30s linear infinite`, // Aquí he aumentado la duración para mantener el desplazamiento continuo
+      animation: `${slideAnimation} 10s linear infinite`, // Aquí he aumentado la duración para mantener el desplazamiento continuo
     },
     "@media (max-width: 800px)": {
       "& > div": {
@@ -87,22 +87,31 @@ function RelatedProducts({ products, category, gender }) {
             display: "flex",
             justifyContent: "center",
             flexDirection: "column",
-            alignItems: isLTE1250 ? "center" : "start",
+            alignItems: productAdmin || isLTE1250 ? "center" : "start",
           }}
         >
           <Typography
             variant="h5"
-            sx={{ m: "20px 0 10px 0", alignSelf: "center" }}
+            sx={{
+              m: productAdmin ? "10px 0 5px 0" : "20px 0 10px 0",
+              alignSelf: "center",
+            }}
           >
             Productos relacionados:
           </Typography>
 
-          <Box sx={{ position: "relative", width: "90%" }}>
-            <AnimatedBox sx={{ width: "100%" }}>
+          <Box sx={{ position: "relative", width: "95%" }}>
+            <AnimatedBox
+              sx={{ width: "100%", height: productAdmin && "16.5rem" }}
+            >
               {filteredProducts?.length > 0 &&
                 filteredProducts.map((product) => (
-                  <Box key={product.id} sx={{ width: "100%", mx: "3px" }}>
+                  <Box
+                    key={product.id}
+                    sx={{ width: "100%", mx: product ? "0" : "3px" }}
+                  >
                     <ProductItem
+                      productAdmin={productAdmin}
                       product={product}
                       navigate={navigate}
                       priceStyle={priceStyle}
@@ -112,8 +121,12 @@ function RelatedProducts({ products, category, gender }) {
                 ))}
               {filteredProducts?.length > 0 &&
                 filteredProducts.map((product) => (
-                  <Box key={product.id} sx={{ width: "100%", mx: "3px" }}>
+                  <Box
+                    key={product.id}
+                    sx={{ width: "100%", mx: product ? "0" : "3px" }}
+                  >
                     <ProductItem
+                      productAdmin={productAdmin}
                       product={product}
                       navigate={navigate}
                       priceStyle={priceStyle}

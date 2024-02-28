@@ -30,7 +30,7 @@ const SearchBarProduct = () => {
   }, [searchTermProducts.string]);
 
   return (
-    <Box sx={{ bgcolor: "beige" }}>
+    <Box sx={{}}>
       <TextField
         id="search"
         label="Buscar producto"

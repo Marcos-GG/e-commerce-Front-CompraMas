@@ -30,7 +30,15 @@ import ProductPrice from "../../components/ProductPrice";
 
 function Home() {
   // const theme = useTheme();
+  const isLTE424 = useMediaQuery("(max-width: 424px)");
+  const isLTE500 = useMediaQuery("(max-width: 500px)");
+  const isLTE530 = useMediaQuery("(max-width: 530px)");
+  const isLTE600 = useMediaQuery("(max-width: 600px)");
+  const isLTE650 = useMediaQuery("(max-width: 650px)");
+  const isLTE700 = useMediaQuery("(max-width: 700px)"); //
   const isLTE1000 = useMediaQuery("(max-width:1000px)");
+  const isLTE1440 = useMediaQuery("(max-width:1440px)");
+  const isLTE1200 = useMediaQuery("(max-width:1200px)");
   const isLTE1700 = useMediaQuery("(max-width:1700px)");
   const isLTE1025 = useMediaQuery("(max-width:1025px)");
 
@@ -111,7 +119,7 @@ function Home() {
     );
 
     const totalStyle = {
-      fontSize: "30px",
+      fontSize: isLTE530 ? "25px" : "30px",
     };
 
     const precioTotal = (
@@ -129,7 +137,7 @@ function Home() {
     });
 
     const subTotalStyle = {
-      fontSize: "14px",
+      fontSize: isLTE530 ? "12.5px" : "14px",
       fontWeight: "bold",
     };
     const precioSubTotal = (
@@ -140,7 +148,11 @@ function Home() {
   };
 
   const priceStyle = {
-    fontSize: "14px",
+    fontSize: isLTE530 ? "13px" : "14px",
+  };
+
+  const priceIndividualStyle = {
+    fontSize: isLTE1440 ? "14px" : "18px",
   };
 
   return (
@@ -156,7 +168,7 @@ function Home() {
           mb: "1rem",
           display: "flex",
           alignItems: "center",
-          justifyContent: "flex-end",
+          justifyContent: isLTE500 ? "center" : "flex-end",
         }}
       >
         <Box
@@ -175,7 +187,10 @@ function Home() {
             <IconButton
               onClick={cantidadCarrito > 0 && handleDrawerToggleCarrito}
             >
-              <ShoppingBagIcon sx={{ fontSize: "1.6rem" }} color="action" />
+              <ShoppingBagIcon
+                sx={{ fontSize: isLTE500 ? "1.4rem" : "1.6rem" }}
+                color="action"
+              />
             </IconButton>
 
             <Drawer
@@ -185,17 +200,19 @@ function Home() {
             >
               <Box
                 sx={{
-                  width: "30rem",
+                  width: isLTE530 ? "100%" : isLTE600 ? "25rem" : "30rem",
                   display: "flex",
                   flexDirection: "column",
                   justifyContent: "center",
+                  overflow: "hidden",
                   alignItems: "center",
+                  bgcolor: "#F5F5F5",
                   height: "100%",
                 }}
               >
                 <Box
                   sx={{
-                    width: "98%",
+                    width: isLTE600 ? "100%" : "98%",
                     height: "80%",
                     display: "flex",
                     flexDirection: "column",
@@ -205,7 +222,10 @@ function Home() {
                   <Typography
                     variant="body"
                     component="p"
-                    sx={{ m: "20px 0 10px 0", fontSize: "20px" }}
+                    sx={{
+                      m: "20px 0 10px 0",
+                      fontSize: isLTE530 ? "17px" : "20px",
+                    }}
                   >
                     MI COMPRA
                   </Typography>
@@ -235,91 +255,214 @@ function Home() {
                             <Box
                               component="img"
                               src={product.image1}
-                              sx={{ width: "100px" }}
+                              sx={{
+                                width: isLTE530
+                                  ? "86px"
+                                  : isLTE530
+                                  ? "90px"
+                                  : "100px",
+                                maxHeight: isLTE530 && "86px",
+                              }}
                             />
 
-                            <Box
-                              sx={{
-                                width: "100%",
-                                display: "flex",
-                                flexDirection: "column",
-                                justifyContent: "space-evenly",
-                              }}
-                            >
-                              <Typography
-                                sx={{ fontSize: "15px", ml: "0.5rem" }}
-                              >
-                                {product.title}
-                              </Typography>
-                              <Box sx={{ display: "flex" }}>
-                                <Typography
-                                  sx={{ mx: "0.5rem", fontSize: "14px" }}
-                                >
-                                  precio:
-                                </Typography>
-                                {
-                                  <ProductPrice
-                                    price={product?.price}
-                                    style={priceStyle}
-                                  />
-                                }
-                              </Box>
-
-                              <Box
-                                sx={{
-                                  display: "flex",
-                                  justifyContent: "space-between",
-                                }}
-                              >
+                            {isLTE650 ? (
+                              <Box sx={{ width: "100%" }}>
                                 <Box
                                   sx={{
-                                    bgcolor: "white",
-                                    borderRadius: "10px",
-                                    display: "flex",
-                                    alignItems: "center",
-                                    width: "4rem",
-                                    height: "25px",
-                                    ml: "1rem",
-                                    justifyContent: "center",
-                                  }}
-                                >
-                                  <IconButton
-                                    onClick={() => handleClickRemove(product)}
-                                  >
-                                    <RemoveIcon sx={{ fontSize: "15px" }} />
-                                  </IconButton>
-
-                                  <Typography sx={{ fontSize: "15px" }}>
-                                    {product.cantidad}
-                                  </Typography>
-
-                                  <IconButton
-                                    onClick={() => handleClickAdd(product)}
-                                  >
-                                    <AddIcon sx={{ fontSize: "15px" }} />
-                                  </IconButton>
-                                </Box>
-                                <Box
-                                  sx={{
-                                    display: "flex",
-                                    justifyContent: "center",
-                                    alignItems: "center",
-                                    width: "55%",
+                                    width: "100%",
+                                    height: "3.6rem",
                                   }}
                                 >
                                   <Typography
+                                    variant="h6"
                                     sx={{
-                                      fontSize: "13px",
-                                      mr: "1rem",
-                                      fontWeight: "bold",
+                                      fontSize: isLTE1200 ? "13px" : "15px",
+                                      ml: "12px",
                                     }}
                                   >
-                                    subTotal:
+                                    {product.title}
                                   </Typography>
-                                  {calcularSubTotal(index)}
+                                  <Box sx={{ ml: "20px" }}>
+                                    <ProductPrice
+                                      price={product?.price}
+                                      style={priceIndividualStyle}
+                                    />
+                                  </Box>
+                                </Box>
+                                <Box
+                                  sx={{
+                                    display: "flex",
+                                    justifyContent: "space-between",
+                                    alignItems: "center",
+                                  }}
+                                >
+                                  <Box
+                                    sx={{
+                                      bgcolor: "white",
+                                      borderRadius: "10px",
+                                      display: "flex",
+                                      alignItems: "center",
+                                      width: isLTE700
+                                        ? "4.5rem"
+                                        : isLTE1200
+                                        ? "5rem"
+                                        : "6rem",
+                                      height: "25px",
+                                      ml: "1rem",
+                                      my: isLTE650 && "8px",
+                                      justifyContent: "center",
+                                    }}
+                                  >
+                                    <IconButton
+                                      onClick={() => handleClickRemove(product)}
+                                    >
+                                      <RemoveIcon
+                                        sx={{
+                                          fontSize: isLTE700 ? "13px" : "15px",
+                                        }}
+                                      />
+                                    </IconButton>
+
+                                    <Typography
+                                      sx={{
+                                        fontSize: isLTE700 ? "13px" : "15px",
+                                      }}
+                                    >
+                                      {product.cantidad}
+                                    </Typography>
+
+                                    <IconButton
+                                      onClick={() => handleClickAdd(product)}
+                                    >
+                                      <AddIcon
+                                        sx={{
+                                          fontSize: isLTE700 ? "13px" : "15px",
+                                        }}
+                                      />
+                                    </IconButton>
+                                  </Box>
+                                  <Box
+                                    sx={{
+                                      display: "flex",
+                                      mr: "20px",
+                                      alignItems: "center",
+                                    }}
+                                  >
+                                    {!isLTE424 ? (
+                                      <Typography
+                                        sx={{
+                                          fontSize: isLTE650 && "14px",
+                                          mr: "10px",
+                                        }}
+                                      >
+                                        SubTotal:
+                                      </Typography>
+                                    ) : (
+                                      <Typography
+                                        sx={{
+                                          fontSize: isLTE650 && "14px",
+                                          mr: isLTE424 ? "5px" : "10px",
+                                        }}
+                                      >
+                                        st:
+                                      </Typography>
+                                    )}
+                                    {calcularSubTotal(index)}
+                                  </Box>
                                 </Box>
                               </Box>
-                            </Box>
+                            ) : (
+                              <Box
+                                sx={{
+                                  width: "100%",
+                                  display: "flex",
+                                  flexDirection: "column",
+                                  justifyContent: "space-evenly",
+                                }}
+                              >
+                                <Typography
+                                  sx={{
+                                    fontSize: "15px",
+                                    ml: "0.5rem",
+                                  }}
+                                >
+                                  {product.title}
+                                </Typography>
+                                <Box sx={{ display: "flex" }}>
+                                  <Typography
+                                    sx={{
+                                      mx: "0.5rem",
+                                      fontSize: "14px",
+                                    }}
+                                  >
+                                    precio:
+                                  </Typography>
+                                  {
+                                    <ProductPrice
+                                      price={product?.price}
+                                      style={priceStyle}
+                                    />
+                                  }
+                                </Box>
+
+                                <Box
+                                  sx={{
+                                    display: "flex",
+
+                                    justifyContent: "space-between",
+                                  }}
+                                >
+                                  <Box
+                                    sx={{
+                                      bgcolor: "white",
+                                      borderRadius: "10px",
+                                      display: "flex",
+                                      alignItems: "center",
+                                      width: "4rem",
+                                      height: "25px",
+                                      ml: "1rem",
+                                      justifyContent: "center",
+                                    }}
+                                  >
+                                    <IconButton
+                                      onClick={() => handleClickRemove(product)}
+                                    >
+                                      <RemoveIcon sx={{ fontSize: "15px" }} />
+                                    </IconButton>
+
+                                    <Typography sx={{ fontSize: "15px" }}>
+                                      {product.cantidad}
+                                    </Typography>
+
+                                    <IconButton
+                                      onClick={() => handleClickAdd(product)}
+                                    >
+                                      <AddIcon sx={{ fontSize: "15px" }} />
+                                    </IconButton>
+                                  </Box>
+                                  <Box
+                                    sx={{
+                                      display: "flex",
+
+                                      alignItems: "center",
+                                      width: "55%",
+                                    }}
+                                  >
+                                    <Typography
+                                      sx={{
+                                        fontSize: "13px",
+                                        mr: "1rem",
+
+                                        fontWeight: "bold",
+                                      }}
+                                    >
+                                      subTotal:
+                                    </Typography>
+                                    <Box sx={{}}>{calcularSubTotal(index)}</Box>
+                                  </Box>
+                                </Box>
+                              </Box>
+                            )}
                           </Box>
 
                           <Divider
@@ -345,12 +488,18 @@ function Home() {
                   }}
                 >
                   <Box
-                    sx={{ display: "flex", justifyContent: "space-between" }}
+                    sx={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                    }}
                   >
-                    <Typography variant="h5" sx={{ m: "10px 0 0 20px" }}>
+                    <Typography
+                      variant="h5"
+                      sx={{ m: "10px 0 0 20px", fontSize: isLTE530 && "20px" }}
+                    >
                       Total
                     </Typography>
-                    <Box sx={{ mr: "15px" }}>{calcularValorTotal()}</Box>
+                    <Box sx={{ m: "5px 0 20px 0" }}>{calcularValorTotal()}</Box>
                   </Box>
 
                   <Box
@@ -367,11 +516,12 @@ function Home() {
                       to="/carrito"
                       sx={{
                         width: "60%",
-                        m: "10px 0 5px 0",
+                        m: isLTE530 ? "4px 0 4px 0" : "10px 0 5px 0",
                         borderRadius: "30px",
+                        fontSize: isLTE530 && "13px",
                       }}
                     >
-                      Inicicar Compra
+                      Iniciar Compra
                     </Button>
 
                     <Button
@@ -380,7 +530,7 @@ function Home() {
                     >
                       <Typography
                         sx={{
-                          fontSize: "13px",
+                          fontSize: isLTE530 ? "12px" : "13px",
                           textDecoration: "none",
                           textDecorationStyle: "none",
                         }}

@@ -3,9 +3,42 @@ import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { createProduct } from "../Redux/actions/productsActions";
 import { getCategory, getGender } from "../Redux/actions/CategoryGender";
+import {
+  Box,
+  Button,
+  IconButton,
+  MenuItem,
+  Select,
+  TextField,
+  useMediaQuery,
+} from "@mui/material";
+import AddIcon from "@mui/icons-material/Add";
+import DetailProduct from "../views/DetailProduct/DetailProduct";
 
 const FormProduct = () => {
   // const [additionalImages, setAdditionalImages] = useState([]);
+  const isLTE500 = useMediaQuery(`(max-width: 500px)`);
+  const isLTE1023 = useMediaQuery(`(max-width: 1023px)`);
+  const isLTE1300 = useMediaQuery(`(max-width: 1300px)`);
+  const isLTE1700 = useMediaQuery(`(max-width: 1700px)`);
+
+  const [image2, setImage2] = useState(false);
+  const handlerImage2 = () => {
+    setImage2(!image2);
+    setImage3(false);
+    setImage4(false);
+  };
+
+  const [image3, setImage3] = useState(false);
+  const handlerImage3 = () => {
+    setImage3(!image3);
+    setImage4(false);
+  };
+
+  const [image4, setImage4] = useState(false);
+  const handlerImage4 = () => {
+    setImage4(!image4);
+  };
 
   const dispatch = useDispatch();
   const categories = useSelector((state) => state.categoryGender.category);
@@ -23,7 +56,7 @@ const FormProduct = () => {
     image3: "",
     image4: "",
     description: "",
-    stock: "",
+    // stock: "",
     price: "",
     gender: "",
     category: "",
@@ -51,150 +84,391 @@ const FormProduct = () => {
     dispatch(createProduct(form));
   };
 
+  const handlerVaciarForm = () => {
+    setForm({
+      title: "",
+      image1: "",
+      image2: "",
+      image3: "",
+      image4: "",
+      description: "",
+      // stock: "",
+      price: "",
+      gender: "",
+      category: "",
+    });
+  };
+
+  const valueForm = Object.values(form).every((value) => !value);
+
   return (
-    <div>
-      <h1> Formulario de creacion para los productos</h1>
-      <div>
-        <form onSubmit={handlerSubmit}>
-          <div>
-            <input
-              type="text"
-              name="title"
-              value={form.title}
-              onChange={formHandler}
-              placeholder="Título"
-            />
-          </div>
-          <div>
-            <input
-              type="text"
-              name="image1"
-              value={form.image1}
-              onChange={formHandler}
-              placeholder="imagen Principal"
-            />
-            {/* <input
-            type="text"
-            name="image"
-            value={additionalImages[0]} // El primer input se utiliza como la imagen principal
-            onChange={(event) => {
-              const newImages = [...additionalImages];
-              newImages[0] = event.target.value; // Actualizar el valor del primer input
-              setAdditionalImages(newImages);
-            }}
-            placeholder="URL de la imagen principal"
-          />
-          <div>
-            {additionalImages.slice(1).map(
-              (
-                image,
-                index // Recorrer los inputs adicionales a partir del segundo elemento
-              ) => (
-                <div key={index}>
-                  <input
+    <Box sx={{ height: `calc(100vh - 3.2rem)` }}>
+      <Box
+        sx={{
+          height: "100%",
+          display: "flex",
+          flexDirection: isLTE1023 && "column",
+        }}
+      >
+        <Box
+          sx={{
+            width: isLTE1023 ? "100%" : isLTE1300 ? "40%" : "40%",
+            height: "100%",
+            display: "flex",
+            justifyContent: "start",
+            flexDirection: "column",
+            p: isLTE1023 ? "" : "10px",
+            mt: "20px",
+          }}
+        >
+          <form onSubmit={handlerSubmit}>
+            <Box
+              sx={{
+                display: "flex",
+                bgcolor: "#F5F5F5",
+                borderRadius: "5px",
+                boxShadow: "10px 10px 15px #888888",
+
+                flexDirection: "column",
+                alignItems: "center",
+                height: "100%",
+                mx: isLTE500 ? "15px" : isLTE1023 && "10%",
+                // m: "30px 30px 0 30px",
+              }}
+            >
+              <Box
+                sx={{
+                  width: isLTE1300 ? "94%" : isLTE1700 ? "90%" : "80%",
+                  my: isLTE500 ? "2px" : "3px",
+                }}
+              >
+                <TextField
+                  type="text"
+                  name="title"
+                  value={form.title}
+                  onChange={formHandler}
+                  placeholder="Título"
+                  InputProps={{
+                    sx: {
+                      bgcolor: "white",
+                      width: "100%",
+                      mt: "20px",
+                      height: "2.5rem",
+                    },
+                  }}
+                  sx={{ width: "100%" }}
+                />
+              </Box>
+              <Box
+                sx={{
+                  width: isLTE1300 ? "94%" : isLTE1700 ? "90%" : "80%",
+                  display: "flex",
+                  alignItems: "center",
+                  my: isLTE500 ? "2px" : "3px",
+                }}
+              >
+                <TextField
+                  type="text"
+                  name="image1"
+                  value={form.image1}
+                  onChange={formHandler}
+                  placeholder="imagen Principal"
+                  InputProps={{
+                    sx: {
+                      bgcolor: "white",
+
+                      width: "100%",
+                      mt: "20px",
+                      height: "2.5rem",
+                    },
+                  }}
+                  sx={{ width: "100%" }}
+                />
+                <IconButton sx={{ mt: "20px" }} onClick={handlerImage2}>
+                  <AddIcon />
+                </IconButton>
+              </Box>
+              {image2 && (
+                <Box
+                  sx={{
+                    width: isLTE1300 ? "94%" : isLTE1700 ? "90%" : "80%",
+                    display: "flex",
+                    alignItems: "center",
+                    my: isLTE500 ? "2px" : "3px",
+                  }}
+                >
+                  <TextField
                     type="text"
-                    value={image}
-                    onChange={(event) => {
-                      const newImages = [...additionalImages];
-                      newImages[index + 1] = event.target.value; // Index + 1 para evitar el primer input
-                      setAdditionalImages(newImages);
+                    name="image2"
+                    value={form.image2}
+                    onChange={formHandler}
+                    placeholder="segunda imagen"
+                    InputProps={{
+                      sx: {
+                        bgcolor: "white",
+                        width: "100%",
+                        mt: "20px",
+                        height: "2.5rem",
+                      },
                     }}
-                    placeholder={`URL de la imagen ${index + 2}`}
+                    sx={{ width: "100%" }}
                   />
-                </div>
-              )
-            )}
-            <button type="button" onClick={addImageInput}>
-              Agregar más imágenes
-            </button> */}
-          </div>
-          <div>
-            <input
-              type="text"
-              name="image2"
-              value={form.image2}
-              onChange={formHandler}
-              placeholder="segunda imagen"
-            />
-          </div>
-          <div>
-            <input
-              type="text"
-              name="image3"
-              value={form.image3}
-              onChange={formHandler}
-              placeholder="tercera imagen"
-            />
-          </div>
-          <div>
-            <input
-              type="text"
-              name="image4"
-              value={form.image4}
-              onChange={formHandler}
-              placeholder="ultima imagen"
-            />
-          </div>
-          <textarea
-            name="description"
-            value={form.description}
-            onChange={formHandler}
-            placeholder="Descripción"
-          ></textarea>
-          <div>
-            <input
-              type="text"
-              name="stock"
-              value={form.stock}
-              onChange={formHandler}
-              placeholder="Stock"
-            />
-          </div>
-          <input
-            type="text"
-            name="price"
-            value={form.price}
-            onChange={formHandler}
-            placeholder="Precio"
-          />
-          <div>
-            <select
-              type="text"
-              name="gender"
-              value={form.gender}
-              onChange={formHandler}
-              placeholder="Género"
-            >
-              <option value="">Genero</option>
-              {genders &&
-                genders.map((gender) => (
-                  <option key={gender.id} value={gender.gender}>
-                    {gender.gender}
-                  </option>
-                ))}
-            </select>
-          </div>
-          <div>
-            <select
-              name="category"
-              value={form.category}
-              onChange={formHandler}
-              placeholder="Categoría"
-            >
-              <option value="">Categoria</option>
-              {categories &&
-                categories.map((category) => (
-                  <option key={category.id} value={category.name}>
-                    {category.name}
-                  </option>
-                ))}
-            </select>
-          </div>
-          <button type="submit">Crear</button>
-        </form>
-      </div>
-    </div>
+                  <IconButton sx={{ mt: "20px" }} onClick={handlerImage3}>
+                    <AddIcon />
+                  </IconButton>
+                </Box>
+              )}
+              {image3 && (
+                <Box
+                  sx={{
+                    width: isLTE1300 ? "94%" : isLTE1700 ? "90%" : "80%",
+                    display: "flex",
+                    alignItems: "center",
+                    my: isLTE500 ? "2px" : "3px",
+                  }}
+                >
+                  <TextField
+                    type="text"
+                    name="image3"
+                    value={form.image3}
+                    onChange={formHandler}
+                    placeholder="tercera imagen"
+                    InputProps={{
+                      sx: {
+                        bgcolor: "white",
+                        width: "100%",
+                        mt: "20px",
+                        height: "2.5rem",
+                      },
+                    }}
+                    sx={{ width: "100%" }}
+                  />
+                  <IconButton sx={{ mt: "20px" }} onClick={handlerImage4}>
+                    <AddIcon />
+                  </IconButton>
+                </Box>
+              )}
+              {image4 && (
+                <Box
+                  sx={{
+                    width: isLTE1300 ? "94%" : isLTE1700 ? "90%" : "80%",
+                    my: isLTE500 ? "2px" : "3px",
+                  }}
+                >
+                  <TextField
+                    type="text"
+                    name="image4"
+                    value={form.image4}
+                    onChange={formHandler}
+                    placeholder="ultima imagen"
+                    InputProps={{
+                      sx: {
+                        bgcolor: "white",
+
+                        width: "100%",
+                        mt: "20px",
+                        height: "2.5rem",
+                      },
+                    }}
+                    sx={{ width: "100%" }}
+                  />
+                </Box>
+              )}
+              <Box
+                sx={{
+                  width: isLTE1300 ? "94%" : isLTE1700 ? "90%" : "80%",
+                  my: isLTE500 ? "2px" : "3px",
+                }}
+              >
+                <TextField
+                  name="description"
+                  value={form.description}
+                  onChange={formHandler}
+                  multiline
+                  rows={4}
+                  placeholder="description"
+                  variant="outlined"
+                  InputProps={{
+                    sx: {
+                      bgcolor: "white",
+                      width: "100%",
+                      mt: "20px",
+                      height: "6rem",
+                    },
+                  }}
+                  sx={{ width: "100%" }}
+                />
+              </Box>
+              <Box
+                sx={{
+                  width: isLTE1300 ? "94%" : isLTE1700 ? "90%" : "80%",
+                  my: isLTE500 ? "2px" : "3px",
+                }}
+              >
+                <TextField
+                  type="text"
+                  name="price"
+                  value={form.price}
+                  onChange={formHandler}
+                  placeholder="Precio"
+                  InputProps={{
+                    sx: {
+                      bgcolor: "white",
+
+                      width: "100%",
+                      mt: "20px",
+                      height: "2.5rem",
+                    },
+                  }}
+                  sx={{ width: "100%" }}
+                />
+              </Box>
+              <Box
+                sx={{
+                  width: isLTE1300 ? "94%" : isLTE1700 ? "90%" : "80%",
+                  my: isLTE500 ? "2px" : "3px",
+                }}
+              >
+                <Select
+                  name="gender"
+                  value={form.gender}
+                  onChange={formHandler}
+                  displayEmpty
+                  placeholder="Género"
+                  sx={{
+                    bgcolor: "white",
+
+                    height: "2.5rem",
+                    width: "100%",
+
+                    mt: "20px",
+                  }}
+                >
+                  <MenuItem value="">Genero</MenuItem>
+                  {genders &&
+                    genders.map((gender) => (
+                      <MenuItem key={gender.id} value={gender.gender}>
+                        {gender.gender}
+                      </MenuItem>
+                    ))}
+                </Select>
+              </Box>
+              <Box
+                sx={{
+                  width: isLTE1300 ? "94%" : isLTE1700 ? "90%" : "80%",
+                  my: isLTE500 ? "2px" : "3px",
+                }}
+              >
+                <Select
+                  name="category"
+                  value={form.category}
+                  onChange={formHandler}
+                  displayEmpty
+                  placeholder="Categoría"
+                  sx={{
+                    height: "2.5rem",
+                    bgcolor: "white",
+
+                    width: "100%",
+                    mt: "20px",
+                  }}
+                >
+                  <MenuItem value="">Categoria</MenuItem>
+                  {categories &&
+                    categories.map((category) => (
+                      <MenuItem key={category.id} value={category.name}>
+                        {category.name}
+                      </MenuItem>
+                    ))}
+                </Select>
+              </Box>
+              <Button
+                type="submit"
+                variant="contained"
+                sx={{
+                  width: isLTE1300 ? "55%" : "40%",
+                  mt: "20px",
+                  fontSize: isLTE500 && "12px",
+                }}
+                disabled={valueForm}
+              >
+                Crear Producto
+              </Button>
+              <Button
+                sx={{
+                  textDecoration: "none",
+                  color: "inherit",
+                  fontSize: isLTE500 ? "10.5px" : "12px",
+                }}
+                onClick={() => handlerVaciarForm()}
+              >
+                Limpiar formulario
+              </Button>
+            </Box>
+          </form>
+        </Box>
+        <Box sx={{ width: isLTE1023 ? "100%" : "64%" }}>
+          {valueForm ? (
+            <Box
+              sx={{
+                width: "100%",
+                mt: "30px",
+                height: "44rem",
+                backgroundColor: "#F5F5F5",
+                boxShadow: "10px 10px 15px #888888",
+                backgroundImage: 'url("/logoblanco.svg")',
+                backgroundSize: "contain",
+                backgroundPosition: "center",
+                backgroundRepeat: "no-repeat",
+                mb: "10px",
+              }}
+            ></Box>
+          ) : (
+            <Box sx={{ mb: "10px" }}>
+              <DetailProduct product={form} />
+            </Box>
+          )}
+        </Box>
+      </Box>
+    </Box>
   );
 };
 
 export default FormProduct;
+
+{
+  /* <input
+                    type="text"
+                    name="image"
+                    value={additionalImages[0]} // El primer input se utiliza como la imagen principal
+                    onChange={(event) => {
+                      const newImages = [...additionalImages];
+                      newImages[0] = event.target.value; // Actualizar el valor del primer input
+                      setAdditionalImages(newImages);
+                    }}
+                    placeholder="URL de la imagen principal"
+                  />
+                  <Box>
+                    {additionalImages.slice(1).map(
+                      (
+                        image,
+                        index // Recorrer los inputs adicionales a partir del segundo elemento
+                      ) => (
+                        <Box key={index}>
+                          <input
+                            type="text"
+                            value={image}
+                            onChange={(event) => {
+                              const newImages = [...additionalImages];
+                              newImages[index + 1] = event.target.value; // Index + 1 para evitar el primer input
+                              setAdditionalImages(newImages);
+                            }}
+                            placeholder={`URL de la imagen ${index + 2}`}
+                          />
+                        </Box>
+                      )
+                    )}
+                    <button type="button" onClick={addImageInput}>
+                      Agregar más imágenes
+                    </button> */
+}

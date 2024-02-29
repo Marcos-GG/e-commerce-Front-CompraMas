@@ -12,7 +12,7 @@ const postProductHandler = async (req, res) => {
       price,
       gender,
       category,
-      stock,
+      // stock,
     } = req.body;
 
     if (!title || !image1 || !description || !price || !gender || !category)
@@ -28,7 +28,7 @@ const postProductHandler = async (req, res) => {
       price,
       gender,
       category,
-      stock,
+      // stock,
     });
 
     if (!postProduct) throw new Error("No se pudo crear la publicacion");

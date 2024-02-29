@@ -62,9 +62,9 @@ module.exports = (sequelize) => {
         allowNull: false,
       },
 
-      stock: {
-        type: DataTypes.INTEGER,
-      },
+      // stock: {
+      //   type: DataTypes.INTEGER,
+      // },
 
       gender: {
         // genero

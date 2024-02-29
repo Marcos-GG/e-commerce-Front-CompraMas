@@ -605,18 +605,18 @@ function Home() {
       <Box
         sx={{
           position: "fixed",
-          right: 20,
-          bottom: 10,
+          right: isLTE500 ? 5 : 20,
+          bottom: isLTE500 ? 0 : 10,
         }}
       >
         <IconButton sx={{}}>
           <NavLink
-            to="https://wa.me/541127147123?text=¡Hola! me gustaria tener atensión personalizada."
+            to="https://wa.me/541127147123?text=¡Hola! me gustaria tener atención personalizada."
             target="_blank"
           >
             <WhatsAppIcon
               sx={{
-                fontSize: "2.80rem",
+                fontSize: isLTE500 ? "2.6rem" : "2.80rem",
                 bgcolor: "#00BD07",
                 color: "white",
                 borderRadius: "50%",

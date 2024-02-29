@@ -79,8 +79,11 @@ const CommentProducts = ({ productId }) => {
             }}
             InputProps={{
               sx: {
+                fontSize: "14px",
+                width: "100%",
+                height: "2.8rem",
+                mr: "15px",
                 textAlign: "center",
-                fontSize: isLTE768 ? "15px" : "18px",
               },
             }}
           />

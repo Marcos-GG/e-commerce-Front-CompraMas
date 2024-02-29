@@ -70,7 +70,7 @@ function RelatedProducts({ productAdmin, products, category, gender }) {
     "& > div": {
       whiteSpace: "nowrap",
       display: "flex",
-      animation: `${slideAnimation} 10s linear infinite`, // Aquí he aumentado la duración para mantener el desplazamiento continuo
+      animation: `${slideAnimation} 30s linear infinite`, // Aquí he aumentado la duración para mantener el desplazamiento continuo
     },
     "@media (max-width: 800px)": {
       "& > div": {

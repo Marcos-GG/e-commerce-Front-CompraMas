@@ -75,7 +75,7 @@ const CompleteOutfits = ({
         sx={{
           display: "flex",
           flexWrap: "wrap",
-          width: "90%",
+          width: isLTE454 ? "97%" : "90%",
           justifyContent: "center",
           gap: isLTE768 ? "5px" : "10px",
         }}
@@ -86,7 +86,13 @@ const CompleteOutfits = ({
               key={product.id}
               sx={{
                 display: "flex",
-                width: isLTE768 ? "49%" : isLTE1520 ? "45%" : "49%",
+                width: isLTE454
+                  ? "48%"
+                  : isLTE768
+                  ? "49%"
+                  : isLTE1520
+                  ? "45%"
+                  : "49%",
                 height: "auto",
                 position: "relative",
                 cursor: "pointer",
@@ -114,7 +120,6 @@ const CompleteOutfits = ({
                 style={{
                   maxWidth: "100%",
                   height: "auto",
-
                   objectFit: "contain",
                 }}
               />

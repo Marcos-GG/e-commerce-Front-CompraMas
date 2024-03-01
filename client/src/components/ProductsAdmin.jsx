@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useSelector, useDispatch } from "react-redux";
 import { NavLink } from "react-router-dom";
@@ -6,6 +7,7 @@ import {
   getProducts,
   putProduct,
   moveToDeactivate,
+  moveToActive,
 } from "../Redux/actions/productsActions";
 import SearchBarProduct from "./SearchBarProduct";
 import {
@@ -23,13 +25,14 @@ import ProductPrice from "./ProductPrice";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
+import ControlPointIcon from "@mui/icons-material/ControlPoint";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import DetailProduct from "../views/DetailProduct/DetailProduct";
 import { getCategory, getGender } from "../Redux/actions/CategoryGender";
 import AddIcon from "@mui/icons-material/Add";
 import CloseIcon from "@mui/icons-material/Close";
 
-const ProductsAdmin = () => {
+const ProductsAdmin = ({ products, productosFiltrados }) => {
   const isLTE370 = useMediaQuery("(max-width:370px)");
   const isLTE412 = useMediaQuery("(max-width:412px)");
   const isLTE600 = useMediaQuery("(max-width:600px)");
@@ -48,10 +51,10 @@ const ProductsAdmin = () => {
 
   const [productDetail, setProductDetail] = useState(null);
 
-  const products = useSelector((state) => state.products.products);
-  const productosFiltrados = useSelector(
-    (state) => state.products.productsFiltered
-  );
+  // const products = useSelector((state) => state.products.products);
+  // const productosFiltrados = useSelector(
+  //   (state) => state.products.productsFiltered
+  // );
 
   useEffect(() => {
     if (products.length === 0) {
@@ -64,6 +67,12 @@ const ProductsAdmin = () => {
     const updateProduct = { ...product, status: false };
     dispatch(putProduct(id, updateProduct));
     dispatch(moveToDeactivate(id));
+  };
+
+  const activateProduct = (id, product) => {
+    const updateProduct = { ...product, status: true };
+    dispatch(putProduct(id, updateProduct));
+    dispatch(moveToActive(id));
   };
 
   const handlerVerDetail = (product) => {
@@ -150,19 +159,34 @@ const ProductsAdmin = () => {
               </NavLink>
             </Tooltip>
 
-            <Tooltip title="suspender" arrow placement="top">
-              <IconButton
-                onClick={(e) => {
-                  e.stopPropagation();
-                  deactiveProduct(product.id, product);
-                }}
-                sx={{ width: "40px", height: "40px" }}
-              >
-                <RemoveCircleOutlineIcon
-                  sx={{ fontSize: isLTE1300 && "20px" }}
-                />
-              </IconButton>
-            </Tooltip>
+            {product.status && (
+              <Tooltip title="suspender" arrow placement="top">
+                <IconButton
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    deactiveProduct(product.id, product);
+                  }}
+                  sx={{ width: "40px", height: "40px" }}
+                >
+                  <RemoveCircleOutlineIcon
+                    sx={{ fontSize: isLTE1300 && "20px" }}
+                  />
+                </IconButton>
+              </Tooltip>
+            )}
+            {!product.status && (
+              <Tooltip title="reactivar" arrow placement="top">
+                <IconButton
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    activateProduct(product.id, product);
+                  }}
+                  sx={{ width: "40px", height: "40px" }}
+                >
+                  <ControlPointIcon sx={{ fontSize: isLTE1300 && "20px" }} />
+                </IconButton>
+              </Tooltip>
+            )}
 
             <Tooltip title="eliminar" arrow placement="top">
               <IconButton
@@ -194,15 +218,15 @@ const ProductsAdmin = () => {
   useEffect(() => {
     if (productDetail) {
       setForm({
-        title: productDetail.title || "",
-        image1: productDetail.image1 || "",
-        image2: productDetail.image2 || "",
-        image3: productDetail.image3 || "",
-        image4: productDetail.image4 || "",
-        description: productDetail.description || "",
-        price: productDetail.price || "",
-        gender: productDetail.gender || "",
-        category: productDetail.category || "",
+        title: productDetail?.title || "",
+        image1: productDetail?.image1 || "",
+        image2: productDetail?.image2 || "",
+        image3: productDetail?.image3 || "",
+        image4: productDetail?.image4 || "",
+        description: productDetail?.description || "",
+        price: productDetail?.price || "",
+        gender: productDetail?.gender || "",
+        category: productDetail?.category || "",
       });
     }
   }, [formEdit]);
@@ -263,6 +287,7 @@ const ProductsAdmin = () => {
       .then(() => {
         // La solicitud PUT se ha completado con éxito
         // Actualizar el estado local con la nueva información del producto
+        setFormEdit(false);
         setProductDetail((prevProductDetail) => ({
           ...prevProductDetail,
           ...form, // Actualizar solo las propiedades que están en el formulario
@@ -270,7 +295,6 @@ const ProductsAdmin = () => {
 
         // Puedes realizar un dispatch de getProducts aquí si es necesario
         dispatch(getProducts());
-        setFormEdit(false);
       })
       .catch((error) => {
         // Manejar errores, si es necesario
@@ -684,7 +708,6 @@ const ProductsAdmin = () => {
                   sx={{
                     display: "flex",
                     flexDirection: "column",
-                    bgcolor: "red",
                     width: "100%",
                     alignItems: "center",
                   }}

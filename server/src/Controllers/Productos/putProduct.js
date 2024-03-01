@@ -8,7 +8,10 @@ const putProductController = async (id, productData) => {
   product.title = productData.title;
   product.description = productData.description;
   product.price = productData.price;
-  product.image = productData.image;
+  product.image1 = productData.image1;
+  product.image2 = productData.image2;
+  product.image3 = productData.image3;
+  product.image4 = productData.image4;
   product.gender = productData.gender;
   product.category = productData.category;
   product.status = productData.status;

@@ -5,12 +5,25 @@ const putProductHandler = async (req, res) => {
     const { id } = req.params; // id de la publicacion
 
     // nueva info de la publicación
-    const { title, image, description, price, gender, category, status } =
-      req.body;
+    const {
+      title,
+      image1,
+      image2,
+      image3,
+      image4,
+      description,
+      price,
+      gender,
+      category,
+      status,
+    } = req.body;
 
     const updatepost = await putProductController(id, {
       title,
-      image,
+      image1,
+      image2,
+      image3,
+      image4,
       description,
       price,
       gender,

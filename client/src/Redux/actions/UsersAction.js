@@ -13,7 +13,7 @@ export const getUsers = () => {
   return async function (dispatch) {
     try {
       const config = configureHeaders();
-      const response = await axios.get(`http://localhost:55878/users`, config);
+      const response = await axios.get(`http://localhost:38621/users`, config);
       const Users = response.data;
 
       const users = Users.map((user) => ({
@@ -35,7 +35,7 @@ export const blockUser = (user) => {
     try {
       const config = configureHeaders();
       await axios.put(
-        `http://localhost:55878/users/${user.id}`,
+        `http://localhost:38621/users/${user.id}`,
         { active: 0 },
         config
       );
@@ -52,7 +52,7 @@ export const unlockUser = (user) => {
     try {
       const config = configureHeaders();
       await axios.put(
-        `http://localhost:55878/users/${user.id}`,
+        `http://localhost:38621/users/${user.id}`,
         { active: 1 },
         config
       );
@@ -68,7 +68,7 @@ export const deleteUser = (user) => {
   return async function (dispatch) {
     try {
       const config = configureHeaders();
-      await axios.delete(`http://localhost:55878/users/${user.id}`, config);
+      await axios.delete(`http://localhost:38621/users/${user.id}`, config);
 
       dispatch({ type: DELETE_USER, payload: user });
     } catch (error) {
@@ -82,7 +82,7 @@ export const getUsersName = (string) => {
     try {
       const config = configureHeaders();
       const response = await axios.get(
-        `http://localhost:55878/users?search=${string}`,
+        `http://localhost:38621/users?search=${string}`,
         config
       );
       dispatch({ type: GET_USERS_NAME, payload: response.data });

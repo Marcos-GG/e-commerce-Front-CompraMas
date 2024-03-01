@@ -7,7 +7,7 @@ export const getCategory = () => {
   return async function (dispatch) {
     const config = configureHeaders();
     const response = await axios.get(
-      "http://localhost:55878/categories",
+      "http://localhost:38621/categories",
       config
     );
 
@@ -19,7 +19,7 @@ export const getGender = () => {
   return async function (dispatch) {
     const config = configureHeaders();
 
-    const response = await axios.get("http://localhost:55878/gender", config);
+    const response = await axios.get("http://localhost:38621/gender", config);
 
     dispatch({ type: GET_GENDER, payload: response.data });
   };

@@ -72,7 +72,11 @@ const NavBarAdmin = () => {
                   Usuarios
                 </Typography>
               </ListItem>
-              <ListItem button component={NavLink} to="/admin/products">
+              <ListItem
+                button
+                component={NavLink}
+                to="/admin/productsActivated"
+              >
                 <Typography variant="body1" sx={{ textDecoration: "none" }}>
                   Productos
                 </Typography>
@@ -144,7 +148,7 @@ const NavBarAdmin = () => {
               <Button
                 variant="contained"
                 component={NavLink}
-                to="/admin/products"
+                to="/admin/productsActivated"
                 size="small"
               >
                 Productos

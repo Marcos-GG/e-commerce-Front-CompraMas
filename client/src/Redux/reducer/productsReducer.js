@@ -19,6 +19,7 @@ const initialState = {
   productId: [],
   desactivatedproducts: [],
   productsFiltered: [],
+  productsFilteredFalse: [],
   favoritos: [],
   isSearchFilterUsed: false,
   isApplyFilterUsed: false,
@@ -82,9 +83,13 @@ const reducer = (state = initialState, action) => {
         const productStatusTrue = action.payload.filter(
           (product) => product.status === true
         );
+        const productStatusFalse = action.payload.filter(
+          (product) => product.status === false
+        );
         return {
           ...state,
           productsFiltered: productStatusTrue,
+          productsFilteredFalse: productStatusFalse,
           isSearchFilterUsed: true,
         };
       }
@@ -134,6 +139,9 @@ const reducer = (state = initialState, action) => {
         ...state,
         products: [...state.products, nuevoProductoActivado],
         desactivatedproducts: state.desactivatedproducts.filter(
+          (product) => product.id !== action.payload
+        ),
+        productsFilteredFalse: state.productsFilteredFalse.filter(
           (product) => product.id !== action.payload
         ),
       };

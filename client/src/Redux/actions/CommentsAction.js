@@ -15,7 +15,7 @@ export const allComments = () => {
     try {
       const config = configureHeaders();
       const response = await axios.get(
-        "http://localhost:38621/comments",
+        "${import.meta.env.VITE_LOCALHOST}comments",
         config
       );
 
@@ -32,7 +32,7 @@ export const postComment = (form, token, productId) => {
       const config = configureHeaders(token);
       const body = { ...form, productId };
       const response = await axios.post(
-        "http://localhost:38621/comments",
+        "${import.meta.env.VITE_LOCALHOST}comments",
         body,
         config
       );
@@ -51,7 +51,7 @@ export const postAnswer = (form, commentId) => {
       const body = { ...form, commentId };
 
       const response = await axios.post(
-        "http://localhost:38621/answer",
+        "${import.meta.env.VITE_LOCALHOST}answer",
         body,
         config
       );
@@ -70,7 +70,7 @@ export const postAnswer = (form, commentId) => {
 //       const body = { ...form, commentId };
 
 //       const response = await axios.post(
-//         "http://localhost:38621/answer",
+//         "${import.meta.env.VITE_LOCALHOST}answer",
 //         body,
 //         config
 //       );

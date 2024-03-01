@@ -6,7 +6,7 @@ export const postUsers = (form) => {
   return async function (dispatch) {
     try {
       const response = await axios.post(
-        `http://localhost:38621/register`,
+        `${import.meta.env.VITE_LOCALHOST}register`,
         form
       );
 
@@ -20,7 +20,10 @@ export const postUsers = (form) => {
 export const postLogin = (form) => {
   return async function (dispatch) {
     try {
-      const response = await axios.post(`http://localhost:38621/login`, form);
+      const response = await axios.post(
+        `${import.meta.env.VITE_LOCALHOST}login`,
+        form
+      );
 
       if (response.data.error) {
         // alert para avisar que el usuario esta ban

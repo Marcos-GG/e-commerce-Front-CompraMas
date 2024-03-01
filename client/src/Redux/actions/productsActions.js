@@ -18,7 +18,7 @@ export const getProducts = () => {
     try {
       const config = configureHeaders();
       const response = await axios.get(
-        "http://localhost:38621/products",
+        "${import.meta.env.VITE_LOCALHOST}products",
         config
       );
       const products = response.data;
@@ -34,7 +34,7 @@ export const getProductId = (id) => {
   return async function (dispatch) {
     const config = configureHeaders();
     const response = await axios.get(
-      `http://localhost:38621/products/${id}`,
+      `${import.meta.env.VITE_LOCALHOST}products/${id}`,
       config
     );
     dispatch({ type: GET_PRODUCT_ID, payload: response.data });
@@ -46,7 +46,7 @@ export const getTermProducts = (string) => {
     try {
       const config = configureHeaders();
       const response = await axios.get(
-        `http://localhost:38621/products?search=${string}`,
+        `${import.meta.env.VITE_LOCALHOST}products?search=${string}`,
         config
       );
       const products = response.data;
@@ -62,7 +62,7 @@ export const putProduct = (id, product) => {
   return async function (dispatch) {
     const config = configureHeaders();
     const response = await axios.put(
-      `http://localhost:38621/products/${id}`,
+      `${import.meta.env.VITE_LOCALHOST}products/${id}`,
       product,
       config
     );
@@ -88,7 +88,7 @@ export const createProduct = (product) => {
     const config = configureHeaders();
 
     const response = await axios.post(
-      `http://localhost:38621/createProduct`,
+      `${import.meta.env.VITE_LOCALHOST}createProduct`,
       product,
       config
     );
@@ -102,7 +102,7 @@ export const apllyFilters = (combinedFilters) => {
     const config = configureHeaders();
 
     const response = await axios.post(
-      `http://localhost:38621/filters`,
+      `${import.meta.env.VITE_LOCALHOST}filters`,
       combinedFilters,
       config
     );

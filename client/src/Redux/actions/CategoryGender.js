@@ -7,7 +7,7 @@ export const getCategory = () => {
   return async function (dispatch) {
     const config = configureHeaders();
     const response = await axios.get(
-      "http://localhost:38621/categories",
+      "${import.meta.env.VITE_LOCALHOST}categories",
       config
     );
 
@@ -19,7 +19,10 @@ export const getGender = () => {
   return async function (dispatch) {
     const config = configureHeaders();
 
-    const response = await axios.get("http://localhost:38621/gender", config);
+    const response = await axios.get(
+      "${import.meta.env.VITE_LOCALHOST}gender",
+      config
+    );
 
     dispatch({ type: GET_GENDER, payload: response.data });
   };

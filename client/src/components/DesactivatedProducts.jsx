@@ -1,47 +1,28 @@
-import { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { NavLink } from "react-router-dom";
-import { putProduct, moveToActive } from "../Redux/actions/productsActions";
+// import { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { Box } from "@mui/material";
+import ProductsAdmin from "./ProductsAdmin";
 
 const DesactivatedProducts = () => {
-  const dispatch = useDispatch();
-
   const products = useSelector((state) => state.products.desactivatedproducts);
+  const productosFiltrados = useSelector(
+    (state) => state.products.productsFilteredFalse
+  );
 
-  useEffect(() => {
-    if (products.length === 0) {
-      dispatch(putProduct());
-    }
-  }, [dispatch, products]);
+  // useEffect(() => {
+  //   if (products.length === 0) {
+  //     dispatch(putProduct());
+  //   }
+  // }, [dispatch, products]);
 
-  const activateProduct = (id, product) => {
-    const updateProduct = { ...product, status: true };
-    dispatch(putProduct(id, updateProduct));
-    dispatch(moveToActive(id));
-  };
-
+  console.log(productosFiltrados, "desactivados");
   return (
-    <div>
-      <h1>productos desactivados</h1>
-      <div>
-        <h3>Productos</h3>
-        {products.map((product) => (
-          <div key={product.id}>
-            <p>{product?.image1}</p>
-            <p>{product.title}</p>
-            <p>{product.price}</p>
-            {/* hay que dar funcionalidad botones para detalle del producto y para activar /eliminar publicacion */}
-            <button>
-              <NavLink to={`/detail/${product.id}`}>Ver mas</NavLink>
-            </button>
-            <button onClick={() => activateProduct(product.id, product)}>
-              reactivar
-            </button>
-            <button>eliminar</button>
-          </div>
-        ))}
-      </div>
-    </div>
+    <Box>
+      <ProductsAdmin
+        products={products}
+        productosFiltrados={productosFiltrados}
+      />
+    </Box>
   );
 };
 

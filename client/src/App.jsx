@@ -13,7 +13,6 @@ import Login from "./views/Login/Login";
 import UserBlocked from "./components/Userblocked";
 import Register from "./views/Register/Register";
 import FormProduct from "./components/FormProduct";
-import ProductsAdmin from "./components/ProductsAdmin";
 import DesactivatedProducts from "./components/DesactivatedProducts";
 import DetailProduct from "./views/DetailProduct/DetailProduct";
 import ShoppingCart from "./views/ShoppingCart/ShoppingCart";
@@ -24,6 +23,7 @@ import { useDispatch, useSelector } from "react-redux";
 import LogOut from "./views/Logout/LogOut";
 import "./App.css";
 import { SET_INITIAL_CART } from "./Redux/actionsTypes/ShoppingCartActionTypes";
+import ProductsActivated from "./components/productsActivated";
 // import SelectedComment from "./components/SelectedComment";
 
 function App() {
@@ -104,9 +104,9 @@ function App() {
         />
 
         <Route
-          path="/admin/products"
+          path="/admin/productsActivated"
           element={
-            token && admin ? <ProductsAdmin /> : <Navigate to="/login" />
+            token && admin ? <ProductsActivated /> : <Navigate to="/login" />
           } // Si no hay un token o si no es admin, redirigir a Login
         />
 

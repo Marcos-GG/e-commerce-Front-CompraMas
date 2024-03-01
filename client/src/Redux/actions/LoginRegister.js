@@ -6,7 +6,7 @@ export const postUsers = (form) => {
   return async function (dispatch) {
     try {
       const response = await axios.post(
-        `${import.meta.env.VITE_LOCALHOST}register`,
+        `${import.meta.env.VITE_DB_PORT}register`,
         form
       );
 
@@ -21,7 +21,7 @@ export const postLogin = (form) => {
   return async function (dispatch) {
     try {
       const response = await axios.post(
-        `${import.meta.env.VITE_LOCALHOST}login`,
+        `${import.meta.env.VITE_DB_PORT}login`,
         form
       );
 

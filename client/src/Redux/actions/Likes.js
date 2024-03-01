@@ -8,7 +8,7 @@ export const addLike = (productId) => {
   return async function (dispatch) {
     const config = configureHeaders();
     const response = await axios.post(
-      "${import.meta.env.VITE_LOCALHOST}likes",
+      `${import.meta.env.VITE_LOCALHOST}likes`,
       { productId },
       config
     );
@@ -21,7 +21,7 @@ export const removeLike = (productId) => {
   return async function (dispatch) {
     const config = configureHeaders();
     const response = await axios.put(
-      "${import.meta.env.VITE_LOCALHOST}likes",
+      `${import.meta.env.VITE_LOCALHOST}likes`,
       { productId },
       config
     );
@@ -34,7 +34,7 @@ export const getFavorites = () => {
   return async function (dispatch) {
     const config = configureHeaders();
     const response = await axios.get(
-      "${import.meta.env.VITE_LOCALHOST}likes/getFavorites",
+      `${import.meta.env.VITE_LOCALHOST}likes/getFavorites`,
       config
     );
 

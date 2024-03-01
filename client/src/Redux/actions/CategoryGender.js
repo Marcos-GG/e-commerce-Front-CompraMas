@@ -7,7 +7,7 @@ export const getCategory = () => {
   return async function (dispatch) {
     const config = configureHeaders();
     const response = await axios.get(
-      "${import.meta.env.VITE_LOCALHOST}categories",
+      `${import.meta.env.VITE_LOCALHOST}categories`,
       config
     );
 
@@ -20,7 +20,7 @@ export const getGender = () => {
     const config = configureHeaders();
 
     const response = await axios.get(
-      "${import.meta.env.VITE_LOCALHOST}gender",
+      `${import.meta.env.VITE_LOCALHOST}gender`,
       config
     );
 

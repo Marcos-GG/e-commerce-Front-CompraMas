@@ -18,7 +18,7 @@ export const getProducts = () => {
     try {
       const config = configureHeaders();
       const response = await axios.get(
-        "${import.meta.env.VITE_LOCALHOST}products",
+        `${import.meta.env.VITE_LOCALHOST}products`,
         config
       );
       const products = response.data;

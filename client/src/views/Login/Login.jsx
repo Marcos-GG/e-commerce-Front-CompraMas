@@ -14,15 +14,12 @@ import {
   TextField,
   Typography,
   useMediaQuery,
-  useTheme,
 } from "@mui/material";
 import PasswordIcon from "@mui/icons-material/Password";
 
 function Login() {
-  const theme = useTheme();
-  const isMdScreen = useMediaQuery(theme.breakpoints.down("md"));
-  const isLessThanOrEqual762 = useMediaQuery(theme.breakpoints.down(762));
-  const isLessThanOrEqual507 = useMediaQuery(theme.breakpoints.down(507));
+  const isLTE507 = useMediaQuery(`(max-width: 507px)`);
+  const isLTE700 = useMediaQuery(`(max-width: 700px)`);
 
   const dispatch = useDispatch();
   const [form, setForm] = useState({
@@ -49,7 +46,6 @@ function Login() {
   };
 
   return (
-    // <Box sx={{ display: "flex" }}>
     <Box
       sx={{
         background:
@@ -63,26 +59,22 @@ function Login() {
     >
       <Card
         sx={{
-          // bgcolor: "#81b2c1",
-          backdropFilter: "blur(20px)",
-          borderRadius: "30px",
-          boxShadow: 6,
+          borderRadius: "20px",
+          boxShadow: 4,
         }}
       >
         <Box
           sx={{
             display: "flex",
-            flexDirection: isLessThanOrEqual762 ? "column" : "row",
-            // width: "35rem",
+            flexDirection: isLTE700 ? "column" : "row",
             justifyContent: "center",
-            // height: "30rem",
             alignItems: "center",
-            p: 6,
+            p: isLTE507 ? 2 : 4,
             maxWidth: "90vw",
           }}
         >
           <Box
-            mb={2.5}
+            mb={isLTE700 ? "2.3rem" : 2.5}
             sx={{
               display: "flex",
               alignItems: "center",
@@ -96,27 +88,26 @@ function Login() {
               src="/logonegro.svg"
               sx={{
                 display: "flex",
-                mr: isLessThanOrEqual507 ? "10px" : "50px",
-                width: isLessThanOrEqual507 ? "17rem" : "24rem",
+                mr: isLTE507 ? "10px" : "50px",
+                width: /* isLessThanOrEqual507 ? "17rem" : */ "24rem",
+                maxWidth: "100%",
               }}
             />
-            <Typography variant="subtitle2">
-              Ingresa tu correo electrónico y contraseña
-            </Typography>
           </Box>
-          <form onSubmit={handleSubmit}>
+          <form
+            onSubmit={handleSubmit}
+            style={{
+              width: "24rem",
+              height: isLTE700 && "20rem",
+              maxWidth: "98%",
+            }}
+          >
             <Box
               sx={{
                 display: "flex",
                 flexDirection: "column",
                 justifyContent: "space-around",
-                width: isLessThanOrEqual507
-                  ? "16rem"
-                  : isLessThanOrEqual762
-                  ? "27rem"
-                  : isMdScreen
-                  ? "15rem"
-                  : "27rem",
+                width: "100%",
                 maxWidth: "90vw",
                 gap: 2,
                 maxHeight: "80vh",
@@ -136,6 +127,10 @@ function Login() {
                     width: "100%",
                   }}
                   InputProps={{
+                    // sx: {
+                    //   width: "25rem",
+                    //   // maxWidth: "25rem"
+                    // },
                     endAdornment: (
                       <InputAdornment position="end">
                         <MailOutlineIcon />

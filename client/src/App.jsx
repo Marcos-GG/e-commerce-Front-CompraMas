@@ -68,7 +68,8 @@ function App() {
       {location.pathname.includes("admin") ? (
         <NavBarAdmin />
       ) : (
-        !location.pathname.includes("login") && <NavBar />
+        !location.pathname.includes("login") &&
+        !location.pathname.includes("register") && <NavBar />
       )}
       <Routes>
         <Route

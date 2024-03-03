@@ -45,7 +45,6 @@ function Home() {
   const ShoppingCartProducts = useSelector(
     (state) => state.shoppingCart.products
   );
-  console.log(ShoppingCartProducts, "Shopping Cart");
 
   const cantidadCarrito =
     ShoppingCartProducts?.length > 0

@@ -11,6 +11,8 @@ import {
   APPLY_FILTERS,
   CLEAR_FILTERED_PRODUCTS,
   GET_TERM_PRODUCTS,
+  SUCCESS,
+  ERROR,
 } from "../actionsTypes/ProductsActionTypes";
 
 export const getProducts = () => {
@@ -58,30 +60,54 @@ export const getTermProducts = (string) => {
   };
 };
 
-export const putProduct = (id, product) => {
+export const putProduct = (id, product, shouldMoveTo) => {
   return async function (dispatch) {
-    const config = configureHeaders();
-    const response = await axios.put(
-      `${import.meta.env.VITE_LOCALHOST}products/${id}`,
-      product,
-      config
-    );
+    try {
+      const config = configureHeaders();
+      const response = await axios.put(
+        `${import.meta.env.VITE_LOCALHOST}products/${id}`,
+        product,
+        config
+      );
 
-    dispatch({ type: PUT_PRODUCT, payload: response.data });
+      if (response.status === 200) {
+        if (shouldMoveTo) {
+          if (shouldMoveTo === "false") {
+            dispatch({ type: MOVE_TO_DEACTIVATE, payload: id });
+            dispatch({
+              type: SUCCESS,
+              payload: "El producto ahora está desactivado",
+            });
+          } else {
+            dispatch({ type: MOVE_TO_ACTIVE, payload: id });
+            dispatch({
+              type: SUCCESS,
+              payload: "Ahora el producto está activo",
+            });
+          }
+        } else {
+          dispatch({ type: SUCCESS, payload: "Actualizado correctamente" });
+        }
+      }
+
+      dispatch({ type: PUT_PRODUCT, payload: response.data });
+    } catch (error) {
+      dispatch({ type: ERROR, payload: "No se actualizo la información." });
+    }
   };
 };
 
-export const moveToActive = (id) => {
-  return function (dispatch) {
-    dispatch({ type: MOVE_TO_ACTIVE, payload: id });
-  };
-};
+// export const moveToActive = (id) => {
+//   return function (dispatch) {
+//     dispatch({ type: MOVE_TO_ACTIVE, payload: id });
+//   };
+// };
 
-export const moveToDeactivate = (id) => {
-  return function (dispatch) {
-    dispatch({ type: MOVE_TO_DEACTIVATE, payload: id });
-  };
-};
+// export const moveToDeactivate = (id) => {
+//   return function (dispatch) {
+//     dispatch({ type: MOVE_TO_DEACTIVATE, payload: id });
+//   };
+// };
 
 export const createProduct = (product) => {
   return async function (dispatch) {

@@ -6,8 +6,7 @@ import { useEffect, useState } from "react";
 import {
   getProducts,
   putProduct,
-  moveToDeactivate,
-  moveToActive,
+  // moveToDeactivate,
 } from "../Redux/actions/productsActions";
 import SearchBarProduct from "./SearchBarProduct";
 import {
@@ -31,6 +30,7 @@ import DetailProduct from "../views/DetailProduct/DetailProduct";
 import { getCategory, getGender } from "../Redux/actions/CategoryGender";
 import AddIcon from "@mui/icons-material/Add";
 import CloseIcon from "@mui/icons-material/Close";
+import Respuesta from "./Respuesta";
 
 const ProductsAdmin = ({ products, productosFiltrados }) => {
   const isLTE370 = useMediaQuery("(max-width:370px)");
@@ -64,15 +64,15 @@ const ProductsAdmin = ({ products, productosFiltrados }) => {
   }, [dispatch]);
 
   const deactiveProduct = (id, product) => {
+    setProductDetail(null);
     const updateProduct = { ...product, status: false };
-    dispatch(putProduct(id, updateProduct));
-    dispatch(moveToDeactivate(id));
+    dispatch(putProduct(id, updateProduct, "false"));
+    // dispatch(moveToDeactivate(id));
   };
 
   const activateProduct = (id, product) => {
     const updateProduct = { ...product, status: true };
-    dispatch(putProduct(id, updateProduct));
-    dispatch(moveToActive(id));
+    dispatch(putProduct(id, updateProduct, true));
   };
 
   const handlerVerDetail = (product) => {
@@ -84,7 +84,7 @@ const ProductsAdmin = ({ products, productosFiltrados }) => {
   const renderProductsMap = (products) => {
     return products.map((product) => (
       <Box
-        key={product.id}
+        key={product?.id}
         sx={{
           display: "flex",
           justifyContent: isLTE1023 ? "start" : "space-evenly",
@@ -124,7 +124,7 @@ const ProductsAdmin = ({ products, productosFiltrados }) => {
                 overflow: "hidden",
               }}
             >
-              {product.title}
+              {product?.title}
             </Typography>
             <Box sx={{ m: "2px 0 0 10px" }}>
               <ProductPrice price={product?.price} />
@@ -149,7 +149,7 @@ const ProductsAdmin = ({ products, productosFiltrados }) => {
             </Tooltip>
 
             <Tooltip title="ver más" arrow placement="top">
-              <NavLink to={`/detail/${product.id}`}>
+              <NavLink to={`/detail/${product?.id}`}>
                 <IconButton
                   sx={{ width: "40px", height: "40px" }}
                   onClick={(e) => e.stopPropagation()}
@@ -159,7 +159,7 @@ const ProductsAdmin = ({ products, productosFiltrados }) => {
               </NavLink>
             </Tooltip>
 
-            {product.status && (
+            {product?.status && (
               <Tooltip title="suspender" arrow placement="top">
                 <IconButton
                   onClick={(e) => {
@@ -174,7 +174,7 @@ const ProductsAdmin = ({ products, productosFiltrados }) => {
                 </IconButton>
               </Tooltip>
             )}
-            {!product.status && (
+            {!product?.status && (
               <Tooltip title="reactivar" arrow placement="top">
                 <IconButton
                   onClick={(e) => {
@@ -232,15 +232,13 @@ const ProductsAdmin = ({ products, productosFiltrados }) => {
   }, [formEdit]);
 
   const handlerEditar = () => {
-    console.log(form, "abirmos editar");
     setFormEdit(!formEdit);
   };
-  console.log(form, "formulario antes de ser abierto editar");
 
   const formHandler = (event) => {
     event.preventDefault();
     const { name, value } = event.target;
-    console.log(name, value, "info acutalizada");
+
     setForm({
       ...form,
       [name]: value,
@@ -282,9 +280,23 @@ const ProductsAdmin = ({ products, productosFiltrados }) => {
     event.preventDefault();
   };
 
+  /// control del mesnaje success / error
+
+  // const [open, setOpen] = useState(false);
+  // const [mensaje, setMensaje] = useState("");
+  // const [tipoMensaje, setTipo] = useState("success");
+
+  // const handleClose = (event, reason) => {
+  //   if (reason === "clickaway") {
+  //     return;
+  //   }
+  //   setOpen(false);
+  // };
+
   const handlerPutProduct = () => {
     dispatch(putProduct(productDetail?.id, form))
       .then(() => {
+        // console.log(data.status, "data");
         // La solicitud PUT se ha completado con éxito
         // Actualizar el estado local con la nueva información del producto
         setFormEdit(false);
@@ -292,6 +304,8 @@ const ProductsAdmin = ({ products, productosFiltrados }) => {
           ...prevProductDetail,
           ...form, // Actualizar solo las propiedades que están en el formulario
         }));
+
+        // actualizamos estados para el mensaje
 
         // Puedes realizar un dispatch de getProducts aquí si es necesario
         dispatch(getProducts());
@@ -305,7 +319,8 @@ const ProductsAdmin = ({ products, productosFiltrados }) => {
   const valueForm = Object.values(form).every((value) => !value);
 
   return (
-    <Box sx={{ width: "100%" }}>
+    <Box>
+      <Respuesta />
       <Box sx={{ m: "20px 0 20px 10px" }}>
         <SearchBarProduct />
       </Box>

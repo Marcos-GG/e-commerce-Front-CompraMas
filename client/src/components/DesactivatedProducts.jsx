@@ -15,7 +15,6 @@ const DesactivatedProducts = () => {
   //   }
   // }, [dispatch, products]);
 
-  console.log(productosFiltrados, "desactivados");
   return (
     <Box>
       <ProductsAdmin

@@ -8,7 +8,13 @@ import {
   getUsersName,
 } from "../Redux/actions/UsersAction";
 import { useEffect, useState } from "react";
-import { Box, Divider, TextField, Typography } from "@mui/material";
+import {
+  Box,
+  Divider,
+  TextField,
+  Typography,
+  useMediaQuery,
+} from "@mui/material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import NoAccountsIcon from "@mui/icons-material/NoAccounts";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
@@ -17,6 +23,8 @@ import LockOpenIcon from "@mui/icons-material/LockOpen";
 import SearchIcon from "@mui/icons-material/Search";
 
 const UserBlocked = () => {
+  const isLTE426 = useMediaQuery(`(max-width: 426px)`);
+  const isLTE779 = useMediaQuery(`(max-width: 779px)`);
   const dispatch = useDispatch();
   const users = useSelector((state) => state.users.users);
 
@@ -61,7 +69,7 @@ const UserBlocked = () => {
         sx={{
           display: "flex",
           width: "100%",
-          justifyContent: "end",
+          justifyContent: isLTE426 ? "center" : "end",
           mb: "15px",
           p: "10px",
         }}
@@ -74,15 +82,15 @@ const UserBlocked = () => {
           InputProps={{
             endAdornment: <SearchIcon />,
             sx: {
-              fontSize: "16px",
-              width: "15rem",
-              height: "3rem",
+              fontSize: isLTE426 ? "15px" : "17px",
+              width: isLTE426 ? "12rem" : "15rem",
+              height: isLTE426 ? "2.7rem" : "3rem",
               mr: "15px",
             },
           }}
           sx={{
             "& label": {
-              fontSize: "15px",
+              fontSize: isLTE426 ? "13px" : "15px",
               color: "gray",
             },
           }}
@@ -90,7 +98,7 @@ const UserBlocked = () => {
       </Box>
       <Box
         sx={{
-          width: "80%",
+          width: isLTE779 ? "99%" : "80%",
           m: "auto",
           height: "45rem",
           maxHeight: "50rem",
@@ -131,11 +139,17 @@ const UserBlocked = () => {
                   >
                     {user?.active ? (
                       <AccountCircleIcon
-                        sx={{ color: "gray", fontSize: "3rem" }}
+                        sx={{
+                          color: "gray",
+                          fontSize: isLTE426 ? "2.5rem" : "3rem",
+                        }}
                       />
                     ) : (
                       <NoAccountsIcon
-                        sx={{ color: "gray", fontSize: "3rem" }}
+                        sx={{
+                          color: "gray",
+                          fontSize: isLTE426 ? "2.5rem" : "3rem",
+                        }}
                       />
                     )}
                   </Box>
@@ -145,7 +159,7 @@ const UserBlocked = () => {
                       maxHeight: "40px",
                       overflow: "break-word",
                       wordWrap: "break-word",
-                      ml: "1.5rem",
+                      ml: isLTE779 ? "0.5rem" : "1.5rem",
                     }}
                   >
                     <Typography
@@ -153,13 +167,21 @@ const UserBlocked = () => {
                       component="p"
                       sx={{
                         textAlign: "center",
+                        fontSize: isLTE426 && "15px",
+                        overflow: "hidden",
                       }}
                     >
                       {user.name} {user.lastname}
                     </Typography>
                   </Box>
                 </Box>
-                <Box sx={{ width: "10%" }}>
+                <Box
+                  sx={{
+                    width: "10%",
+                    minWidth: isLTE779 ? "5rem" : "8rem",
+                    bgcolor: "pink",
+                  }}
+                >
                   <Box
                     sx={{
                       display: "flex",
@@ -186,8 +208,12 @@ const UserBlocked = () => {
                             justifyContent: "space-evenly",
                           }}
                         >
-                          <LockOpenIcon fontSize="small" />
-                          Bloquear
+                          <LockOpenIcon
+                            fontSize={isLTE426 ? "13px" : "small"}
+                          />
+                          <Typography sx={{ fontSize: isLTE426 && "13px" }}>
+                            Bloquear
+                          </Typography>
                         </Box>
                       ) : (
                         <Box
@@ -199,8 +225,10 @@ const UserBlocked = () => {
                             justifyContent: "space-evenly",
                           }}
                         >
-                          <LockIcon fontSize="small" />
-                          Desbloquear
+                          <LockIcon fontSize={isLTE426 ? "13px" : "small"} />
+                          <Typography sx={{ fontSize: isLTE426 && "13px" }}>
+                            Desbloquear
+                          </Typography>
                         </Box>
                       )}
                     </Box>
@@ -208,7 +236,6 @@ const UserBlocked = () => {
                     <Divider sx={{ bgcolor: "#F5F5F5", width: "80%" }} />
                     <Box
                       sx={{
-                        width: "80%",
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "space-evenly",
@@ -217,7 +244,12 @@ const UserBlocked = () => {
                       size="small"
                       onClick={() => handlerDeleteUser(user)}
                     >
-                      <DeleteForeverIcon fontSize="small" /> Eliminar
+                      <DeleteForeverIcon
+                        fontSize={isLTE426 ? "13px" : "small"}
+                      />{" "}
+                      <Typography sx={{ fontSize: isLTE426 && "13px" }}>
+                        Eliminar
+                      </Typography>
                     </Box>
                   </Box>
                 </Box>

@@ -11,6 +11,10 @@ import {
   CLEAR_FILTERED_PRODUCTS,
   SET_FAVORITES,
   GET_TERM_PRODUCTS,
+  SUCCESS,
+  ERROR,
+  CLEAN_ERROR,
+  CLEAN_SUCCESS,
 } from "../actionsTypes/ProductsActionTypes";
 import { ADD_LIKE, REMOVE_LIKE } from "../actionsTypes/LikesTypes";
 
@@ -20,6 +24,8 @@ const initialState = {
   desactivatedproducts: [],
   productsFiltered: [],
   productsFilteredFalse: [],
+  success: "",
+  error: "",
   favoritos: [],
   isSearchFilterUsed: false,
   isApplyFilterUsed: false,
@@ -130,6 +136,22 @@ const reducer = (state = initialState, action) => {
       };
     }
 
+    case SUCCESS: {
+      console.log(action.payload);
+      return { ...state, success: action.payload };
+    }
+    case CLEAN_SUCCESS: {
+      return { ...state, success: "" };
+    }
+
+    case ERROR: {
+      return { ...state, error: action.payload };
+    }
+
+    case CLEAN_ERROR: {
+      return { ...state, error: "" };
+    }
+
     case MOVE_TO_ACTIVE: {
       const nuevoProductoActivado = state.desactivatedproducts.find(
         (product) => product.id === action.payload
@@ -137,6 +159,7 @@ const reducer = (state = initialState, action) => {
 
       return {
         ...state,
+        success: "Ahora el producto esta activo.",
         products: [...state.products, nuevoProductoActivado],
         desactivatedproducts: state.desactivatedproducts.filter(
           (product) => product.id !== action.payload

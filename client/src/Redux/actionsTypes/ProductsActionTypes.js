@@ -10,3 +10,7 @@ export const APPLY_FILTERS = "APPLY_FILTERS";
 export const CLEAR_FILTERED_PRODUCTS = "CLEAR_FILTERED_PRODUCTS";
 export const SET_FAVORITES = "SET_FAVORITES";
 export const GET_TERM_PRODUCTS = "GET_TERM_PRODUCTS";
+export const SUCCESS = "SUCCESS";
+export const ERROR = "ERROR";
+export const CLEAN_ERROR = "CLEAN_ERROR";
+export const CLEAN_SUCCESS = "CLEAN_SUCCESS";

@@ -8,6 +8,7 @@ import {
   DELETE_USER,
   GET_USERS_NAME,
 } from "../actionsTypes/UsersActionTypes";
+import { SUCCESS } from "../actionsTypes/ProductsActionTypes";
 
 export const getUsers = () => {
   return async function (dispatch) {
@@ -42,7 +43,7 @@ export const blockUser = (user) => {
         { active: 0 },
         config
       );
-
+      dispatch({ type: SUCCESS, payload: "Usuario bloqueado." });
       dispatch({ type: BLOCK_USER, payload: user });
     } catch (error) {
       return { error: error.message };
@@ -59,7 +60,7 @@ export const unlockUser = (user) => {
         { active: 1 },
         config
       );
-
+      dispatch({ type: SUCCESS, payload: "Usuario Desbloqueado." });
       dispatch({ type: UNLOCK_USER, payload: user });
     } catch (error) {
       return { error: error.message };
@@ -75,7 +76,6 @@ export const deleteUser = (user) => {
         `${import.meta.env.VITE_LOCALHOST}users/${user.id}`,
         config
       );
-
       dispatch({ type: DELETE_USER, payload: user });
     } catch (error) {
       return { error: error.message };

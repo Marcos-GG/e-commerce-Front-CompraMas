@@ -76,13 +76,13 @@ export const putProduct = (id, product, shouldMoveTo) => {
             dispatch({ type: MOVE_TO_DEACTIVATE, payload: id });
             dispatch({
               type: SUCCESS,
-              payload: "El producto ahora está desactivado",
+              payload: "Producto desactivado.",
             });
           } else {
             dispatch({ type: MOVE_TO_ACTIVE, payload: id });
             dispatch({
               type: SUCCESS,
-              payload: "Ahora el producto está activo",
+              payload: "Producto activado.",
             });
           }
         } else {

@@ -27,6 +27,7 @@ import {
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import ProductPrice from "../../components/ProductPrice";
+import Respuesta from "../../components/Respuesta";
 
 function Home() {
   // const theme = useTheme();
@@ -162,6 +163,7 @@ function Home() {
         height: "calc(100vh - 3.2rem)",
       }}
     >
+      <Respuesta />
       <Box
         sx={{
           mb: "1rem",

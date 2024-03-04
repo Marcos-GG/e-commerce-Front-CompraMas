@@ -21,6 +21,7 @@ import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import LockIcon from "@mui/icons-material/Lock";
 import LockOpenIcon from "@mui/icons-material/LockOpen";
 import SearchIcon from "@mui/icons-material/Search";
+import Respuesta from "./Respuesta";
 
 const UserBlocked = () => {
   const isLTE426 = useMediaQuery(`(max-width: 426px)`);
@@ -64,7 +65,7 @@ const UserBlocked = () => {
       <Typography variant="h1" sx={{ fontSize: "35px" }}>
         Bloquear usuarios
       </Typography>
-
+      <Respuesta />
       <Box
         sx={{
           display: "flex",
@@ -178,8 +179,8 @@ const UserBlocked = () => {
                 <Box
                   sx={{
                     width: "10%",
-                    minWidth: isLTE779 ? "5rem" : "8rem",
-                    bgcolor: "pink",
+                    minWidth: isLTE779 ? "7rem" : "8rem",
+                    bgcolor: "#F5f5f5",
                   }}
                 >
                   <Box
@@ -211,7 +212,11 @@ const UserBlocked = () => {
                           <LockOpenIcon
                             fontSize={isLTE426 ? "13px" : "small"}
                           />
-                          <Typography sx={{ fontSize: isLTE426 && "13px" }}>
+                          <Typography
+                            sx={{
+                              fontSize: isLTE426 ? "13px" : isLTE779 && "15px",
+                            }}
+                          >
                             Bloquear
                           </Typography>
                         </Box>
@@ -226,7 +231,11 @@ const UserBlocked = () => {
                           }}
                         >
                           <LockIcon fontSize={isLTE426 ? "13px" : "small"} />
-                          <Typography sx={{ fontSize: isLTE426 && "13px" }}>
+                          <Typography
+                            sx={{
+                              fontSize: isLTE426 ? "13px" : isLTE779 && "15px",
+                            }}
+                          >
                             Desbloquear
                           </Typography>
                         </Box>

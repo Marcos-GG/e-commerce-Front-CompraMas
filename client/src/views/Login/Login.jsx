@@ -16,6 +16,7 @@ import {
   useMediaQuery,
 } from "@mui/material";
 import PasswordIcon from "@mui/icons-material/Password";
+import Respuesta from "../../components/Respuesta";
 
 function Login() {
   const isLTE507 = useMediaQuery(`(max-width: 507px)`);
@@ -57,6 +58,7 @@ function Login() {
         alignItems: "center",
       }}
     >
+      <Respuesta />
       <Card
         sx={{
           borderRadius: "20px",

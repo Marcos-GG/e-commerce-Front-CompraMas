@@ -22,7 +22,7 @@ const loginController = async (email, password) => {
       expiresIn: "2h",
     });
 
-    return { token, admin: user.admin };
+    return { token, admin: user.admin, user: user.name };
   } catch (error) {
     throw new Error(error.message);
   }

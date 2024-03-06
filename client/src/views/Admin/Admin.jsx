@@ -1,33 +1,48 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Comments from "../../components/Comments";
 import { useDispatch, useSelector } from "react-redux";
-import { ALL_COMMENTS } from "../../Redux/actionsTypes/CommentsTypes";
 import { allComments } from "../../Redux/actions/CommentsAction";
 import { Box } from "@mui/material";
+import { GET_PRODUCTS } from "../../Redux/actionsTypes/ProductsActionTypes";
+import { getProducts } from "../../Redux/actions/productsActions";
 
 const Admin = () => {
   const dispatch = useDispatch();
-  const comments = useSelector((state) => state.comments.comments);
+  const AllComments = useSelector((state) => state.comments.comments);
 
   useEffect(() => {
-    const persistedData = localStorage.getItem("persist:root");
+    try {
+      const persistedData = localStorage.getItem("persist:root");
 
-    if (persistedData) {
-      const parsedData = JSON.parse(persistedData);
+      if (persistedData) {
+        const parsedData = JSON.parse(persistedData);
 
-      const localComments =
-        parsedData.comments && JSON.parse(parsedData.comments).comments;
+        const localProducts =
+          parsedData.products && JSON.parse(parsedData.products).products;
 
-      if (localComments || localComments.length > 0) {
-        if (!comments || comments.length === 0) {
-          dispatch({ type: ALL_COMMENTS, payload: localComments });
+        if (localProducts || localProducts.length > 0) {
+          dispatch({ type: GET_PRODUCTS, payload: localProducts });
         }
       }
-    }
 
+      dispatch(getProducts());
+    } catch (error) {
+      return error;
+    }
+  }, []);
+
+  useEffect(() => {
     dispatch(allComments());
   }, []);
+
+  const [comments, setComments] = useState(null);
+
+  useEffect(() => {
+    setComments(AllComments);
+  }, [AllComments]);
+
+  console.log(comments, "estado de comments ");
 
   return (
     <Box
@@ -61,3 +76,21 @@ const Admin = () => {
 };
 
 export default Admin;
+// useEffect(() => {
+//   const persistedData = localStorage.getItem("persist:root");
+
+//   if (persistedData) {
+//     const parsedData = JSON.parse(persistedData);
+
+//     const localComments =
+//       parsedData.comments && JSON.parse(parsedData.comments).comments;
+
+//     if (localComments || localComments.length > 0) {
+//       if (!comments || comments.length === 0) {
+//         dispatch({ type: ALL_COMMENTS, payload: localComments });
+//       }
+//     }
+//   }
+
+//   dispatch(allComments());
+// }, []);

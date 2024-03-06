@@ -10,14 +10,13 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import FormatoHora from "./FormatoHora";
 import SelectedComment from "./SelectedComment";
-// import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const Comments = ({ comments }) => {
-  // const navigate = useNavigate();
-
+  // console.log(comments, "comments");
   const theme = useTheme();
   const isLessThanOrEqual430 = useMediaQuery(theme.breakpoints.down(430));
   const isLessThanOrEqual820 = useMediaQuery(theme.breakpoints.down(820));
@@ -25,12 +24,37 @@ const Comments = ({ comments }) => {
   const isLessThanOrEqual1268 = useMediaQuery(theme.breakpoints.down(1268));
   const isLessThanOrEqual1662 = useMediaQuery(theme.breakpoints.down(1662));
 
+  const products = useSelector((state) => state.products.products);
+
   const token = localStorage.getItem("token");
   const decodeToken = jwtDecode(token);
   const userId = decodeToken.id;
 
   const [selectedComment, setSelectedComment] = useState(null);
+  console.log(selectedComment, "selected comment");
+
+  useEffect(() => {
+    if (selectedComment) {
+      const producto = products.find((product) =>
+        product?.Comments?.some((comment) => comment.id === selectedComment.id)
+      );
+
+      const comentarioEspecifico = producto.Comments.find(
+        (comment) => comment.id === selectedComment.id
+      );
+
+      console.log(comentarioEspecifico, "comentario console.log");
+
+      setSelectedComment(comentarioEspecifico);
+    }
+  }, [products, selectedComment]);
+
+  console.log(selectedComment, "info del comment seleccionado");
   const scrollContainerRef = useRef(null); // referencia al contenedor de scroll
+
+  const handleSelectedComment = (comment) => {
+    setSelectedComment(comment);
+  };
 
   return (
     <Box
@@ -65,7 +89,7 @@ const Comments = ({ comments }) => {
           display: isLessThanOrEqual430 && selectedComment ? "none" : "block",
         }}
       >
-        {comments.map((comment) => (
+        {comments?.map((comment) => (
           <Box
             key={comment.id}
             sx={{
@@ -81,14 +105,7 @@ const Comments = ({ comments }) => {
                 marginBottom: "10px",
               },
             }}
-            onClick={() => {
-              setSelectedComment(comment);
-
-              // {
-              //   isLessThanOrEqual430 &&
-              //     navigate(`/admin/comments/${comment.id}`);
-              // }
-            }}
+            onClick={() => handleSelectedComment(comment)}
           >
             <UserAvatar user={comment.User} />
 
@@ -123,7 +140,6 @@ const Comments = ({ comments }) => {
       <Box>
         {selectedComment ? (
           <SelectedComment
-            setSelectedComment={setSelectedComment}
             selectedComment={selectedComment}
             isLessThanOrEqual430={isLessThanOrEqual430}
             isLessThanOrEqual820={isLessThanOrEqual820}

@@ -84,13 +84,13 @@ const SelectedComment = ({
                 fontWeight: "bold",
               }}
             >
-              {selectedComment.User.name || ""}{" "}
-              {selectedComment.User.lastname || ""}
+              {selectedComment?.User?.name || ""}{" "}
+              {selectedComment?.User?.lastname || ""}
             </Typography>
-            <Typography>{selectedComment.text}</Typography>
+            <Typography>{selectedComment?.text}</Typography>
           </Box>
 
-          {selectedComment.Answers.sort((a, b) => {
+          {selectedComment?.Answers?.sort((a, b) => {
             if (a.createdAt < b.createdAt) return -1;
             else if (a.createdAt > b.createdAt) return 1;
             return 0;
@@ -100,13 +100,13 @@ const SelectedComment = ({
               sx={{
                 display: "flex",
                 justifyContent:
-                  userId === answer.userId ? "flex-end" : "flex-start",
+                  userId === answer?.userId ? "flex-end" : "flex-start",
               }}
             >
               <Box
                 sx={{
                   display: "flex",
-                  bgcolor: userId === answer.userId ? "#00CCFD" : "#F5F5F5",
+                  bgcolor: userId === answer?.userId ? "#00CCFD" : "#F5F5F5",
                   width: "24rem",
                   borderRadius:
                     userId === answer.userId
@@ -129,7 +129,7 @@ const SelectedComment = ({
                     fontWeight: "bold",
                   }}
                 >
-                  {answer.User.name || ""} {answer.User.lastname || ""}
+                  {answer.User.name || ""} {answer?.User?.lastname || ""}
                 </Typography>
                 <Typography
                   sx={{
@@ -151,7 +151,7 @@ const SelectedComment = ({
             alignItems: "center",
           }}
         >
-          <AnswerComment commentId={selectedComment.id} />
+          <AnswerComment commentId={selectedComment?.id} />
         </Box>
       </Box>
     </Box>

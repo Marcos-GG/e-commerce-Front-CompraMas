@@ -55,7 +55,7 @@ const SearchBarProduct = () => {
                 ? "14rem"
                 : "15rem",
             height: "3rem",
-            mr: "15px",
+            // mr: "15px",
           },
         }}
         sx={{

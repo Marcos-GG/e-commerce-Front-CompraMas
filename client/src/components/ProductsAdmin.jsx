@@ -67,7 +67,6 @@ const ProductsAdmin = ({ products, productosFiltrados }) => {
     setProductDetail(null);
     const updateProduct = { ...product, status: false };
     dispatch(putProduct(id, updateProduct, "false"));
-    // dispatch(moveToDeactivate(id));
   };
 
   const activateProduct = (id, product) => {

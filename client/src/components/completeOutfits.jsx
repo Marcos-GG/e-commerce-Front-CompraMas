@@ -114,8 +114,9 @@ const CompleteOutfits = ({
                 },
               }}
             >
-              <img
-                src={product.image2}
+              <Box
+                component="img"
+                src={product.image1}
                 alt={product.title}
                 style={{
                   maxWidth: "100%",

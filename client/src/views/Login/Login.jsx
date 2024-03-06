@@ -17,10 +17,13 @@ import {
 } from "@mui/material";
 import PasswordIcon from "@mui/icons-material/Password";
 import Respuesta from "../../components/Respuesta";
+import Validations from "../../Validations/Validations";
 
 function Login() {
   const isLTE507 = useMediaQuery(`(max-width: 507px)`);
   const isLTE700 = useMediaQuery(`(max-width: 700px)`);
+
+  const [error, setError] = useState();
 
   const dispatch = useDispatch();
   const [form, setForm] = useState({
@@ -36,6 +39,16 @@ function Login() {
       ...form,
       [campo]: value,
     });
+
+    setError(
+      Validations(
+        {
+          ...form,
+          [campo]: value,
+        },
+        campo
+      )
+    );
   };
 
   const handleSubmit = (event) => {
@@ -116,7 +129,11 @@ function Login() {
               }}
             >
               <Box>
-                {/* <MailOutlineIcon sx={{ marginLeft: "10px" }} /> */}
+                {error?.email && (
+                  <Typography sx={{ fontSize: "13px", color: "red" }}>
+                    {error.email}
+                  </Typography>
+                )}
                 <TextField
                   name="email"
                   value={form.email}
@@ -129,10 +146,6 @@ function Login() {
                     width: "100%",
                   }}
                   InputProps={{
-                    // sx: {
-                    //   width: "25rem",
-                    //   // maxWidth: "25rem"
-                    // },
                     endAdornment: (
                       <InputAdornment position="end">
                         <MailOutlineIcon />
@@ -143,6 +156,11 @@ function Login() {
               </Box>
 
               <Box>
+                {error?.password && (
+                  <Typography sx={{ fontSize: "13px", color: "red" }}>
+                    {error.password}
+                  </Typography>
+                )}
                 <TextField
                   name="password"
                   value={form.password}

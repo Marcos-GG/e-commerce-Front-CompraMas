@@ -9,20 +9,24 @@ import ProductItem from "./ProductItem";
 
 function Card({ product }) {
   const dispatch = useDispatch();
+
   const [liked, setLiked] = useState(false);
 
   const token = localStorage.getItem("token");
   const decodeToken = jwtDecode(token);
   const userId = decodeToken.id;
 
-  const productosLikeados = product.Likes?.some(
-    // Likes es un array de objetos que son los usuarios que le dieron like , si "alguno" de esos objetos es del userId devuelve true
-    (like) => like.userId === userId
-  );
-
   useEffect(() => {
+    const productosLikeados = product.Likes?.some(
+      // Likes es un array de objetos que son los usuarios que le dieron like , si "alguno" de esos objetos es del userId devuelve true
+      (like) => like.userId === userId
+    );
+
     setLiked(productosLikeados); // cargamos con true o false dependieno lo que devuelva some
-  }, [productosLikeados]);
+  }, [product, userId]);
+
+  // useEffect(() => {
+  // }, []);
 
   const handleClickAdd = () => {
     dispatch(addProduct(product));

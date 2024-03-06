@@ -17,14 +17,12 @@ import DesactivatedProducts from "./components/DesactivatedProducts";
 import DetailProduct from "./views/DetailProduct/DetailProduct";
 import ShoppingCart from "./views/ShoppingCart/ShoppingCart";
 import NavBar from "./components/NavBar";
-import Favoritos from "./components/Favoritos";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import LogOut from "./views/Logout/LogOut";
 import "./App.css";
 import { SET_INITIAL_CART } from "./Redux/actionsTypes/ShoppingCartActionTypes";
 import ProductsActivated from "./components/productsActivated";
-// import SelectedComment from "./components/SelectedComment";
 
 function App() {
   const location = useLocation();
@@ -90,13 +88,6 @@ function App() {
           element={token && admin ? <Admin /> : <Navigate to="/login" />} // Si no hay un token o si no es admin, redirigir a Login
         />
 
-        {/* <Route
-          path="/admin/comments/:id"
-          element={
-            token && admin ? <SelectedComment /> : <Navigate to="/login" />
-          }
-        /> */}
-
         <Route
           path="/admin/desactivatedProducts"
           element={
@@ -129,11 +120,6 @@ function App() {
         <Route
           path="/carrito"
           element={token ? <ShoppingCart /> : <Navigate to="/login" />}
-        />
-
-        <Route
-          path="/favoritos"
-          element={token ? <Favoritos /> : <Navigate to="/login" />}
         />
       </Routes>
     </div>

@@ -25,9 +25,6 @@ function Card({ product }) {
     setLiked(productosLikeados); // cargamos con true o false dependieno lo que devuelva some
   }, [product, userId]);
 
-  // useEffect(() => {
-  // }, []);
-
   const handleClickAdd = () => {
     dispatch(addProduct(product));
   };

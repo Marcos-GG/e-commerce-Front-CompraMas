@@ -16,7 +16,7 @@ const postProductHandler = async (req, res) => {
     } = req.body;
 
     if (!title || !image1 || !description || !price || !gender || !category)
-      throw new Error("Datos incompletos para realizar publicacion");
+      throw new Error("Campos incompletos para la creación.");
 
     const postProduct = await postProductController({
       title,
@@ -31,7 +31,7 @@ const postProductHandler = async (req, res) => {
       // stock,
     });
 
-    if (!postProduct) throw new Error("No se pudo crear la publicacion");
+    if (!postProduct) throw new Error("No se pudo crear la publicación");
 
     return res.status(200).json(postProduct);
   } catch (error) {

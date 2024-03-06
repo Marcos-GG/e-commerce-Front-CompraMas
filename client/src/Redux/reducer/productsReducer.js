@@ -5,8 +5,8 @@ import {
   MOVE_TO_ACTIVE,
   MOVE_TO_DEACTIVATE,
   CREATE_PRODUCT,
-  POST_COMMENT_PRODUCT_ID,
-  POST_ANSWER_PRODUCT_ID,
+  // POST_COMMENT_PRODUCT_ID,
+  // POST_ANSWER_PRODUCT_ID,
   APPLY_FILTERS,
   CLEAR_FILTERED_PRODUCTS,
   SET_FAVORITES,
@@ -15,12 +15,15 @@ import {
   ERROR,
   CLEAN_ERROR,
   CLEAN_SUCCESS,
+  CLEAN_DETAIL,
 } from "../actionsTypes/ProductsActionTypes";
 import { ADD_LIKE, REMOVE_LIKE } from "../actionsTypes/LikesTypes";
+import { POST_ANSWER, POST_COMMENT } from "../actionsTypes/CommentsTypes";
 
 const initialState = {
   products: [],
   productId: [],
+  commentId: [],
   desactivatedproducts: [],
   productsFiltered: [],
   productsFilteredFalse: [],
@@ -34,6 +37,7 @@ const initialState = {
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_PRODUCTS: {
+      console.log(action.payload);
       const statusTrue = action.payload.filter(
         (product) => product.status === true
       );
@@ -53,13 +57,37 @@ const reducer = (state = initialState, action) => {
       return { ...state, productId: action.payload };
     }
 
-    case POST_COMMENT_PRODUCT_ID: {
+    case CLEAN_DETAIL: {
+      return { ...state, productId: "" };
+    }
+
+    case POST_COMMENT: {
+      console.log(action.payload, "cuadno hago un comentario ");
+      const productIndex = state.products.findIndex(
+        (product) => product.id === action.payload.productId
+      );
+      if (productIndex !== -1) {
+        const updatedProduct = { ...state.products[productIndex] };
+
+        updatedProduct.Comments = updatedProduct.Comments
+          ? [action.payload, ...updatedProduct.Comments]
+          : [action.payload];
+
+        const updatedProducts = [...state.products];
+        updatedProducts[productIndex] = updatedProduct;
+
+        console.log(
+          updatedProducts,
+          "updated products con el comenario integrado"
+        );
+        return {
+          ...state,
+          products: updatedProducts,
+        };
+      }
+
       return {
         ...state,
-        productId: {
-          ...state.productId,
-          Comments: [action.payload, ...state.productId.Comments],
-        },
       };
     }
 
@@ -101,29 +129,38 @@ const reducer = (state = initialState, action) => {
       }
     }
 
-    case POST_ANSWER_PRODUCT_ID: {
+    case POST_ANSWER: {
       const commentId = action.payload.commentId;
+      console.log(action.payload, "respuesta que llega postAnswer");
 
-      // Encuentra el comentario específico para agregarle la respuesta
-      const updatedComments = state.productId.Comments.map((comment) => {
-        if (comment.id === commentId) {
-          // Actualiza Answers y le agrega la nueva respuesta
-          return {
-            ...comment,
-            Answers: comment.Answers
-              ? [...comment.Answers, action.payload]
-              : [action.payload],
-          };
+      // Encuentra el producto correspondiente en el estado
+      const updatedProducts = state.products.map((product) => {
+        // Verifica si el producto tiene comentarios
+        if (product.Comments && product.Comments.length > 0) {
+          // Actualiza los comentarios dentro del producto
+          product.Comments = product.Comments.map((comment) => {
+            // Verifica si el comentario tiene el mismo ID que el commentId
+            if (comment.id === commentId) {
+              // Actualiza Answers y le agrega la nueva respuesta
+              return {
+                ...comment,
+                Answers: comment.Answers
+                  ? [...comment.Answers, action.payload]
+                  : [action.payload],
+              };
+            }
+            return comment;
+          });
         }
-        return comment;
+        return product;
       });
 
       return {
         ...state,
-        productId: {
-          ...state.productId,
-          Comments: updatedComments,
-        },
+        products: updatedProducts,
+        commentId: updatedProducts.find((product) =>
+          product.Comments.some((comment) => comment.id === commentId)
+        ),
       };
     }
 

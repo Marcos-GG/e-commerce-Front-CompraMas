@@ -1,3 +1,3 @@
 export const ALL_COMMENTS = "ALL_COMMENTS";
-export const POST_COMMENTS = "POST_COMMENTS";
-export const POST_ANSWER_COMMENT_ID = "POST_ANSWER_COMMENT_ID";
+export const POST_COMMENT = "POST_COMMENT";
+export const POST_ANSWER = "POST_ANSWER";

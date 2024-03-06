@@ -14,3 +14,4 @@ export const SUCCESS = "SUCCESS";
 export const ERROR = "ERROR";
 export const CLEAN_ERROR = "CLEAN_ERROR";
 export const CLEAN_SUCCESS = "CLEAN_SUCCESS";
+export const CLEAN_DETAIL = "CLEAN_DETAIL";

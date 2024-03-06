@@ -97,29 +97,24 @@ export const putProduct = (id, product, shouldMoveTo) => {
   };
 };
 
-// export const moveToActive = (id) => {
-//   return function (dispatch) {
-//     dispatch({ type: MOVE_TO_ACTIVE, payload: id });
-//   };
-// };
-
-// export const moveToDeactivate = (id) => {
-//   return function (dispatch) {
-//     dispatch({ type: MOVE_TO_DEACTIVATE, payload: id });
-//   };
-// };
-
 export const createProduct = (product) => {
   return async function (dispatch) {
-    const config = configureHeaders();
+    try {
+      const config = configureHeaders();
 
-    const response = await axios.post(
-      `${import.meta.env.VITE_LOCALHOST}createProduct`,
-      product,
-      config
-    );
-
-    dispatch({ type: CREATE_PRODUCT, payload: response.data });
+      const response = await axios.post(
+        `${import.meta.env.VITE_LOCALHOST}createProduct`,
+        product,
+        config
+      );
+      if (response.status === 200) {
+        dispatch({ type: SUCCESS, payload: "Producto creado correctamente." });
+      }
+      dispatch({ type: CREATE_PRODUCT, payload: response.data });
+    } catch (error) {
+      dispatch({ type: ERROR, payload: error.response.data.error });
+      return error;
+    }
   };
 };
 

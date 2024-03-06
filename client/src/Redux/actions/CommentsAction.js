@@ -3,12 +3,14 @@ import { configureHeaders } from "../auth/configureHeaders";
 
 import {
   ALL_COMMENTS,
+  POST_COMMENT,
+  POST_ANSWER,
   // POST_ANSWER_COMMENT_ID,
 } from "../actionsTypes/CommentsTypes";
-import {
-  POST_COMMENT_PRODUCT_ID,
-  POST_ANSWER_PRODUCT_ID,
-} from "../actionsTypes/ProductsActionTypes";
+// import {
+//   POST_COMMENT_PRODUCT_ID,
+//   POST_ANSWER_PRODUCT_ID,
+// } from "../actionsTypes/ProductsActionTypes";
 
 export const allComments = () => {
   return async function (dispatch) {
@@ -37,7 +39,7 @@ export const postComment = (form, token, productId) => {
         config
       );
 
-      dispatch({ type: POST_COMMENT_PRODUCT_ID, payload: response.data });
+      dispatch({ type: POST_COMMENT, payload: response.data });
     } catch (error) {
       return error.message;
     }
@@ -56,7 +58,7 @@ export const postAnswer = (form, commentId) => {
         config
       );
 
-      dispatch({ type: POST_ANSWER_PRODUCT_ID, payload: response.data });
+      dispatch({ type: POST_ANSWER, payload: response.data });
     } catch (error) {
       return error.message;
     }

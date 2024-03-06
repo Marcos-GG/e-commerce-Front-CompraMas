@@ -40,6 +40,7 @@ export const getFavorites = () => {
 
     const ProductosFavoritos = response.data.map((like) => like.Product);
 
+    console.log(ProductosFavoritos, "productos favoritos");
     dispatch({ type: SET_FAVORITES, payload: ProductosFavoritos });
   };
 };

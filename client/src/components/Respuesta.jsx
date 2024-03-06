@@ -46,6 +46,11 @@ const Respuesta = () => {
         autoHideDuration={3000}
         onClose={handleClose}
         message={message}
+        anchorOrigin={{
+          vertical: "top",
+          horizontal: "center",
+        }}
+        sx={{ mt: "2rem" }}
       >
         <Alert onClose={handleClose} severity={severity}>
           {message}

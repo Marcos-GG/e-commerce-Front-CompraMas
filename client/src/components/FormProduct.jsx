@@ -10,10 +10,14 @@ import {
   MenuItem,
   Select,
   TextField,
+  Typography,
   useMediaQuery,
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import DetailProduct from "../views/DetailProduct/DetailProduct";
+import Respuesta from "./Respuesta";
+import { CLEAN_DETAIL } from "../Redux/actionsTypes/ProductsActionTypes";
+import Validations from "../Validations/Validations";
 
 const FormProduct = () => {
   // const [additionalImages, setAdditionalImages] = useState([]);
@@ -47,7 +51,10 @@ const FormProduct = () => {
   useEffect(() => {
     dispatch(getCategory());
     dispatch(getGender());
+    dispatch({ type: CLEAN_DETAIL });
   }, [getCategory, getGender]);
+
+  const [error, setError] = useState();
 
   const [form, setForm] = useState({
     title: "",
@@ -69,18 +76,12 @@ const FormProduct = () => {
       ...form,
       [name]: value,
     });
-  };
 
-  // const addImageInput = () => {
-  //   setAdditionalImages([...additionalImages, ""]);
-  // };
+    setError(Validations({ ...form, [name]: value }, name));
+  };
 
   const handlerSubmit = (event) => {
     event.preventDefault();
-    // const formData = {
-    //   ...form,
-    //   image: additionalImages, // Incluir todas las imágenes, incluida la imagen principal, en el array "image"
-    // };
     dispatch(createProduct(form));
   };
 
@@ -97,12 +98,14 @@ const FormProduct = () => {
       gender: "",
       category: "",
     });
+    setError("");
   };
 
   const valueForm = Object.values(form).every((value) => !value);
 
   return (
     <Box sx={{ height: `calc(100vh - 3.2rem)` }}>
+      <Respuesta />
       <Box
         sx={{
           height: "100%",
@@ -128,7 +131,6 @@ const FormProduct = () => {
                 bgcolor: "#F5F5F5",
                 borderRadius: "5px",
                 boxShadow: "10px 10px 15px #888888",
-
                 flexDirection: "column",
                 alignItems: "center",
                 height: "100%",
@@ -142,6 +144,13 @@ const FormProduct = () => {
                   my: isLTE500 ? "2px" : "3px",
                 }}
               >
+                {error?.title && (
+                  <Typography
+                    sx={{ fontSize: "13px", color: "red", mb: "-10px" }}
+                  >
+                    {error.title}
+                  </Typography>
+                )}
                 <TextField
                   type="text"
                   name="title"
@@ -152,7 +161,7 @@ const FormProduct = () => {
                     sx: {
                       bgcolor: "white",
                       width: "100%",
-                      mt: "20px",
+                      mt: "10px",
                       height: "2.5rem",
                     },
                   }}
@@ -162,90 +171,118 @@ const FormProduct = () => {
               <Box
                 sx={{
                   width: isLTE1300 ? "94%" : isLTE1700 ? "90%" : "80%",
-                  display: "flex",
-                  alignItems: "center",
                   my: isLTE500 ? "2px" : "3px",
                 }}
               >
-                <TextField
-                  type="text"
-                  name="image1"
-                  value={form.image1}
-                  onChange={formHandler}
-                  placeholder="imagen Principal"
-                  InputProps={{
-                    sx: {
-                      bgcolor: "white",
-
-                      width: "100%",
-                      mt: "20px",
-                      height: "2.5rem",
-                    },
-                  }}
-                  sx={{ width: "100%" }}
-                />
-                <IconButton sx={{ mt: "20px" }} onClick={handlerImage2}>
-                  <AddIcon />
-                </IconButton>
-              </Box>
-              {image2 && (
-                <Box
-                  sx={{
-                    width: isLTE1300 ? "94%" : isLTE1700 ? "90%" : "80%",
-                    display: "flex",
-                    alignItems: "center",
-                    my: isLTE500 ? "2px" : "3px",
-                  }}
-                >
+                <Box>
+                  {error?.image1 && (
+                    <Typography
+                      sx={{ fontSize: "13px", color: "red", mb: "-10px" }}
+                    >
+                      {error.image1}
+                    </Typography>
+                  )}
+                </Box>
+                <Box sx={{ display: "flex", alignItems: "center" }}>
                   <TextField
                     type="text"
-                    name="image2"
-                    value={form.image2}
+                    name="image1"
+                    value={form.image1}
                     onChange={formHandler}
-                    placeholder="segunda imagen"
+                    placeholder="imagen Principal"
                     InputProps={{
                       sx: {
                         bgcolor: "white",
                         width: "100%",
-                        mt: "20px",
+                        mt: "10px",
                         height: "2.5rem",
                       },
                     }}
                     sx={{ width: "100%" }}
                   />
-                  <IconButton sx={{ mt: "20px" }} onClick={handlerImage3}>
+                  <IconButton sx={{ mt: "10px" }} onClick={handlerImage2}>
                     <AddIcon />
                   </IconButton>
+                </Box>
+              </Box>
+              {image2 && (
+                <Box
+                  sx={{
+                    width: isLTE1300 ? "94%" : isLTE1700 ? "90%" : "80%",
+                    alignItems: "center",
+                    my: isLTE500 ? "2px" : "3px",
+                  }}
+                >
+                  <Box>
+                    {error?.image2 && (
+                      <Typography
+                        sx={{ fontSize: "13px", color: "red", mb: "-10px" }}
+                      >
+                        {error.image2}
+                      </Typography>
+                    )}
+                  </Box>
+                  <Box sx={{ display: "flex", alignItems: "center" }}>
+                    <TextField
+                      type="text"
+                      name="image2"
+                      value={form.image2}
+                      onChange={formHandler}
+                      placeholder="segunda imagen"
+                      InputProps={{
+                        sx: {
+                          bgcolor: "white",
+                          width: "100%",
+                          mt: "10px",
+                          height: "2.5rem",
+                        },
+                      }}
+                      sx={{ width: "100%" }}
+                    />
+                    <IconButton sx={{ mt: "10px" }} onClick={handlerImage3}>
+                      <AddIcon />
+                    </IconButton>
+                  </Box>
                 </Box>
               )}
               {image3 && (
                 <Box
                   sx={{
                     width: isLTE1300 ? "94%" : isLTE1700 ? "90%" : "80%",
-                    display: "flex",
-                    alignItems: "center",
                     my: isLTE500 ? "2px" : "3px",
                   }}
                 >
-                  <TextField
-                    type="text"
-                    name="image3"
-                    value={form.image3}
-                    onChange={formHandler}
-                    placeholder="tercera imagen"
-                    InputProps={{
-                      sx: {
-                        bgcolor: "white",
-                        width: "100%",
-                        mt: "20px",
-                        height: "2.5rem",
-                      },
-                    }}
-                    sx={{ width: "100%" }}
-                  />
-                  <IconButton sx={{ mt: "20px" }} onClick={handlerImage4}>
-                    <AddIcon />
-                  </IconButton>
+                  <Box>
+                    {error?.image3 && (
+                      <Typography
+                        sx={{ fontSize: "13px", color: "red", mb: "-10px" }}
+                      >
+                        {error.image3}
+                      </Typography>
+                    )}
+                  </Box>
+
+                  <Box sx={{ display: "flex" }}>
+                    <TextField
+                      type="text"
+                      name="image3"
+                      value={form.image3}
+                      onChange={formHandler}
+                      placeholder="tercera imagen"
+                      InputProps={{
+                        sx: {
+                          bgcolor: "white",
+                          width: "100%",
+                          mt: "10px",
+                          height: "2.5rem",
+                        },
+                      }}
+                      sx={{ width: "100%" }}
+                    />
+                    <IconButton sx={{ mt: "10px" }} onClick={handlerImage4}>
+                      <AddIcon />
+                    </IconButton>
+                  </Box>
                 </Box>
               )}
               {image4 && (
@@ -255,6 +292,13 @@ const FormProduct = () => {
                     my: isLTE500 ? "2px" : "3px",
                   }}
                 >
+                  {error?.image4 && (
+                    <Typography
+                      sx={{ fontSize: "13px", color: "red", mb: "-10px" }}
+                    >
+                      {error.image4}
+                    </Typography>
+                  )}
                   <TextField
                     type="text"
                     name="image4"
@@ -264,9 +308,8 @@ const FormProduct = () => {
                     InputProps={{
                       sx: {
                         bgcolor: "white",
-
                         width: "100%",
-                        mt: "20px",
+                        mt: "10px",
                         height: "2.5rem",
                       },
                     }}
@@ -280,6 +323,13 @@ const FormProduct = () => {
                   my: isLTE500 ? "2px" : "3px",
                 }}
               >
+                {error?.description && (
+                  <Typography
+                    sx={{ fontSize: "13px", color: "red", mb: "-10px" }}
+                  >
+                    {error.description}
+                  </Typography>
+                )}
                 <TextField
                   name="description"
                   value={form.description}
@@ -292,7 +342,7 @@ const FormProduct = () => {
                     sx: {
                       bgcolor: "white",
                       width: "100%",
-                      mt: "20px",
+                      mt: "10px",
                       height: "6rem",
                     },
                   }}
@@ -305,8 +355,15 @@ const FormProduct = () => {
                   my: isLTE500 ? "2px" : "3px",
                 }}
               >
+                {error?.price && (
+                  <Typography
+                    sx={{ fontSize: "13px", color: "red", mb: "-10px" }}
+                  >
+                    {error.price}
+                  </Typography>
+                )}
                 <TextField
-                  type="text"
+                  type="number"
                   name="price"
                   value={form.price}
                   onChange={formHandler}
@@ -314,9 +371,8 @@ const FormProduct = () => {
                   InputProps={{
                     sx: {
                       bgcolor: "white",
-
                       width: "100%",
-                      mt: "20px",
+                      mt: "10px",
                       height: "2.5rem",
                     },
                   }}
@@ -329,6 +385,14 @@ const FormProduct = () => {
                   my: isLTE500 ? "2px" : "3px",
                 }}
               >
+                {error?.gender && (
+                  <Typography
+                    sx={{ fontSize: "13px", color: "red", mb: "-10px" }}
+                  >
+                    {error.gender}
+                  </Typography>
+                )}
+
                 <Select
                   name="gender"
                   value={form.gender}
@@ -337,11 +401,9 @@ const FormProduct = () => {
                   placeholder="Género"
                   sx={{
                     bgcolor: "white",
-
                     height: "2.5rem",
                     width: "100%",
-
-                    mt: "20px",
+                    mt: "10px",
                   }}
                 >
                   <MenuItem value="">Genero</MenuItem>
@@ -359,6 +421,14 @@ const FormProduct = () => {
                   my: isLTE500 ? "2px" : "3px",
                 }}
               >
+                {error?.category && (
+                  <Typography
+                    sx={{ fontSize: "13px", color: "red", mb: "-10px" }}
+                  >
+                    {error.category}
+                  </Typography>
+                )}
+
                 <Select
                   name="category"
                   value={form.category}
@@ -368,9 +438,8 @@ const FormProduct = () => {
                   sx={{
                     height: "2.5rem",
                     bgcolor: "white",
-
                     width: "100%",
-                    mt: "20px",
+                    mt: "10px",
                   }}
                 >
                   <MenuItem value="">Categoria</MenuItem>

@@ -1,5 +1,6 @@
+/* eslint-disable react/prop-types */
 import { useSelector, useDispatch } from "react-redux";
-import { useParams } from "react-router-dom";
+import { NavLink, useLocation, useParams } from "react-router-dom";
 import {
   clearProductosFiltrados,
   getProductId,
@@ -25,46 +26,49 @@ import CompleteOutfits from "../../components/completeOutfits";
 import CommentDesplegable from "../../components/CommentDesplegable";
 import CircleIcon from "@mui/icons-material/Circle";
 import CircleOutlinedIcon from "@mui/icons-material/CircleOutlined";
+import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 
-function DetailProduct() {
+function DetailProduct({ product }) {
   const isLTE454 = useMediaQuery("(max-width:454px)");
   const isLTE600 = useMediaQuery("(max-width:600px)");
   const isLTE768 = useMediaQuery("(max-width:768px)");
   const isLTE1000 = useMediaQuery("(max-width:1000px)");
+  const isLTE1023 = useMediaQuery("(max-width:1023px)");
   const isLTE1200 = useMediaQuery("(max-width:1200px)");
   const isLTE1250 = useMediaQuery("(max-width:1250px)");
   const isLTE1400 = useMediaQuery("(max-width:1400px)");
   const isLTE1520 = useMediaQuery("(max-width:1520px)");
 
+  const location = useLocation();
+  const currentPath = location.pathname;
+
   const { id } = useParams();
   const dispatch = useDispatch();
 
   const productId = useSelector((state) => state.products.productId);
-  console.log(productId, "productId");
 
   const products = useSelector((state) => state.products.products);
 
   const [fotoPrincipal, setFotoPrincipal] = useState("");
-  console.log(fotoPrincipal, "fotoPrincipal");
   const [fotoLength, setFotoLength] = useState([]);
 
   useEffect(() => {
-    if (productId) {
+    if (product || productId) {
       const imageArray = [
-        productId?.image1,
-        productId?.image2,
-        productId?.image3,
-        productId?.image4,
+        product?.image1 || productId?.image1,
+        product?.image2 || productId?.image2,
+        product?.image3 || productId?.image3,
+        product?.image4 || productId?.image4,
       ];
       const validImages = imageArray.filter((image) => image);
       setFotoLength(validImages);
       setFotoPrincipal(validImages[0]); // Actualizar fotoPrincipal con la primera imagen válida
     }
-  }, [productId]);
+  }, [product, productId]);
 
   /// productos relacionados
-  const category = productId?.category;
-  const gender = productId?.gender;
+  const category = product?.category || productId?.category;
+  const gender = product?.gender || productId?.gender;
   const IdProduct = productId?.id;
 
   useEffect(() => {
@@ -85,7 +89,7 @@ function DetailProduct() {
   const userId = decodeToken.id;
 
   useEffect(() => {
-    dispatch(getProductId(id));
+    if (!product) dispatch(getProductId(id));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -94,7 +98,7 @@ function DetailProduct() {
   };
 
   const priceStyle = {
-    fontSize: isLTE454 ? "1.6rem" : "2.2rem",
+    fontSize: product ? "1.4rem" : isLTE454 ? "1.6rem" : "2.2rem",
   };
 
   const handleImageClick = (image) => {
@@ -102,16 +106,45 @@ function DetailProduct() {
   };
 
   return (
-    <Box>
+    <Box sx={{ position: "relative" }}>
+      {currentPath !== "/admin/products" &&
+        currentPath !== "/admin/createProduct" && (
+          <Box
+            sx={{
+              position: "fixed",
+              zIndex: 5,
+              right: isLTE454 ? 5 : 20,
+              bottom: isLTE454 ? 0 : 10,
+            }}
+          >
+            <IconButton sx={{}}>
+              <NavLink
+                to={`https://wa.me/541127147123?text=¡Hola! me gustaria recibir información sobre ${productId.title}. ${productId.category} para ${productId.gender}, precio ${productId.price}.`}
+                target="_blank"
+              >
+                <WhatsAppIcon
+                  sx={{
+                    fontSize: isLTE454 ? "2.6rem" : "2.80rem",
+                    bgcolor: "#00BD07",
+                    color: "white",
+                    borderRadius: "50%",
+                    p: "5px",
+                  }}
+                />
+              </NavLink>
+            </IconButton>
+          </Box>
+        )}
       <Box
         sx={{
           display: "flex",
           justifyContent: "center", // Alinea horizontalmente al centro
-          mx: isLTE1400 ? "0" : "5rem",
+          mx: product ? 0 : isLTE1400 ? "0" : "5rem",
           mt: "3rem",
-          flexDirection: isLTE768 && "column",
-          alignItems: isLTE768 && "center",
+          flexDirection: product ? isLTE1023 && "column" : isLTE768 && "column",
+          alignItems: isLTE1023 && "center",
           gap: isLTE768 && "30px",
+          width: product && isLTE1023 ? "100%" : isLTE1023 ? "100%" : "95%",
         }}
       >
         <Box
@@ -119,23 +152,38 @@ function DetailProduct() {
             display: "flex",
             justifyContent: "center",
             position: "relative",
-            width: "100%",
+            width: product ? (isLTE1023 ? "100%" : "100%") : "100%",
             maxWidth: "100rem",
             maxHeight: "30rem",
           }}
         >
-          <img
+          <Box
+            component="img"
             src={fotoPrincipal}
-            alt={productId?.title}
-            style={{
-              minWidth: "18rem",
-              maxWidth: isLTE768 ? "55%" : "100%",
-              maxHeight: isLTE768 ? "55%" : "100%",
+            alt={product?.title || productId?.title}
+            sx={{
+              minWidth: product ? (isLTE768 ? "17rem" : "12rem") : "18rem",
+              maxWidth: product
+                ? isLTE1023
+                  ? "50%"
+                  : "100%"
+                : isLTE768
+                ? "55%"
+                : "100%",
+              maxHeight: product
+                ? isLTE1023
+                  ? "50%"
+                  : "100%"
+                : isLTE768
+                ? "55%"
+                : "100%",
               height: "auto",
-              position: isLTE768 ? "" : "absolute",
+              position: isLTE1023 ? "" : "absolute",
               top: "50%",
               left: "50%",
-              transform: !isLTE768 && "translate(-50%, -50%)",
+              transform: product
+                ? !isLTE1023 && "translate(-50%, -50%)"
+                : !isLTE1023 && "translate(-50%, -50%)",
             }}
           />
 
@@ -174,14 +222,16 @@ function DetailProduct() {
             alignItems: "center",
             justifyContent: "center",
             flexDirection: "column",
+            width: product && isLTE1023 ? "95%" : "100%",
             maxwidth: "65rem",
+            mt: "1rem",
           }}
         >
           <Box sx={{ alignSelf: "flex-end" }}>
             <Typography
               sx={{
                 display: "flex",
-                fontSize: isLTE1000 ? "10.9px" : "13px",
+                fontSize: product ? "12px" : isLTE1000 ? "10.9px" : "13px",
                 fontWeight: "bold",
                 color: "gray",
                 fontStyle: "italic",
@@ -191,48 +241,59 @@ function DetailProduct() {
               {
                 <FavoriteBorderIcon
                   fontSize="small"
-                  sx={{ fontSize: isLTE1000 && "15px" }}
+                  sx={{
+                    fontSize: product ? "14px" : isLTE1000 && "15px",
+                    mt: "2px",
+                  }}
                 />
               }
-              {productId.likes} veces indicado como favorito
+              {product?.likes || productId?.likes} veces favorito
             </Typography>
           </Box>
 
           <Box
             sx={{
-              width: isLTE1200 ? "100%" : "80%",
+              width: product ? "100%" : isLTE1200 ? "100%" : "80%",
               height: "100%",
             }}
           >
             <Typography
               variant="h2"
               sx={{
-                fontSize: isLTE454
+                fontSize: product
+                  ? isLTE1200
+                    ? "24px"
+                    : "34px"
+                  : isLTE454
                   ? "30px"
                   : isLTE768
                   ? "35px"
-                  : isLTE1000 && "45px",
+                  : isLTE1000 && "38px",
                 textTransform: "uppercase",
                 letterSpacing: isLTE768
                   ? "0.5rem"
                   : isLTE1520
                   ? "1rem"
                   : "1.5rem",
-                ml: isLTE454 ? "15px" : isLTE768 && "15px",
+                ml: product ? "10px" : isLTE454 ? "15px" : isLTE768 && "15px",
               }}
             >
-              {productId?.title}
+              {product?.title || productId?.title}
             </Typography>
 
             <Typography
               component="p"
               sx={{ ml: isLTE454 ? "25px" : "15px", my: "5px" }}
             >
-              {productId?.category} para {productId?.gender}
+              {product?.category || productId?.category} para{" "}
+              {product?.gender || productId?.gender}
             </Typography>
 
-            <Typography variant="h4" mt={2.5} ml={2}>
-              <ProductPrice price={productId?.price} style={priceStyle} />
+            <Typography variant="h4" mt={isLTE768 ? 1 : 2.5} ml={2}>
+              <ProductPrice
+                price={product?.price || productId?.price || "$0"}
+                style={priceStyle}
+              />
             </Typography>
 
             <Box
@@ -245,11 +306,11 @@ function DetailProduct() {
               <Button
                 variant="contained"
                 sx={{
-                  width: "50%",
+                  width: product ? "33%" : "50%",
                   maxWidth: "13rem",
-                  mt: isLTE1200 ? "1.5rem" : "5px",
+                  mt: isLTE768 ? "0.5rem" : isLTE1200 ? "1.5rem" : "5px",
                   borderRadius: "40px",
-                  fontSize: isLTE454 ? "15px" : "18px",
+                  fontSize: product ? "13px" : isLTE454 ? "15px" : "18px",
                   mb: "10px",
                 }}
               >
@@ -259,11 +320,11 @@ function DetailProduct() {
                 variant="contained"
                 endIcon={<AddShoppingCartIcon />}
                 sx={{
-                  width: "60%",
+                  width: product ? "43%" : "60%",
                   maxWidth: "15rem",
                   height: "2.5rem",
                   borderRadius: "40px",
-                  fontSize: isLTE454 ? "12px" : "13px",
+                  fontSize: product ? "10px" : isLTE454 ? "12px" : "13px",
                   mb: "30px",
                 }}
                 onClick={() => handleClickAdd(productId)}
@@ -277,26 +338,36 @@ function DetailProduct() {
 
       <Box
         sx={{
-          m: isLTE768 ? "0.5rem 0 1rem 0" : isLTE1400 && "4rem 0 1rem 0",
+          m: product
+            ? "1.5rem 0 1rem 0"
+            : isLTE768
+            ? "0.5rem 0 1rem 0"
+            : isLTE1400 && "4rem 0 1rem 0",
           display: "flex",
-          justifyContent: isLTE1400 ? "center" : "end",
+          justifyContent: product ? "center" : isLTE1400 ? "center" : "end",
         }}
       >
         <Box
           sx={{
-            width: isLTE768 ? "100%" : isLTE1400 ? "90%" : "50%",
+            width: product
+              ? "90%"
+              : isLTE768
+              ? "100%"
+              : isLTE1400
+              ? "90%"
+              : "50%",
             textAlign: "start",
           }}
         >
           <Typography
             component="p"
             sx={{
-              fontSize: isLTE454 ? "14.8px" : "16px",
+              fontSize: product ? "14px" : isLTE454 ? "14.8px" : "16px",
               width: isLTE768 ? "90%" : "80%",
               mx: "auto",
             }}
           >
-            {productId?.description}
+            {product?.description || productId?.description}
           </Typography>
         </Box>
       </Box>
@@ -304,223 +375,246 @@ function DetailProduct() {
       <Box
         sx={{
           display: "flex",
-          flexDirection: isLTE1250 && "column",
-          alignItems: isLTE1250 && "center",
+          flexDirection: product ? "column" : isLTE1250 && "column",
+          alignItems: product ? "center" : isLTE1250 && "center",
         }}
       >
         <Box
           sx={{
-            width: isLTE1250 ? "100%" : isLTE1520 ? "60%" : "55%",
+            width: product
+              ? "100%"
+              : isLTE1250
+              ? "100%"
+              : isLTE1520
+              ? "60%"
+              : "55%",
             display: isLTE1250 && "flex",
             flexDirection: isLTE1250 && "column",
             alignItems: isLTE1250 && "center",
           }}
         >
           <Box
-            sx={{ mx: "25px", mb: "50px", width: isLTE1200 ? "90%" : "100%" }}
+            sx={{
+              mx: product ? "0" : "25px",
+              mb: product ? "10px" : "50px",
+              width: isLTE1200 ? "90%" : "100%",
+            }}
           >
             <RelatedProducts
-              id={id}
+              productAdmin={true}
+              id={product?.id || id}
               products={products}
               category={category}
               gender={gender}
             />
           </Box>
 
-          <Box
-            sx={{
-              width: isLTE768 ? "98%" : "90%",
-              maxWidth: "60rem",
-              display: "flex",
-              justifyContent: "center",
-              mt: "10px",
-              maxHeight: "21.5rem",
-              mb: "20px",
-              border: "1px solid #F5F5F5",
-              ml: isLTE1250 ? "" : "2rem",
-              boxShadow: "10px 10px 15px #888888",
-            }}
-          >
+          {!product && (
             <Box
               sx={{
-                width: "100%",
-                height: "100%",
+                width: isLTE768 ? "98%" : "90%",
+                maxWidth: "60rem",
+                display: "flex",
+                justifyContent: "center",
+                mt: "10px",
+                maxHeight: "21.5rem",
+                mb: "20px",
+                border: "1px solid #F5F5F5",
+                ml: isLTE1250 ? "" : "2rem",
+                boxShadow: "10px 10px 15px #888888",
               }}
             >
-              {productId.Comments &&
-                productId.Comments.length > 0 &&
-                productId.Comments.some(
-                  (comment) => comment.userId === userId
-                ) &&
-                productId.Comments.map((comment) => (
-                  <Box key={comment.id} sx={{}}>
-                    <Box
-                      sx={{
-                        overflow: "auto",
-                        width: "100%",
-                        height: "100%",
-                        backgroundColor: "#f5f5f5",
-                        backgroundImage: 'url("/logoblanco.svg")',
-                        backgroundSize: "contain",
-                        backgroundPosition: "center",
-                        backgroundRepeat: "no-repeat",
-                      }}
-                    >
-                      {comment.userId === userId && (
-                        <Box
-                          sx={{
-                            display: "flex",
-                            flexDirection: "column",
-                            width: "100%",
-                            height: "13rem",
-                          }}
-                        >
-                          <Box
-                            sx={{
-                              display: "flex",
-                              alignSelf: comment.userId
-                                ? "flex-end"
-                                : "flex-start",
-                              bgcolor: "#00CCFD",
-                              maxWidth: "75%",
-                              width: isLTE768 ? "19rem" : "24rem",
-                              borderRadius: "15px 15px 0px 15px",
-                              mx: "5px",
-                              padding: isLTE768 ? "5px" : "10px",
-                              mt: isLTE600 ? "3px" : "5px",
-                              border: "1px solid #00CCFD",
-                              boxShadow: "10px 10px 15px #888888",
-                              overflow: "break-word",
-                              wordWrap: "break-word",
-                              gap: 1,
-                            }}
-                          >
-                            <Typography
-                              component="p"
-                              sx={{ fontSize: isLTE768 && "14px" }}
-                            >
-                              {comment.text}
-                            </Typography>
-                          </Box>
+              <Box
+                sx={{
+                  width: "100%",
+                  height: "100%",
+                }}
+              >
+                {productId.Comments &&
+                  productId.Comments.length > 0 &&
+                  productId.Comments.some(
+                    (comment) => comment.userId === userId
+                  ) &&
+                  productId.Comments.map((comment) => (
+                    <Box key={comment.id} sx={{}}>
+                      <Box
+                        sx={{
+                          overflow: "auto",
+                          width: "100%",
+                          height: "100%",
+                          backgroundColor: "#f5f5f5",
+                          backgroundImage: 'url("/logoblanco.svg")',
+                          backgroundSize: "contain",
+                          backgroundPosition: "center",
+                          backgroundRepeat: "no-repeat",
+                        }}
+                      >
+                        {comment.userId === userId && (
                           <Box
                             sx={{
                               display: "flex",
                               flexDirection: "column",
+                              width: "100%",
+                              height: "13rem",
                             }}
                           >
-                            {comment.Answers &&
-                              comment.Answers.length > 0 &&
-                              comment.Answers.map((answer) => (
-                                <Box
-                                  key={answer.id}
-                                  sx={{
-                                    display: "flex",
-                                    bgcolor:
-                                      userId === answer.userId
-                                        ? "#00CCFD"
-                                        : "#F5F5F5",
-                                    width: isLTE768 ? "19rem" : "24rem",
-                                    maxWidth: "75%",
+                            <Box
+                              sx={{
+                                display: "flex",
+                                alignSelf: comment.userId
+                                  ? "flex-end"
+                                  : "flex-start",
+                                bgcolor: "#00CCFD",
+                                maxWidth: "75%",
+                                width: isLTE768 ? "19rem" : "24rem",
+                                borderRadius: "15px 15px 0px 15px",
+                                mx: "5px",
+                                padding: isLTE768 ? "5px" : "10px",
+                                mt: isLTE600 ? "3px" : "5px",
+                                border: "1px solid #00CCFD",
+                                boxShadow: "10px 10px 15px #888888",
+                                overflow: "break-word",
+                                wordWrap: "break-word",
+                                gap: 1,
+                              }}
+                            >
+                              <Typography
+                                component="p"
+                                sx={{ fontSize: isLTE768 && "14px" }}
+                              >
+                                {comment.text}
+                              </Typography>
+                            </Box>
+                            <Box
+                              sx={{
+                                display: "flex",
+                                flexDirection: "column",
+                              }}
+                            >
+                              {comment.Answers &&
+                                comment.Answers.length > 0 &&
+                                comment.Answers.map((answer) => (
+                                  <Box
+                                    key={answer.id}
+                                    sx={{
+                                      display: "flex",
+                                      bgcolor:
+                                        userId === answer.userId
+                                          ? "#00CCFD"
+                                          : "#F5F5F5",
+                                      width: isLTE768 ? "19rem" : "24rem",
+                                      maxWidth: "75%",
 
-                                    borderRadius:
-                                      userId === answer.userId
-                                        ? "15px 15px 0px 15px"
-                                        : "0 15px 15px 15px",
-                                    mx: "5px",
-                                    alignSelf:
-                                      userId === answer.userId
-                                        ? "flex-end"
-                                        : "flex-start",
-                                    flexDirection: "column",
-                                    padding: isLTE768 ? "5px" : "10px",
-                                    mt: isLTE600 ? "5px" : "5px",
-                                    border: "1px solid #00CCFD",
-                                    boxShadow: "10px 10px 15px #888888",
-                                    overflow: "break-word",
-                                    wordWrap: "break-word",
-                                    gap: 1,
-                                  }}
-                                >
-                                  <Typography
-                                    component="p"
-                                    sx={{ fontSize: isLTE768 && "14px" }}
+                                      borderRadius:
+                                        userId === answer.userId
+                                          ? "15px 15px 0px 15px"
+                                          : "0 15px 15px 15px",
+                                      mx: "5px",
+                                      alignSelf:
+                                        userId === answer.userId
+                                          ? "flex-end"
+                                          : "flex-start",
+                                      flexDirection: "column",
+                                      padding: isLTE768 ? "5px" : "10px",
+                                      mt: isLTE600 ? "5px" : "5px",
+                                      border: "1px solid #00CCFD",
+                                      boxShadow: "10px 10px 15px #888888",
+                                      overflow: "break-word",
+                                      wordWrap: "break-word",
+                                      gap: 1,
+                                    }}
                                   >
-                                    {answer.answer}
-                                  </Typography>
-                                </Box>
-                              ))}
+                                    <Typography
+                                      component="p"
+                                      sx={{ fontSize: isLTE768 && "14px" }}
+                                    >
+                                      {answer.answer}
+                                    </Typography>
+                                  </Box>
+                                ))}
+                            </Box>
                           </Box>
-                        </Box>
-                      )}
+                        )}
+                      </Box>
+                      <Box>
+                        {userId === comment.userId && (
+                          <AnswerComment commentId={comment.id} />
+                        )}
+                      </Box>
                     </Box>
-                    <Box>
-                      {userId === comment.userId && (
-                        <AnswerComment commentId={comment.id} />
-                      )}
-                    </Box>
-                  </Box>
-                ))}
-              {productId.Comments &&
-                productId.Comments.length >= 0 &&
-                productId.Comments.every(
-                  (comment) => comment.userId !== userId
-                ) && (
-                  <Box
-                    sx={{
-                      textAlign: "start",
-                      mx: isLTE768 ? "2px" : "20px",
-                    }}
-                  >
+                  ))}
+                {productId.Comments &&
+                  productId.Comments.length >= 0 &&
+                  productId.Comments.every(
+                    (comment) => comment.userId !== userId
+                  ) && (
                     <Box
-                      sx={{ overflow: "break-word", wordWrap: "break-word" }}
+                      sx={{
+                        textAlign: "start",
+                        mx: isLTE768 ? "2px" : "20px",
+                      }}
                     >
-                      <Typography
-                        component="p"
-                        sx={{
-                          m: "10px",
-                          fontSize: isLTE768 ? "13.5px" : isLTE1520 && "15px",
-                        }}
+                      <Box
+                        sx={{ overflow: "break-word", wordWrap: "break-word" }}
                       >
-                        En CompraMás, valoramos tu retroalimentación. A través
-                        de nuestra sección de comentarios, te invitamos a
-                        compartir preguntas, opiniones y experiencias para
-                        mejorar la experiencia de compra. Si tienes consultas
-                        específicas sobre un producto o deseas compartir tus
-                        impresiones, esta sección es ideal para hacerlo. Por
-                        otro lado, si necesitas ayuda personalizada o resolver
-                        dudas, nuestro equipo está a tu disposición a través de
-                        WhatsApp. Ya sea para consultas sobre productos o
-                        asesoramiento detallado, ¡gracias por ser parte de
-                        CompraMás!
-                      </Typography>
+                        <Typography
+                          component="p"
+                          sx={{
+                            m: "10px",
+                            fontSize: isLTE768 ? "13.5px" : isLTE1520 && "15px",
+                          }}
+                        >
+                          En CompraMás, valoramos tu retroalimentación. A través
+                          de nuestra sección de comentarios, te invitamos a
+                          compartir preguntas, opiniones y experiencias para
+                          mejorar la experiencia de compra. Si tienes consultas
+                          específicas sobre un producto o deseas compartir tus
+                          impresiones, esta sección es ideal para hacerlo. Por
+                          otro lado, si necesitas ayuda personalizada o resolver
+                          dudas, nuestro equipo está a tu disposición a través
+                          de WhatsApp. Ya sea para consultas sobre productos o
+                          asesoramiento detallado, ¡gracias por ser parte de
+                          CompraMás!
+                        </Typography>
+                      </Box>
+
+                      <CommentProducts productId={productId.id} />
                     </Box>
-
-                    <CommentProducts productId={productId.id} />
-                  </Box>
-                )}
+                  )}
+              </Box>
             </Box>
-          </Box>
+          )}
 
-          <Box
-            sx={{
-              width: isLTE600 ? "98%" : "90%",
-              maxWidth: "60rem",
-              display: "flex",
-              ml: isLTE1200 ? "" : "2rem",
-              justifyContent: isLTE1250 && "center",
-            }}
-          >
-            <CommentDesplegable productId={productId} userId={userId} />
-          </Box>
+          {!product && (
+            <Box
+              sx={{
+                width: isLTE600 ? "98%" : "90%",
+                maxWidth: "60rem",
+                display: "flex",
+                ml: isLTE1200 ? "" : "2rem",
+                justifyContent: isLTE1250 && "center",
+                mb: "1.8rem",
+              }}
+            >
+              <CommentDesplegable productId={productId} userId={userId} />
+            </Box>
+          )}
         </Box>
         <Box
           sx={{
-            width: isLTE1250 ? "100%" : isLTE1520 ? "40%" : "45%",
+            width: product
+              ? "80%"
+              : isLTE1250
+              ? "100%"
+              : isLTE1520
+              ? "40%"
+              : "45%",
             display: "flex",
             mb: "15px",
           }}
         >
           <CompleteOutfits
+            product={true}
             IdProduct={IdProduct}
             gender={gender}
             category={category}

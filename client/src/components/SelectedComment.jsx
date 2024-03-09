@@ -1,19 +1,23 @@
 /* eslint-disable react/prop-types */
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, useMediaQuery } from "@mui/material";
 import { useEffect } from "react";
 import AnswerComment from "./AnswerComment";
+import KeyboardReturnIcon from "@mui/icons-material/KeyboardReturn";
 
 const SelectedComment = ({
   selectedComment,
-  isLessThanOrEqual430,
-  isLessThanOrEqual820,
-  isLessThanOrEqual980,
-  isLessThanOrEqual1268,
-  isLessThanOrEqual1662,
+  isLTE430,
+
   scrollContainerRef,
   userId,
+  handleCleanComment,
   // setSelectedComment,
 }) => {
+  const isLTE425 = useMediaQuery("(max-width:425px)");
+  const isLTE765 = useMediaQuery(`(max-width: 765px)`);
+  const isLTE768 = useMediaQuery("(max-width:768px)");
+  const isLTE600 = useMediaQuery("(max-width:600px)");
+
   useEffect(() => {
     if (scrollContainerRef.current && selectedComment) {
       scrollContainerRef.current.scrollTop =
@@ -24,35 +28,55 @@ const SelectedComment = ({
   return (
     <Box
       sx={{
-        width: isLessThanOrEqual430
-          ? "100vw"
-          : isLessThanOrEqual820
-          ? "25rem"
-          : isLessThanOrEqual980
-          ? "30rem"
-          : isLessThanOrEqual1268
-          ? "40rem"
-          : isLessThanOrEqual1662
-          ? "50rem"
-          : "68rem",
-        height: isLessThanOrEqual430 ? `calc(100vh - 3.2rem)` : "45rem",
-        borderRadius: isLessThanOrEqual430 ? "" : " 0 20px 20px 0 ",
+        width: "100%",
+        height: isLTE430 ? `calc(100vh - 3.2rem)` : "45.59rem",
+        borderRadius: isLTE430 ? "" : " 0 10px 10px 0 ",
         backgroundColor: "#f5f5f5",
         boxShadow: "10px 10px 15px #888888;",
         backgroundImage: 'url("/logoblanco.svg")',
         backgroundSize: "contain",
         backgroundPosition: "center",
+        overflowY: "auto",
         backgroundRepeat: "no-repeat",
+        position: "relative",
       }}
     >
-      <Box>
+      {isLTE765 && (
+        <Box
+          sx={{
+            bgcolor: "#0060a5",
+            position: "sticky",
+            top: 0,
+            width: "100%",
+            height: "1.5rem",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            color: "white",
+            gap: "10px",
+            cursor: "pointer",
+          }}
+          onClick={() => handleCleanComment()}
+        >
+          <KeyboardReturnIcon sx={{ fontSize: "16px" }} />
+          mensajes
+        </Box>
+      )}
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          width: "100%",
+          height: "95%",
+        }}
+      >
         <Box
           ref={scrollContainerRef}
           sx={{
             display: "flex",
             flexDirection: "column",
-            height: "43rem",
-            maxHeight: isLessThanOrEqual430 ? "" : "40rem", // Establecer la altura máxima para activar el scroll
+            height: isLTE425 ? "100%" : "43rem",
+            maxHeight: isLTE430 ? "100%" : "41rem", // Establecer la altura máxima para activar el scroll
             overflowY: "auto", // Habilitar el scroll vertical cuando el contenido excede la altura máxima
           }}
         >
@@ -60,20 +84,16 @@ const SelectedComment = ({
             sx={{
               display: "flex",
               flexDirection: "column",
-              width: isLessThanOrEqual430
-                ? "17rem"
-                : isLessThanOrEqual1268
-                ? "18rem"
-                : "24rem",
+              width: isLTE768 ? "19rem" : "24rem",
+              maxWidth: "70%",
+              mx: "5px",
+              mt: isLTE600 ? "12px" : "5px",
               borderRadius: "0 15px 15px 15px",
-              margin: "15px",
-              // margin: "4px",
-              padding: "10px",
+              padding: isLTE768 ? "5px" : "10px",
               border: "1px solid #00CCFD",
               bgcolor: "#F5F5F5",
               boxShadow: "10px 10px 15px #888888;",
               wordBreak: "break-all",
-
               gap: 1,
             }}
           >
@@ -82,12 +102,25 @@ const SelectedComment = ({
               sx={{
                 textAlign: "start",
                 fontWeight: "bold",
+                fontSize: isLTE425 && "12px",
               }}
             >
               {selectedComment?.User?.name || ""}{" "}
               {selectedComment?.User?.lastname || ""}
             </Typography>
-            <Typography>{selectedComment?.text}</Typography>
+
+            <Typography
+              sx={{
+                width: "100%",
+                display: "flex",
+                flexWrap: "wrap",
+                boxSizing: "border-box",
+                fontSize: isLTE425 && "15.5px",
+                mt: isLTE425 && "-6px",
+              }}
+            >
+              {selectedComment?.text}
+            </Typography>
           </Box>
 
           {selectedComment?.Answers?.sort((a, b) => {
@@ -107,17 +140,20 @@ const SelectedComment = ({
                 sx={{
                   display: "flex",
                   bgcolor: userId === answer?.userId ? "#00CCFD" : "#F5F5F5",
-                  width: "24rem",
+                  width: isLTE768 ? "19rem" : "24rem",
+                  maxWidth: "70%",
                   borderRadius:
                     userId === answer.userId
                       ? "15px 15px 0px 15px;"
                       : "0 15px 15px 15px",
-                  mx: "15px",
+                  mx: isLTE425 ? "5px" : "8px",
                   alignItems: "start",
                   flexDirection: "column",
-                  padding: "10px",
+                  padding: isLTE768 ? "5px" : "10px",
                   my: "5px",
-                  boxShadow: "10px 10px 15px #888888;",
+                  border: "1px solid #00CCFD",
+                  boxShadow: "10px 10px 15px #888888",
+                  overflowWrap: "break-word",
                   wordBreak: "break-all",
                   gap: 1,
                 }}
@@ -127,6 +163,7 @@ const SelectedComment = ({
                   sx={{
                     textAlign: "start",
                     fontWeight: "bold",
+                    fontSize: isLTE425 && "12px",
                   }}
                 >
                   {answer.User.name || ""} {answer?.User?.lastname || ""}
@@ -137,6 +174,8 @@ const SelectedComment = ({
                     display: "flex",
                     flexWrap: "wrap",
                     boxSizing: "border-box",
+                    fontSize: isLTE425 && "15.5px",
+                    mt: isLTE425 && "-6px",
                   }}
                 >
                   {answer.answer}
@@ -147,8 +186,14 @@ const SelectedComment = ({
         </Box>
         <Box
           sx={{
+            bgcolor: "#F5F5F5",
             display: "flex",
             alignItems: "center",
+            boxShadow: "0px -10px 15px #888888;",
+            position: isLTE430 & "fixed",
+            width: "100%",
+            height: "4rem",
+            bottom: 0,
           }}
         >
           <AnswerComment commentId={selectedComment?.id} />

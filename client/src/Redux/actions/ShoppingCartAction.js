@@ -1,7 +1,11 @@
+import axios from "axios";
+import { configureHeaders } from "../auth/configureHeaders";
+
 import {
   ADD_PRODUCT,
   REMOVE_PRODUCT,
 } from "../actionsTypes/ShoppingCartActionTypes";
+import { SUCCESS } from "../actionsTypes/ProductsActionTypes";
 
 export const addProduct = (product) => {
   return async function (dispatch) {
@@ -60,5 +64,15 @@ export const removeProduct = (product) => {
     }
 
     dispatch({ type: REMOVE_PRODUCT, payload: product });
+  };
+};
+
+export const finalizarCompra = () => {
+  return async function (dispatch) {
+    const config = configureHeaders();
+
+    await axios.post(`${import.meta.env.VITE_LOCALHOST}compra`, {}, config);
+
+    dispatch({ type: SUCCESS, payload: "Compra finalizada con éxito!" });
   };
 };

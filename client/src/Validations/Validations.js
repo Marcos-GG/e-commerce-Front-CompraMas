@@ -14,6 +14,25 @@ const Validations = (form, campo) => {
   if (campo === "password") {
     if (!form.password) {
       error.password = "Campo está vacio.";
+    } else if (!/^[a-zA-Z0-9]+$/.test(form.password)) {
+      error.password = "Solo letras y numeros.";
+    }
+  }
+
+  // form
+  if (campo === "name") {
+    if (!form.name) {
+      error.name = "Campo está vacio.";
+    } else if (form.name.length > 13) {
+      error.name = "Máximo 13 caracteres.";
+    }
+  }
+
+  if (campo === "lastname") {
+    if (!form.lastname) {
+      error.lastname = "Campo está vacio.";
+    } else if (form.lastname.length > 12) {
+      error.lastname = "Máximo 12 caracteres.";
     }
   }
 
@@ -75,6 +94,38 @@ const Validations = (form, campo) => {
       error.price = "Campo vacio.";
     } else if (/[^0-9]/.test(form.price)) {
       error.price = "No se aceptan puntos ni comas.";
+    }
+  }
+
+  if (campo === "birthDate") {
+    const today = new Date();
+
+    const fechaIngresada = new Date(form.birthDate);
+
+    const años = today.getFullYear() - fechaIngresada.getFullYear();
+
+    if (!form.birthDate) {
+      error.birthDate = "Campo vacio.";
+    } else if (!(today >= fechaIngresada) || !(años >= 18)) {
+      error.birthDate = "Debe tener al menos 18 años.";
+    }
+  }
+
+  if (campo === "DNI") {
+    if (!form.DNI) {
+      error.DNI = "Campo vacio.";
+    } else if (form.DNI.length > 8) {
+      error.DNI = "Máximo 8 caracteres.";
+    }
+  }
+
+  if (campo === "phone") {
+    if (!form.phone) {
+      error.phone = "Campo vacio.";
+    } else if (!/^[0-9]+$/.test(form.phone)) {
+      error.phone = "Solo se aceptan números.";
+    } else if (form.phone.length > 10) {
+      error.phone = "Máximo 10 caracteres.";
     }
   }
 

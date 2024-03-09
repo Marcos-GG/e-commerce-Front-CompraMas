@@ -6,11 +6,16 @@ import {
   Box,
   Button,
   Card,
+  IconButton,
   TextField,
   ThemeProvider,
+  Typography,
   createTheme,
   useMediaQuery,
 } from "@mui/material";
+import Validations from "../../Validations/Validations";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import VisibilityIcon from "@mui/icons-material/Visibility";
 
 function Register() {
   const isLTE483 = useMediaQuery(`(max-width: 483px)`);
@@ -36,6 +41,12 @@ function Register() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const [visibility, setvisibility] = useState(false);
+
+  const handleVisibility = () => {
+    setvisibility(!visibility);
+  };
+
   const [form, setForm] = useState({
     name: "",
     lastname: "",
@@ -46,6 +57,8 @@ function Register() {
     password: "",
   });
 
+  const [error, setError] = useState();
+
   const formHandler = (event) => {
     const campo = event.target.name;
     let value = event.target.value;
@@ -54,6 +67,16 @@ function Register() {
       ...form,
       [campo]: value,
     });
+
+    setError(
+      Validations(
+        {
+          ...form,
+          [campo]: value,
+        },
+        campo
+      )
+    );
   };
 
   const handleSubmit = async (event) => {
@@ -65,6 +88,10 @@ function Register() {
       return error.message;
     }
     event.target.reset();
+  };
+
+  const getMaxDate = () => {
+    return new Date().toISOString().split("T")[0];
   };
 
   return (
@@ -85,6 +112,7 @@ function Register() {
             borderRadius: 4,
             maxWidth: "28rem",
             width: "94%",
+            maxHeight: "98%",
           }}
         >
           <Box
@@ -113,6 +141,14 @@ function Register() {
             >
               <form onSubmit={handleSubmit}>
                 <Box>
+                  {error?.name && (
+                    <Typography
+                      sx={{ fontSize: "13px", color: "red", mb: "-20px" }}
+                    >
+                      {error.name}
+                    </Typography>
+                  )}
+
                   <TextField
                     placeholder="Nombre"
                     type="text"
@@ -122,6 +158,14 @@ function Register() {
                   />
                 </Box>
                 <Box>
+                  {error?.lastname && (
+                    <Typography
+                      sx={{ fontSize: "13px", color: "red", mb: "-20px" }}
+                    >
+                      {error.lastname}
+                    </Typography>
+                  )}
+
                   <TextField
                     placeholder="Apellido"
                     type="text"
@@ -131,6 +175,14 @@ function Register() {
                   />
                 </Box>
                 <Box>
+                  {error?.email && (
+                    <Typography
+                      sx={{ fontSize: "13px", color: "red", mb: "-20px" }}
+                    >
+                      {error.email}
+                    </Typography>
+                  )}
+
                   <TextField
                     placeholder="Email"
                     type="email"
@@ -140,24 +192,53 @@ function Register() {
                   />
                 </Box>
                 <Box>
+                  {error?.DNI && (
+                    <Typography
+                      sx={{ fontSize: "13px", color: "red", mb: "-20px" }}
+                    >
+                      {error.DNI}
+                    </Typography>
+                  )}
+
                   <TextField
                     placeholder="DNI"
-                    type="text"
+                    type="number"
                     name="DNI"
                     value={form.DNI}
                     onChange={formHandler}
                   />
                 </Box>
                 <Box>
+                  {error?.birthDate && (
+                    <Typography
+                      sx={{ fontSize: "13px", color: "red", mb: "-20px" }}
+                    >
+                      {error.birthDate}
+                    </Typography>
+                  )}
+
                   <TextField
                     type="date"
                     name="birthDate"
                     placeholder="Fecha de nacimiento"
                     value={form.birthDate}
                     onChange={formHandler}
+                    InputProps={{
+                      inputProps: {
+                        max: getMaxDate(),
+                      },
+                    }}
                   />
                 </Box>
                 <Box>
+                  {error?.phone && (
+                    <Typography
+                      sx={{ fontSize: "13px", color: "red", mb: "-20px" }}
+                    >
+                      {error.phone}
+                    </Typography>
+                  )}
+
                   <TextField
                     placeholder="Número de teléfono"
                     type="tel"
@@ -167,12 +248,31 @@ function Register() {
                   />
                 </Box>
                 <Box>
+                  {error?.password && (
+                    <Typography
+                      sx={{ fontSize: "13px", color: "red", mb: "-20px" }}
+                    >
+                      {error.password}
+                    </Typography>
+                  )}
+
                   <TextField
                     placeholder="Contraseña"
-                    type="password"
+                    type={!visibility ? "password" : "text"}
                     name="password"
                     value={form.password}
                     onChange={formHandler}
+                    InputProps={{
+                      endAdornment: (
+                        <IconButton onClick={() => handleVisibility()}>
+                          {visibility ? (
+                            <VisibilityIcon />
+                          ) : (
+                            <VisibilityOffIcon />
+                          )}
+                        </IconButton>
+                      ),
+                    }}
                   />
                 </Box>
                 <Box

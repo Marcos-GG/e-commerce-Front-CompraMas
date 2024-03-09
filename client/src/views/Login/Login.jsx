@@ -10,6 +10,7 @@ import {
   Button,
   Card,
   Divider,
+  IconButton,
   InputAdornment,
   TextField,
   Typography,
@@ -18,6 +19,8 @@ import {
 import PasswordIcon from "@mui/icons-material/Password";
 import Respuesta from "../../components/Respuesta";
 import Validations from "../../Validations/Validations";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import VisibilityIcon from "@mui/icons-material/Visibility";
 
 function Login() {
   const isLTE507 = useMediaQuery(`(max-width: 507px)`);
@@ -57,6 +60,12 @@ function Login() {
     dispatch(postLogin(form));
 
     event.target.reset();
+  };
+
+  const [visibility, setvisibility] = useState(false);
+
+  const handleVisibility = () => {
+    setvisibility(!visibility);
   };
 
   return (
@@ -168,9 +177,17 @@ function Login() {
                   variant="outlined"
                   placeholder="Password"
                   fullWidth
-                  type="password"
+                  type={!visibility ? "password" : "text"}
                   InputProps={{
-                    endAdornment: (
+                    endAdornment: form.password ? (
+                      <IconButton onClick={() => handleVisibility()}>
+                        {visibility ? (
+                          <VisibilityIcon />
+                        ) : (
+                          <VisibilityOffIcon />
+                        )}
+                      </IconButton>
+                    ) : (
                       <InputAdornment position="end">
                         <PasswordIcon />
                       </InputAdornment>

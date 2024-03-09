@@ -41,8 +41,15 @@ const postGenderHandler = require("../Handlers/Gender/postGender");
 //handler login
 const loginHandler = require("../Handlers/Login/loginHandler");
 const getFavoritesHandler = require("../Handlers/Productos/getFavorites");
+const CompraFinalizada = require("../Handlers/Email/HandlerCompraFinalizada");
+
+// Email
 
 const router = Router();
+
+//Email
+
+router.post("/compra", CompraFinalizada);
 
 //login
 router.post("/login", loginHandler);

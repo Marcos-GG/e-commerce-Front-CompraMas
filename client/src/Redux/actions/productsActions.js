@@ -11,21 +11,27 @@ import {
   APPLY_FILTERS,
   CLEAR_FILTERED_PRODUCTS,
   GET_TERM_PRODUCTS,
+  LENGTH_PRODUCTS,
   SUCCESS,
   ERROR,
 } from "../actionsTypes/ProductsActionTypes";
 
-export const getProducts = () => {
+export const getProducts = (page) => {
   return async function (dispatch) {
     try {
       const config = configureHeaders();
       const response = await axios.get(
-        `${import.meta.env.VITE_LOCALHOST}products`,
+        `${import.meta.env.VITE_LOCALHOST}products?page=${page}`,
+
         config
       );
-      const products = response.data;
+      const products = response.data.products;
+      const totalProducts = response.data.totalProducts;
+
+      console.log(response.data, "response.data");
 
       dispatch({ type: GET_PRODUCTS, payload: products });
+      dispatch({ type: LENGTH_PRODUCTS, payload: totalProducts });
     } catch (error) {
       return error;
     }
@@ -43,17 +49,22 @@ export const getProductId = (id) => {
   };
 };
 
-export const getTermProducts = (string) => {
+export const getTermProducts = (string, page) => {
   return async function (dispatch) {
     try {
       const config = configureHeaders();
       const response = await axios.get(
-        `${import.meta.env.VITE_LOCALHOST}products?search=${string}`,
+        `${
+          import.meta.env.VITE_LOCALHOST
+        }products?search=${string}&page=${page}`,
         config
       );
-      const products = response.data;
+      console.log(response.data);
+      const products = response.data.products;
+      const productosFiltrados = response.data.productosFiltrados;
 
       dispatch({ type: GET_TERM_PRODUCTS, payload: products });
+      dispatch({ type: LENGTH_PRODUCTS, payload: productosFiltrados });
     } catch (error) {
       return error;
     }

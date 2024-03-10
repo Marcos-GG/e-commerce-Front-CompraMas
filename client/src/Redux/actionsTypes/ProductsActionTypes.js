@@ -15,3 +15,4 @@ export const ERROR = "ERROR";
 export const CLEAN_ERROR = "CLEAN_ERROR";
 export const CLEAN_SUCCESS = "CLEAN_SUCCESS";
 export const CLEAN_DETAIL = "CLEAN_DETAIL";
+export const LENGTH_PRODUCTS = "LENGTH_PRODUCTS";

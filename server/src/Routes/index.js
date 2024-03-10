@@ -58,13 +58,13 @@ router.post("/login", loginHandler);
 router.get("/users/:id", getUserHandler);
 router.post("/register", createUserHandler);
 router.delete("/users/:id", deleteUserHandler);
-router.get("/users", getUserHandler);
+router.get("/user", getUserHandler);
 router.put("/users/:id", putUserHandler);
 
 // products
 router.get("/products/:id", getProductHandler);
 router.post("/createProduct", postProductHandler);
-router.get("/products", getProductHandler);
+router.get("/products/", getProductHandler);
 router.put("/products/:id", putProductHandler);
 router.delete("/products/:id", deleteProductHandler);
 router.post("/filters", handlerApplyFilters);

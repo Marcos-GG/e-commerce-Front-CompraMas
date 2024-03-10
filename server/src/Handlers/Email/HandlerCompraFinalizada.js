@@ -7,7 +7,6 @@ const CompraFinalizada = async (req, res) => {
 
     const user = await User.findByPk(userId);
 
-    console.log(user);
     compraFinalizada(user.name, user.email);
 
     return res.status(200).json(user);

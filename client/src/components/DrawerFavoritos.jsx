@@ -3,7 +3,7 @@
 // import ProductItem from "./ProductItem";
 import /* addProduct  */ "../Redux/actions/ShoppingCartAction";
 import { useDispatch /* useSelector */ } from "react-redux";
-import { jwtDecode } from "jwt-decode";
+// import { jwtDecode } from "jwt-decode";
 import {
   getFavorites /* removeLike */,
   removeLike,
@@ -35,9 +35,9 @@ const DrawerFavoritos = ({
 
   const dispatch = useDispatch();
 
-  const token = localStorage.getItem("token");
-  const decodeToken = jwtDecode(token);
-  const userId = decodeToken.id;
+  // const token = localStorage.getItem("token");
+  // const decodeToken = jwtDecode(token);
+  // const userId = decodeToken.id;
 
   useEffect(() => {
     dispatch(getFavorites());
@@ -45,11 +45,11 @@ const DrawerFavoritos = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const liked = favoriteProducts.some(
-    (product) =>
-      product.Likes && product.Likes.some((like) => like.userId === userId)
-  );
-  console.log(liked, "liked");
+  // const liked = favoriteProducts.some(
+  //   (product) =>
+  //     product.Likes && product.Likes.some((like) => like.userId === userId)
+  // );
+  // console.log(liked, "liked");
 
   const handleClickAdd = (product) => {
     dispatch(addProduct(product));

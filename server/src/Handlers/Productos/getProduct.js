@@ -3,7 +3,7 @@ const getProductController = require("../../Controllers/Productos/getProduct");
 const getProductHandler = async (req, res) => {
   try {
     const { id } = req.params;
-    const { search } = req.query;
+    const { search, page } = req.query;
 
     if (id) {
       const idProduct = await getProductController(id, search);
@@ -13,7 +13,7 @@ const getProductHandler = async (req, res) => {
     }
 
     if (search) {
-      const searchProducts = await getProductController(id, search);
+      const searchProducts = await getProductController(id, search, page);
       if (!searchProducts)
         throw new Error(
           "No se encontraron productos con la información ingresada."

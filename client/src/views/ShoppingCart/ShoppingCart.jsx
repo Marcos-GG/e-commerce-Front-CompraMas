@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import {
   addProduct,
+  finalizarCompra,
   removeProduct,
 } from "../../Redux/actions/ShoppingCartAction";
 import ProductPrice from "../../components/ProductPrice";
@@ -92,6 +93,10 @@ const ShoppingCart = () => {
       navigate("/");
     }
   }, [products]);
+
+  const handleCompra = () => {
+    dispatch(finalizarCompra());
+  };
 
   return (
     <Box sx={{ mt: isLTE1200 ? "18px" : "30px" }}>
@@ -493,8 +498,9 @@ const ShoppingCart = () => {
                 mt: "10px",
                 fontSize: isLTE700 && "13px",
               }}
+              onClick={() => handleCompra()}
             >
-              Iniciar pago
+              Finalizar Compra
             </Button>
 
             <Button

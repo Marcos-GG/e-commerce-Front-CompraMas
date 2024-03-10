@@ -6,6 +6,7 @@ import { allComments } from "../../Redux/actions/CommentsAction";
 import { Box } from "@mui/material";
 import { GET_PRODUCTS } from "../../Redux/actionsTypes/ProductsActionTypes";
 import { getProducts } from "../../Redux/actions/productsActions";
+import Circularprogress from "../../components/CircularProgress";
 
 const Admin = () => {
   const dispatch = useDispatch();
@@ -42,35 +43,37 @@ const Admin = () => {
     setComments(AllComments);
   }, [AllComments]);
 
-  console.log(comments, "estado de comments ");
+  const [isLoading, setIsLoading] = useState(true);
+  useEffect(() => {
+    if (comments !== null) {
+      setIsLoading(false);
+    } else {
+      setIsLoading(true);
+    }
+  }, [AllComments]);
 
   return (
-    <Box
-      sx={
-        // cuando son las resoluciones mas chicas tengo que comentar todo para que ocupe el 100% sin scroll porque quiero ver solo los mns para responder
-        {
-          // display: "flex",
-          // justifyContent: "center",
-          // alignItems: "center",
-          // bgcolor: "red",
-          // height: "53rem",
-        }
-      }
-    >
-      <Box
-        sx={{
-          position: "absolute",
-          top: 0,
-          left: 0,
-          right: 0,
-          width: "100%",
-          height: "100%",
-          backgroundImage: `url("/fondoChat.jpg")`, // URL de la imagen de fondo
-          filter: "blur(3px)", // Aplicar desenfoque al fondo
-          zIndex: -1,
-        }}
-      />
-      <Comments comments={comments} />
+    <Box>
+      {isLoading ? (
+        <Circularprogress />
+      ) : (
+        <Box>
+          <Box
+            sx={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              right: 0,
+              width: "100%",
+              height: "100%",
+              backgroundImage: `url("/fondoChat.jpg")`, // URL de la imagen de fondo
+              filter: "blur(3px)", // Aplicar desenfoque al fondo
+              zIndex: -1,
+            }}
+          />
+          <Comments comments={comments} />
+        </Box>
+      )}
     </Box>
   );
 };

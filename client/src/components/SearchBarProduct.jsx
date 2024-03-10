@@ -28,7 +28,8 @@ const SearchBarProduct = () => {
 
   useEffect(() => {
     if (searchTermProducts.string.length > 0) {
-      dispatch(getTermProducts(searchTermProducts.string));
+      let page = 1;
+      dispatch(getTermProducts(searchTermProducts.string, page));
     } else {
       dispatch(clearProductosFiltrados());
       dispatch(getProducts());

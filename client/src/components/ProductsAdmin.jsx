@@ -295,7 +295,6 @@ const ProductsAdmin = ({ products, productosFiltrados }) => {
   const handlerPutProduct = () => {
     dispatch(putProduct(productDetail?.id, form))
       .then(() => {
-        // console.log(data.status, "data");
         // La solicitud PUT se ha completado con éxito
         // Actualizar el estado local con la nueva información del producto
         setFormEdit(false);

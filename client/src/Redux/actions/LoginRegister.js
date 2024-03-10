@@ -30,13 +30,11 @@ export const postLogin = (form) => {
       );
 
       const user = response.data.token.user;
-      console.log(response, "response 200");
       if (response.status === 200) {
         dispatch({ type: SUCCESS, payload: `Hola ${user}. Bienvenido!` });
       }
       dispatch({ type: LOGIN, payload: response.data });
     } catch (error) {
-      console.log(error.response.data, "data");
       dispatch({ type: ERROR, payload: error.response.data.error });
       return error;
     }

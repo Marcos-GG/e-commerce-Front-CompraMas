@@ -14,6 +14,7 @@ import {
   SUCCESS,
   ERROR,
   CLEAN_ERROR,
+  LENGTH_PRODUCTS,
   CLEAN_SUCCESS,
   CLEAN_DETAIL,
 } from "../actionsTypes/ProductsActionTypes";
@@ -22,6 +23,7 @@ import { POST_ANSWER, POST_COMMENT } from "../actionsTypes/CommentsTypes";
 
 const initialState = {
   products: [],
+  lengthProducts: null,
   productId: [],
   commentId: [],
   desactivatedproducts: [],
@@ -37,7 +39,6 @@ const initialState = {
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_PRODUCTS: {
-      console.log(action.payload);
       const statusTrue = action.payload.filter(
         (product) => product.status === true
       );
@@ -53,6 +54,10 @@ const reducer = (state = initialState, action) => {
       };
     }
 
+    case LENGTH_PRODUCTS: {
+      return { ...state, lengthProducts: action.payload };
+    }
+
     case GET_PRODUCT_ID: {
       return { ...state, productId: action.payload };
     }
@@ -62,7 +67,6 @@ const reducer = (state = initialState, action) => {
     }
 
     case POST_COMMENT: {
-      console.log(action.payload, "cuadno hago un comentario ");
       const productIndex = state.products.findIndex(
         (product) => product.id === action.payload.productId
       );
@@ -76,10 +80,6 @@ const reducer = (state = initialState, action) => {
         const updatedProducts = [...state.products];
         updatedProducts[productIndex] = updatedProduct;
 
-        console.log(
-          updatedProducts,
-          "updated products con el comenario integrado"
-        );
         return {
           ...state,
           products: updatedProducts,
@@ -131,7 +131,6 @@ const reducer = (state = initialState, action) => {
 
     case POST_ANSWER: {
       const commentId = action.payload.commentId;
-      console.log(action.payload, "respuesta que llega postAnswer");
 
       // Encuentra el producto correspondiente en el estado
       const updatedProducts = state.products.map((product) => {
@@ -174,7 +173,6 @@ const reducer = (state = initialState, action) => {
     }
 
     case SUCCESS: {
-      console.log(action.payload);
       return { ...state, success: action.payload };
     }
     case CLEAN_SUCCESS: {

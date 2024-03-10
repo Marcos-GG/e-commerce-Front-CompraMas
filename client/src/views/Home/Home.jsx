@@ -16,13 +16,13 @@ import ThumbUpAltIcon from "@mui/icons-material/ThumbUpAlt";
 import DrawerShoppingCart from "../ShoppingCart/DrawerShoppingCart";
 import Respuesta from "../../components/Respuesta";
 import DrawerFavoritos from "../../components/DrawerFavoritos";
+import Paginado from "../../components/Paginado";
+import Circularprogress from "../../components/CircularProgress";
 
 function Home() {
   // const theme = useTheme();
   const isLTE500 = useMediaQuery("(max-width: 500px)");
-  //
   const isLTE1000 = useMediaQuery("(max-width:1000px)");
-
   const isLTE1700 = useMediaQuery("(max-width:1700px)");
   const isLTE1025 = useMediaQuery("(max-width:1025px)");
 
@@ -62,8 +62,8 @@ function Home() {
           dispatch({ type: GET_PRODUCTS, payload: localProducts });
         }
       }
-
-      dispatch(getProducts());
+      let page = 1;
+      dispatch(getProducts(page));
     } catch (error) {
       setError(error.message);
     }
@@ -96,6 +96,21 @@ function Home() {
     setOpenFavorite(!openFavorite);
   };
 
+  const [isLoading, setIsLoading] = useState(true);
+  console.log(isLoading, "isLoading");
+
+  useEffect(() => {
+    if (
+      favoriteProducts !== null &&
+      productosFiltrados !== null &&
+      products !== null
+    ) {
+      setIsLoading(false);
+    } else {
+      setIsLoading(true);
+    }
+  }, [favoriteProducts, productosFiltrados, products]);
+
   return (
     <Box
       className={Style}
@@ -104,141 +119,154 @@ function Home() {
         height: "calc(100vh - 3.2rem)",
       }}
     >
-      <Respuesta />
-      <Box
-        sx={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "flex-end",
-          my: "1.5rem",
-        }}
-      >
-        <Box sx={{ display: "flex", alignItems: "center", mt: "3px" }}>
-          <IconButton
-            onClick={favoriteProducts.length > 0 && handleDrawerToggleFavoritos}
+      {isLoading ? (
+        <Circularprogress />
+      ) : (
+        <Box>
+          <Respuesta />
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "flex-end",
+              my: "1.5rem",
+            }}
           >
-            <Badge
-              color="primary"
-              badgeContent={
-                favoriteProducts.length >= 1 ? favoriteProducts.length : null
-              }
-            >
-              <ThumbUpAltIcon
-                sx={{ fontSize: isLTE500 ? "1.4rem" : "1.6rem" }}
-                color="action"
+            <Box sx={{ display: "flex", alignItems: "center", mt: "3px" }}>
+              <IconButton
+                onClick={
+                  favoriteProducts.length > 0 && handleDrawerToggleFavoritos
+                }
+              >
+                <Badge
+                  color="primary"
+                  badgeContent={
+                    favoriteProducts.length >= 1
+                      ? favoriteProducts.length
+                      : null
+                  }
+                >
+                  <ThumbUpAltIcon
+                    sx={{ fontSize: isLTE500 ? "1.4rem" : "1.6rem" }}
+                    color="action"
+                  />
+                </Badge>
+              </IconButton>
+              <DrawerFavoritos
+                handleDrawerToggleFavoritos={handleDrawerToggleFavoritos}
+                openFavorite={openFavorite}
+                favoriteProducts={favoriteProducts}
               />
-            </Badge>
-          </IconButton>
-          <DrawerFavoritos
-            handleDrawerToggleFavoritos={handleDrawerToggleFavoritos}
-            openFavorite={openFavorite}
-            favoriteProducts={favoriteProducts}
-          />
-        </Box>
-        <Box sx={{ display: "flex", alignItems: "center" }}>
-          <IconButton
-            onClick={cantidadCarrito > 0 && handleDrawerToggleCarrito}
-          >
-            <Badge
-              color="primary"
-              badgeContent={cantidadCarrito >= 1 ? cantidadCarrito : null}
-            >
-              <ShoppingBagIcon
-                sx={{ fontSize: isLTE500 ? "1.4rem" : "1.6rem" }}
-                color="action"
+            </Box>
+            <Box sx={{ display: "flex", alignItems: "center" }}>
+              <IconButton
+                onClick={cantidadCarrito > 0 && handleDrawerToggleCarrito}
+              >
+                <Badge
+                  color="primary"
+                  badgeContent={cantidadCarrito >= 1 ? cantidadCarrito : null}
+                >
+                  <ShoppingBagIcon
+                    sx={{ fontSize: isLTE500 ? "1.4rem" : "1.6rem" }}
+                    color="action"
+                  />
+                </Badge>
+              </IconButton>
+              <DrawerShoppingCart
+                handleDrawerToggleCarrito={handleDrawerToggleCarrito}
+                openCarrito={openCarrito}
+                ShoppingCartProducts={ShoppingCartProducts}
               />
-            </Badge>
-          </IconButton>
-          <DrawerShoppingCart
-            handleDrawerToggleCarrito={handleDrawerToggleCarrito}
-            openCarrito={openCarrito}
-            ShoppingCartProducts={ShoppingCartProducts}
-          />
-        </Box>
-        <Box sx={{ mr: "1.3rem" }}>
-          <SearchBarProduct />
-        </Box>
-      </Box>
+            </Box>
+            <Box sx={{ mr: "1.3rem" }}>
+              <SearchBarProduct />
+            </Box>
+          </Box>
 
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: isLTE1000 ? "column" : "",
-        }}
-      >
-        {isLTE1000 ? (
           <Box
             sx={{
-              bgcolor: "#f5f5f5",
-              boxShadow: "0px 5px 15px #888888;",
-              mb: "2rem",
-              width: open ? "100vw" : "12rem",
-              transition: "width 0.6s ease",
+              display: "flex",
+              flexDirection: isLTE1000 ? "column" : "",
             }}
           >
-            <Filtros
-              open={open}
-              handleDrawerToggle={handleDrawerToggleCarrito}
-            />
-          </Box>
-        ) : (
-          <Box
-            sx={{
-              background: "#f5f5f5",
-              padding: "0 15px 0 15px",
-              width: "19rem",
-              borderRadius: "0 5px 5px 0",
-              border: "1px solid #00CCFD",
-              minWidth: "12rem",
-              maxHeight: "37rem",
-              minHeight: "37rem",
-              marginRight: isLTE1025 ? "3.5rem" : isLTE1700 ? "3.5rem" : "",
-            }}
-          >
-            <Filtros open={open} handleDrawerToggle={handleDrawerToggle} />
-          </Box>
-        )}
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            width: "1",
-            margin: "0 auto",
-          }}
-        >
-          <CardContainer
-            products={
-              productsFiltered && productsFiltered.length === 0
-                ? products
-                : productosFiltrados
-            }
-          />
-        </Box>
-      </Box>
-      <Box
-        sx={{
-          position: "fixed",
-          right: isLTE500 ? 5 : 20,
-          bottom: isLTE500 ? 0 : 10,
-        }}
-      >
-        <IconButton sx={{}}>
-          <NavLink
-            to="https://wa.me/541127147123?text=¡Hola! me gustaria tener atención personalizada."
-            target="_blank"
-          >
-            <WhatsAppIcon
+            {isLTE1000 ? (
+              <Box
+                sx={{
+                  bgcolor: "#f5f5f5",
+                  boxShadow: "0px 5px 15px #888888;",
+                  mb: "2rem",
+                  width: open ? "100vw" : "12rem",
+                  transition: "width 0.6s ease",
+                }}
+              >
+                <Filtros
+                  open={open}
+                  handleDrawerToggle={handleDrawerToggleCarrito}
+                />
+              </Box>
+            ) : (
+              <Box
+                sx={{
+                  background: "#f5f5f5",
+                  padding: "0 15px 0 15px",
+                  width: "19rem",
+                  borderRadius: "0 5px 5px 0",
+                  border: "1px solid #00CCFD",
+                  minWidth: "12rem",
+                  maxHeight: "37rem",
+                  minHeight: "37rem",
+                  marginRight: isLTE1025 ? "3.5rem" : isLTE1700 ? "3.5rem" : "",
+                }}
+              >
+                <Filtros open={open} handleDrawerToggle={handleDrawerToggle} />
+              </Box>
+            )}
+            <Box
               sx={{
-                fontSize: isLTE500 ? "2.6rem" : "2.80rem",
-                bgcolor: "#00BD07",
-                color: "white",
-                borderRadius: "50%",
-                p: "5px",
+                display: "flex",
+                justifyContent: "center",
+                width: "1",
+                margin: "0 auto",
               }}
-            />
-          </NavLink>
-        </IconButton>
-      </Box>
+            >
+              <CardContainer
+                products={
+                  productsFiltered && productsFiltered.length === 0
+                    ? products
+                    : productosFiltrados
+                }
+              />
+            </Box>
+          </Box>
+          <Box>
+            <Paginado />
+          </Box>
+          <Box
+            sx={{
+              position: "fixed",
+              right: isLTE500 ? 5 : 20,
+              bottom: isLTE500 ? 0 : 10,
+            }}
+          >
+            <IconButton sx={{}}>
+              <NavLink
+                to="https://wa.me/541127147123?text=¡Hola! me gustaria tener atención personalizada."
+                target="_blank"
+              >
+                <WhatsAppIcon
+                  sx={{
+                    fontSize: isLTE500 ? "2.6rem" : "2.80rem",
+                    bgcolor: "#00BD07",
+                    color: "white",
+                    borderRadius: "50%",
+                    p: "5px",
+                  }}
+                />
+              </NavLink>
+            </IconButton>
+          </Box>
+        </Box>
+      )}
     </Box>
   );
 }

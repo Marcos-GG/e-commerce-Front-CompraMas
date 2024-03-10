@@ -107,34 +107,33 @@ function DetailProduct({ product }) {
 
   return (
     <Box sx={{ position: "relative" }}>
-      {currentPath !== "/admin/products" &&
-        currentPath !== "/admin/createProduct" && (
-          <Box
-            sx={{
-              position: "fixed",
-              zIndex: 5,
-              right: isLTE454 ? 5 : 20,
-              bottom: isLTE454 ? 0 : 10,
-            }}
-          >
-            <IconButton sx={{}}>
-              <NavLink
-                to={`https://wa.me/541127147123?text=¡Hola! me gustaria recibir información sobre ${productId.title}. ${productId.category} para ${productId.gender}, precio ${productId.price}.`}
-                target="_blank"
-              >
-                <WhatsAppIcon
-                  sx={{
-                    fontSize: isLTE454 ? "2.6rem" : "2.80rem",
-                    bgcolor: "#00BD07",
-                    color: "white",
-                    borderRadius: "50%",
-                    p: "5px",
-                  }}
-                />
-              </NavLink>
-            </IconButton>
-          </Box>
-        )}
+      {currentPath.includes("/detail") && (
+        <Box
+          sx={{
+            position: "fixed",
+            zIndex: 5,
+            right: isLTE454 ? 5 : 20,
+            bottom: isLTE454 ? 0 : 10,
+          }}
+        >
+          <IconButton sx={{}}>
+            <NavLink
+              to={`https://wa.me/541127147123?text=¡Hola! me gustaria recibir información sobre ${productId.title}. ${productId.category} para ${productId.gender}, precio ${productId.price}.`}
+              target="_blank"
+            >
+              <WhatsAppIcon
+                sx={{
+                  fontSize: isLTE454 ? "2.6rem" : "2.80rem",
+                  bgcolor: "#00BD07",
+                  color: "white",
+                  borderRadius: "50%",
+                  p: "5px",
+                }}
+              />
+            </NavLink>
+          </IconButton>
+        </Box>
+      )}
       <Box
         sx={{
           display: "flex",
@@ -320,11 +319,11 @@ function DetailProduct({ product }) {
                 variant="contained"
                 endIcon={<AddShoppingCartIcon />}
                 sx={{
-                  width: product ? "43%" : "60%",
+                  width: "60%",
                   maxWidth: "15rem",
                   height: "2.5rem",
                   borderRadius: "40px",
-                  fontSize: product ? "10px" : isLTE454 ? "12px" : "13px",
+                  fontSize: product ? "12px" : isLTE454 ? "12px" : "13px",
                   mb: "30px",
                 }}
                 onClick={() => handleClickAdd(productId)}
@@ -473,8 +472,8 @@ function DetailProduct({ product }) {
                                 mt: isLTE600 ? "3px" : "5px",
                                 border: "1px solid #00CCFD",
                                 boxShadow: "10px 10px 15px #888888",
-                                overflow: "break-word",
-                                wordWrap: "break-word",
+                                overflowWrap: "break-word",
+                                wordBreak: "break-all",
                                 gap: 1,
                               }}
                             >
@@ -519,8 +518,8 @@ function DetailProduct({ product }) {
                                       mt: isLTE600 ? "5px" : "5px",
                                       border: "1px solid #00CCFD",
                                       boxShadow: "10px 10px 15px #888888",
-                                      overflow: "break-word",
-                                      wordWrap: "break-word",
+                                      overflowWrap: "break-word",
+                                      wordBreak: "break-all",
                                       gap: 1,
                                     }}
                                   >

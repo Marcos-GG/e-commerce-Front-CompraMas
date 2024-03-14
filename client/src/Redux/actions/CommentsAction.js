@@ -57,8 +57,10 @@ export const postAnswer = (form, commentId) => {
         body,
         config
       );
+      console.log("sdasdasd", response.data);
 
       dispatch({ type: POST_ANSWER, payload: response.data });
+      dispatch({ type: "POST_ANSWER_PRODUCTS", payload: response.data });
     } catch (error) {
       return error.message;
     }

@@ -3,7 +3,7 @@ const { Products, Like, User, Comment, Answer } = require("../../db");
 
 const getProductController = async (id, search, page) => {
   try {
-    let pageSize = 3;
+    let pageSize = 10;
     let offset = (page - 1) * pageSize;
 
     if (id) {
@@ -29,7 +29,21 @@ const getProductController = async (id, search, page) => {
         ],
       });
 
-      return idProduct;
+      console.log("jdjadjajsdjajjjjjjj");
+      const relacionados = await Products.findAll({
+        attributes: ["id", "image1", "price", "title"],
+        where: {
+          category: idProduct.category,
+          gender: idProduct.gender,
+        },
+      });
+
+      console.log("entro en relacionados");
+      const productosRelacionados = relacionados.filter(
+        (product) => product.id !== idProduct.id
+      );
+
+      return { idProduct, relacionados: productosRelacionados };
     }
 
     // separamos el valor de search
@@ -74,12 +88,12 @@ const getProductController = async (id, search, page) => {
       [Op.or]: [
         {
           title: {
-            [Op.like]: `${term}%`,
+            [Op.like]: `%${term}%`,
           },
         },
         {
           description: {
-            [Op.like]: `${term}%`,
+            [Op.like]: `%${term}%`,
           },
         },
       ],
@@ -88,15 +102,17 @@ const getProductController = async (id, search, page) => {
     // Op.and es el operador que permite combinar esas condiciones para formar una sola condición lógica. todas tienen que ser true ( en este caso las condiciones de palabras )
 
     if (search) {
+      console.log("fhausfgas");
       const products = await Products.findAll({
         where: {
           [Op.and]: palabras,
         },
+        include: { model: Like },
         offset,
         limit: pageSize,
       });
 
-      const totalFilteredProducts = await Products.findAll({
+      const totalFilteredProducts = await Products.count({
         where: {
           [Op.and]: palabras,
         },
@@ -104,7 +120,7 @@ const getProductController = async (id, search, page) => {
 
       return {
         products,
-        productosFiltrados: totalFilteredProducts.length,
+        productosFiltrados: totalFilteredProducts,
       };
     }
 
@@ -129,15 +145,23 @@ const getProductController = async (id, search, page) => {
             ],
           },
         ],
+        where: { status: true },
         offset,
         limit: pageSize,
       });
 
-      const totalProducts = await Products.findAll();
+      const totalProducts = await Products.count({
+        where: { status: true },
+      });
+
+      const precioMaximo = await Products.max("price", {
+        where: { status: true },
+      });
 
       return {
         products: paginatedProducts,
-        totalProducts: totalProducts.length,
+        totalProducts: totalProducts,
+        precioMaximo,
       };
     }
 
@@ -162,6 +186,8 @@ const getProductController = async (id, search, page) => {
         },
       ],
     });
+    console.log("entroasadasda");
+
     return {
       products: allProducts,
     };

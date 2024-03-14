@@ -5,6 +5,8 @@ const getProductHandler = async (req, res) => {
     const { id } = req.params;
     const { search, page } = req.query;
 
+    console.log("áasdasdasd");
+
     if (id) {
       const idProduct = await getProductController(id, search);
       if (!idProduct) throw new Error("El producto no existe.");
@@ -22,9 +24,19 @@ const getProductHandler = async (req, res) => {
       return res.status(200).json(searchProducts);
     }
 
-    const allProducts = await getProductController();
-    if (allProducts.length === 0) throw new Error("No existen productos.");
+    if (page) {
+      const allProductsPage = await getProductController(
+        undefined,
+        undefined,
+        page
+      );
+      if (allProductsPage.length === 0)
+        throw new Error("No existen productos.");
 
+      return res.status(200).json(allProductsPage);
+    }
+
+    const allProducts = await getProductController();
     return res.status(200).json(allProducts);
   } catch (error) {
     return res.status(400).json({ error: error.message });

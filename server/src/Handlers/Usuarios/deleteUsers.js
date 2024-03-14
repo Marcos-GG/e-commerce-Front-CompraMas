@@ -7,7 +7,7 @@ const deleteUserHandler = async (req, res) => {
     if (id) {
       const deleteUser = await deleteUserController(id);
 
-      if (!deleteUser) throw new Error("Np existe usuario con ese id");
+      if (!deleteUser) throw new Error("No existe usuario con ese id");
 
       return res.status(200).json(deleteUser);
     } else {

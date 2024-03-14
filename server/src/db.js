@@ -47,19 +47,19 @@ const { Products, Like, User, Category, Comment, Answer, Gender } =
 // Category.hasMany(Products, { foreignKey: "category" });
 
 // relaciones de likes
-Like.belongsTo(Products, { foreignKey: "productId" });
-Like.belongsTo(User, { foreignKey: "userId" });
-Products.hasMany(Like, { foreignKey: "productId" });
+Like.belongsTo(Products, { foreignKey: "productId", onDelete: "CASCADE" });
+Like.belongsTo(User, { foreignKey: "userId", onDelete: "CASCADE" });
+Products.hasMany(Like, { foreignKey: "productId", onDelete: "CASCADE" });
 
 // relaciones de comments
-Products.hasMany(Comment, { foreignKey: "productId" });
-Comment.belongsTo(User, { foreignKey: "userId" });
-Comment.belongsTo(Products, { foreignKey: "productId" });
+Products.hasMany(Comment, { foreignKey: "productId", onDelete: "CASCADE" });
+Comment.belongsTo(User, { foreignKey: "userId", onDelete: "CASCADE" });
+Comment.belongsTo(Products, { foreignKey: "productId", onDelete: "CASCADE" });
 
 // relaciones de Answer
-Comment.hasMany(Answer, { foreignKey: "commentId" });
-Answer.belongsTo(Comment, { foreignKey: "commentId" });
-Answer.belongsTo(User, { foreignKey: "userId" });
+Comment.hasMany(Answer, { foreignKey: "commentId", onDelete: "CASCADE" });
+Answer.belongsTo(Comment, { foreignKey: "commentId", onDelete: "CASCADE" });
+Answer.belongsTo(User, { foreignKey: "userId", onDelete: "CASCADE" });
 
 Products.belongsTo(Gender, { foreignKey: "genderId" });
 Gender.hasMany(Products, { foreignKey: "genderId" });

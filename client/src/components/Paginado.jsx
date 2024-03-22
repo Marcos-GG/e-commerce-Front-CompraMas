@@ -1,42 +1,56 @@
-import { Box, Button } from "@mui/material";
+import { Box, Pagination } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { getProducts } from "../Redux/actions/productsActions";
+import { useEffect, useState } from "react";
 
 const Paginado = () => {
   const dispatch = useDispatch();
-  const cantidadProducts = useSelector(
-    (state) => state.products.lengthProducts
+  const productosLength = useSelector(
+    (state) => state.products?.lengthProducts
   );
-  console.log(cantidadProducts, "cantidad");
+
+  console.log(productosLength);
 
   const productosFiltrados = useSelector(
-    (state) => state.products.productsFiltered
+    (state) => state.products?.productsFiltered
   );
-  console.log(productosFiltrados.length, "productosFiltrados");
+
+  const EstaFiltrandoSearch = useSelector(
+    (state) => state.products?.isSearchFilterUsed
+  );
+
+  const EstaFiltrando = useSelector(
+    (state) => state.products?.isApplyFilterUsed
+  );
+
+  console.log(productosFiltrados, "productosFiltrados");
+  const [currentPage, setCurrentPage] = useState(1);
 
   const handlePageChange = (page) => {
+    setCurrentPage(page);
     dispatch(getProducts(page));
   };
 
-  const paginationButtons = () => {
-    const buttons = [];
-    const totalPages = Math.ceil(cantidadProducts / 3);
+  /// cuaando  se limpia la busqueda por search se realiza un get de products por eso siempre  volvemos a mostar el valor 1 en pagination
 
-    for (let i = 1; i <= totalPages; i++) {
-      buttons.push(
-        <Button key={i} onClick={() => handlePageChange(i)}>
-          {i}
-        </Button>
-      );
-    }
-
-    return buttons;
-  };
+  useEffect(() => {
+    // Resetear la página cuando cambie la lista de productos
+    setCurrentPage(1);
+  }, [productosFiltrados]);
 
   return (
-    <Box>
-      Paginado
-      <Box>{paginationButtons()}</Box>
+    <Box sx={{ bgcolor: "#F5F5F5", my: "2rem" }}>
+      <Pagination
+        count={Math.ceil(
+          (EstaFiltrando || EstaFiltrandoSearch
+            ? productosFiltrados?.length
+            : productosLength) / 20
+        )}
+        page={currentPage}
+        onChange={(e, page) => {
+          handlePageChange(page);
+        }}
+      />
     </Box>
   );
 };

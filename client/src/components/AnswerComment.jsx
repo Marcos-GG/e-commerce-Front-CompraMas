@@ -7,7 +7,7 @@ import { Box, Button, TextField, useMediaQuery } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
 
 // eslint-disable-next-line react/prop-types
-const AnswerComment = ({ commentId }) => {
+const AnswerComment = ({ commentId, productId }) => {
   const isLTE768 = useMediaQuery("(max-width:768px)");
 
   const dispatch = useDispatch();
@@ -33,7 +33,7 @@ const AnswerComment = ({ commentId }) => {
       return;
     }
 
-    dispatch(postAnswer(form, commentId));
+    dispatch(postAnswer(form, commentId, productId));
     // dispatch(postAnswerAdmin(form, commentId));
 
     setForm({ answer: "" });

@@ -5,8 +5,6 @@ import {
   MOVE_TO_ACTIVE,
   MOVE_TO_DEACTIVATE,
   CREATE_PRODUCT,
-  // POST_COMMENT_PRODUCT_ID,
-  // POST_ANSWER_PRODUCT_ID,
   APPLY_FILTERS,
   CLEAR_FILTERED_PRODUCTS,
   SET_FAVORITES,
@@ -17,16 +15,28 @@ import {
   LENGTH_PRODUCTS,
   CLEAN_SUCCESS,
   CLEAN_DETAIL,
+  RELATED_PRODUCTS,
+  GET_ALL_PRODUCTS,
+  PRECIO_MAX,
+  LENGTH_PRODUCTS_FILTERED,
+  CREATE_PREFERENCE,
+  GET_COMPRAS,
 } from "../actionsTypes/ProductsActionTypes";
 import { ADD_LIKE, REMOVE_LIKE } from "../actionsTypes/LikesTypes";
-import { POST_ANSWER, POST_COMMENT } from "../actionsTypes/CommentsTypes";
+import { POST_COMMENT } from "../actionsTypes/CommentsTypes";
 
 const initialState = {
+  preferenceId: null,
   products: [],
+  compras: [],
   lengthProducts: null,
+  lengthProductsFiltered: null,
   productId: [],
   commentId: [],
+  priceMax: null,
+  activatedProductsAdmin: [],
   desactivatedproducts: [],
+  relacionados: [],
   productsFiltered: [],
   productsFilteredFalse: [],
   success: "",
@@ -38,7 +48,10 @@ const initialState = {
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case GET_PRODUCTS: {
+    case CREATE_PREFERENCE: {
+      return { ...state, preferenceId: action.payload };
+    }
+    case GET_ALL_PRODUCTS: {
       const statusTrue = action.payload.filter(
         (product) => product.status === true
       );
@@ -47,59 +60,95 @@ const reducer = (state = initialState, action) => {
         (product) => product.status === false
       );
 
+      console.log(statusTrue);
+      console.log(statusFalse);
       return {
         ...state,
-        products: statusTrue,
+        activatedProductsAdmin: statusTrue,
         desactivatedproducts: statusFalse,
       };
+    }
+
+    case GET_PRODUCTS: {
+      // const statusTrue = action.payload.filter(
+      //   (product) => product.status === true
+      // );
+
+      // const statusFalse = action.payload.filter(
+      //   (product) => product.status === false
+      // );
+
+      return {
+        ...state,
+        products: action.payload,
+        // desactivatedproducts: statusFalse,
+      };
+    }
+
+    case GET_COMPRAS: {
+      return { ...state, compras: action.payload };
+    }
+
+    case PRECIO_MAX: {
+      return { ...state, priceMax: action.payload };
     }
 
     case LENGTH_PRODUCTS: {
       return { ...state, lengthProducts: action.payload };
     }
 
+    case LENGTH_PRODUCTS_FILTERED: {
+      return { ...state, lengthProductsFiltered: action.payload };
+    }
+
     case GET_PRODUCT_ID: {
       return { ...state, productId: action.payload };
     }
+    case RELATED_PRODUCTS: {
+      console.log("relacionados redux", action.payload);
+      return { ...state, relacionados: action.payload };
+    }
 
     case CLEAN_DETAIL: {
-      return { ...state, productId: "" };
+      return { ...state, productId: "", relacionados: "" };
     }
 
     case POST_COMMENT: {
-      const productIndex = state.products.findIndex(
-        (product) => product.id === action.payload.productId
-      );
-      if (productIndex !== -1) {
-        const updatedProduct = { ...state.products[productIndex] };
-
-        updatedProduct.Comments = updatedProduct.Comments
-          ? [action.payload, ...updatedProduct.Comments]
-          : [action.payload];
-
-        const updatedProducts = [...state.products];
-        updatedProducts[productIndex] = updatedProduct;
-
-        return {
-          ...state,
-          products: updatedProducts,
-        };
-      }
+      console.log(action.payload);
 
       return {
         ...state,
+        products: state.products.map((product) => {
+          if (product?.id === action.payload.productId) {
+            return {
+              ...product,
+              Comments: [...product.Comments, action.payload],
+            };
+          }
+          return product;
+        }),
+        productId: {
+          ...state.productId,
+          Comments: [...state.productId.Comments, action.payload],
+        },
       };
     }
 
     case GET_TERM_PRODUCTS: {
+      console.log("hola");
       if (state.isApplyFilterUsed) {
+        console.log("tenia aplicado filtros", action.payload);
         const filteredProducts = state.productsFiltered.filter((product) => {
-          const products = action.payload.some(
+          // Verificar si el producto actual está en action.payload
+          const isProductInPayload = action.payload.some(
             (payloadProduct) => payloadProduct.id === product.id
           );
 
-          return products && products.status;
+          // Retornar true solo si el producto está en action.payload y su estado es verdadero
+          return isProductInPayload && product.status;
         });
+
+        console.log(filteredProducts, "asd");
         if (filteredProducts.length > 0) {
           return {
             ...state,
@@ -111,7 +160,7 @@ const reducer = (state = initialState, action) => {
           alert(
             "No se encontraron coincidencias con los filtros aplicados previamente."
           );
-          return { ...state };
+          return { ...state, error: "No se encontraron coincidencias" };
         }
       } else {
         const productStatusTrue = action.payload.filter(
@@ -129,37 +178,65 @@ const reducer = (state = initialState, action) => {
       }
     }
 
-    case POST_ANSWER: {
-      const commentId = action.payload.commentId;
+    case "POST_ANSWER_PRODUCTS": {
+      // const commentId = action.payload.commentId;
 
-      // Encuentra el producto correspondiente en el estado
+      console.log(action.payload);
+
       const updatedProducts = state.products.map((product) => {
-        // Verifica si el producto tiene comentarios
-        if (product.Comments && product.Comments.length > 0) {
-          // Actualiza los comentarios dentro del producto
-          product.Comments = product.Comments.map((comment) => {
-            // Verifica si el comentario tiene el mismo ID que el commentId
-            if (comment.id === commentId) {
-              // Actualiza Answers y le agrega la nueva respuesta
-              return {
-                ...comment,
-                Answers: comment.Answers
-                  ? [...comment.Answers, action.payload]
-                  : [action.payload],
-              };
-            }
-            return comment;
-          });
+        if (product.id == action.payload.Comment.Product.id) {
+          console.log(product);
+
+          let ProductUpdate = {
+            ...product,
+            Comments: product.Comments.map((comment) => {
+              if (comment.id === action.payload.Comment.id) {
+                console.log("true", comment);
+
+                let objetoConAnswer = {
+                  ...comment,
+                  Answers: [...(comment.Answers || []), action.payload],
+                };
+
+                console.log(objetoConAnswer);
+
+                return objetoConAnswer;
+              }
+              return comment;
+            }),
+          };
+
+          console.log(ProductUpdate, "mensaje actualizado");
+          return ProductUpdate;
         }
         return product;
       });
 
+      console.log(state.productId.Comments);
+
       return {
         ...state,
         products: updatedProducts,
-        commentId: updatedProducts.find((product) =>
-          product.Comments.some((comment) => comment.id === commentId)
-        ),
+        productId: {
+          ...state.productId,
+          Comments: [
+            ...state.productId.Comments.map((comment) => {
+              if (comment.id === action.payload.commentId) {
+                console.log(comment, "mensaje actualiz");
+
+                const comentarioActualizado = {
+                  ...comment,
+                  Answers: [...(comment?.Answers || []), action.payload],
+                };
+
+                console.log(comentarioActualizado, "mensaje actualizado");
+
+                return comentarioActualizado;
+              }
+              return comment;
+            }),
+          ],
+        },
       };
     }
 
@@ -167,6 +244,12 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         products: state.products.map((product) =>
+          product.id === action.payload.id ? action.payload : product
+        ),
+        activatedProductsAdmin: state.activatedProductsAdmin.map((product) =>
+          product.id === action.payload.id ? action.payload : product
+        ),
+        desactivatedproducts: state.desactivatedproducts.map((product) =>
           product.id === action.payload.id ? action.payload : product
         ),
       };
@@ -195,7 +278,10 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         success: "Ahora el producto esta activo.",
-        products: [...state.products, nuevoProductoActivado],
+        activatedProductsAdmin: [
+          ...state.activatedProductsAdmin,
+          nuevoProductoActivado,
+        ],
         desactivatedproducts: state.desactivatedproducts.filter(
           (product) => product.id !== action.payload
         ),
@@ -216,7 +302,7 @@ const reducer = (state = initialState, action) => {
           ...state.desactivatedproducts,
           nuevoProductoDesactivado,
         ],
-        products: state.products.filter(
+        activatedProductsAdmin: state.activatedProductsAdmin.filter(
           (product) => product.id !== action.payload
         ),
         productsFiltered: state.productsFiltered.filter(
@@ -233,12 +319,15 @@ const reducer = (state = initialState, action) => {
     }
 
     case APPLY_FILTERS: {
+      console.log("entra a apllyFilters", action.payload);
       if (state.isSearchFilterUsed) {
         const filterProducts = state.productsFiltered.filter((product) => {
           return action.payload.some(
             (payloadProduct) => payloadProduct.id === product.id
           );
         });
+
+        console.log(filterProducts, "aa");
         if (filterProducts.length > 0) {
           return {
             ...state,
@@ -246,12 +335,14 @@ const reducer = (state = initialState, action) => {
             isApplyFilterUsed: true,
           };
         } else {
-          alert(
-            "No se encontraron coincidencias con los filtros aplicados previamente."
-          );
-          return { ...state };
+          return {
+            ...state,
+            error: "No se encontraron coincidencias.",
+            isApplyFilterUsed: false,
+          };
         }
       } else {
+        console.log(action.payload, "jajs");
         return {
           ...state,
           productsFiltered: action.payload,
@@ -261,11 +352,13 @@ const reducer = (state = initialState, action) => {
     }
 
     case CLEAR_FILTERED_PRODUCTS: {
+      console.log("entra el clearaaaaa");
+      console.log("Estado actual de productsFiltered:", state.productsFiltered);
       return {
         ...state,
-        productsFiltered: [],
         isSearchFilterUsed: false,
         isApplyFilterUsed: false,
+        productsFiltered: [],
       };
     }
 
@@ -278,9 +371,12 @@ const reducer = (state = initialState, action) => {
       };
     }
     case SET_FAVORITES: {
+      const productsStatusTrue = action.payload.filter(
+        (product) => product.status === true
+      );
       return {
         ...state,
-        favoritos: action.payload,
+        favoritos: productsStatusTrue,
       };
     }
 

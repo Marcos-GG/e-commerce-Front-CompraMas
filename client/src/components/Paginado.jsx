@@ -9,8 +9,6 @@ const Paginado = () => {
     (state) => state.products?.lengthProducts
   );
 
-  console.log(productosLength);
-
   const productosFiltrados = useSelector(
     (state) => state.products?.productsFiltered
   );
@@ -23,7 +21,6 @@ const Paginado = () => {
     (state) => state.products?.isApplyFilterUsed
   );
 
-  console.log(productosFiltrados, "productosFiltrados");
   const [currentPage, setCurrentPage] = useState(1);
 
   const handlePageChange = (page) => {

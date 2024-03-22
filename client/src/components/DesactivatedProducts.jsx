@@ -1,19 +1,22 @@
 // import { useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Box } from "@mui/material";
 import ProductsAdmin from "./ProductsAdmin";
+import { useEffect } from "react";
+import { getProductsAll } from "../Redux/actions/productsActions";
 
 const DesactivatedProducts = () => {
+  const dispatch = useDispatch();
   const products = useSelector((state) => state.products.desactivatedproducts);
   const productosFiltrados = useSelector(
     (state) => state.products.productsFilteredFalse
   );
 
-  // useEffect(() => {
-  //   if (products.length === 0) {
-  //     dispatch(putProduct());
-  //   }
-  // }, [dispatch, products]);
+  console.log(products, "jajsdjasda");
+
+  useEffect(() => {
+    dispatch(getProductsAll());
+  }, [dispatch]);
 
   return (
     <Box>

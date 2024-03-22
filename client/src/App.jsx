@@ -23,6 +23,7 @@ import LogOut from "./views/Logout/LogOut";
 import "./App.css";
 import { SET_INITIAL_CART } from "./Redux/actionsTypes/ShoppingCartActionTypes";
 import ProductsActivated from "./components/productsActivated";
+import Compras from "./components/Compras";
 
 function App() {
   const location = useLocation();
@@ -120,6 +121,10 @@ function App() {
         <Route
           path="/carrito"
           element={token ? <ShoppingCart /> : <Navigate to="/login" />}
+        />
+        <Route
+          path="/compras"
+          element={token ? <Compras /> : <Navigate to="/login" />}
         />
       </Routes>
     </div>

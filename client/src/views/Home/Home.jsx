@@ -6,7 +6,10 @@ import { getProducts } from "../../Redux/actions/productsActions";
 import CardContainer from "../../components/CardContainer";
 import Filtros from "../../components/Filtros";
 import { Badge, Box, IconButton, useMediaQuery } from "@mui/material";
-import { GET_PRODUCTS } from "../../Redux/actionsTypes/ProductsActionTypes";
+import {
+  CLEAN_DETAIL,
+  GET_PRODUCTS,
+} from "../../Redux/actionsTypes/ProductsActionTypes";
 import SearchBarProduct from "../../components/SearchBarProduct";
 import { NavLink } from "react-router-dom";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
@@ -44,12 +47,11 @@ function Home() {
     (state) => state.products.productsFiltered
   );
 
-  const [productsFiltered, setProductsFiltered] = useState([]);
-
   const [, setError] = useState(null);
 
   useEffect(() => {
     try {
+      dispatch({ type: CLEAN_DETAIL });
       const persistedData = localStorage.getItem("persist:root");
 
       if (persistedData) {
@@ -69,10 +71,6 @@ function Home() {
     }
   }, []);
 
-  useEffect(() => {
-    setProductsFiltered(productosFiltrados);
-  }, [productosFiltrados]);
-
   // vida del boton filtros
   const [open, setOpen] = useState(false);
 
@@ -86,6 +84,11 @@ function Home() {
     setOpenCarrito(!openCarrito);
   };
 
+  useEffect(() => {
+    if (ShoppingCartProducts.length === 0) {
+      setOpenCarrito(false);
+    }
+  }, [ShoppingCartProducts]);
   // favoritos
 
   const [openFavorite, setOpenFavorite] = useState(false);
@@ -96,13 +99,18 @@ function Home() {
     setOpenFavorite(!openFavorite);
   };
 
+  useEffect(() => {
+    if (favoriteProducts.length === 0) {
+      setOpenFavorite(false);
+    }
+  }, [favoriteProducts]);
+
   const [isLoading, setIsLoading] = useState(true);
-  console.log(isLoading, "isLoading");
 
   useEffect(() => {
     if (
       favoriteProducts !== null &&
-      productosFiltrados !== null &&
+      // productosFiltrados !== null &&
       products !== null
     ) {
       setIsLoading(false);
@@ -114,10 +122,12 @@ function Home() {
   return (
     <Box
       className={Style}
-      sx={{
-        position: "relative",
-        height: "calc(100vh - 3.2rem)",
-      }}
+      sx={
+        {
+          // position: "relative",
+          // height: "calc(100vh - 3.2rem)",
+        }
+      }
     >
       {isLoading ? (
         <Circularprogress />
@@ -134,9 +144,11 @@ function Home() {
           >
             <Box sx={{ display: "flex", alignItems: "center", mt: "3px" }}>
               <IconButton
-                onClick={
-                  favoriteProducts.length > 0 && handleDrawerToggleFavoritos
-                }
+                onClick={() => {
+                  if (favoriteProducts?.length > 0) {
+                    handleDrawerToggleFavoritos();
+                  }
+                }}
               >
                 <Badge
                   color="primary"
@@ -160,7 +172,11 @@ function Home() {
             </Box>
             <Box sx={{ display: "flex", alignItems: "center" }}>
               <IconButton
-                onClick={cantidadCarrito > 0 && handleDrawerToggleCarrito}
+                onClick={() => {
+                  if (cantidadCarrito > 0) {
+                    handleDrawerToggleCarrito();
+                  }
+                }}
               >
                 <Badge
                   color="primary"
@@ -199,10 +215,7 @@ function Home() {
                   transition: "width 0.6s ease",
                 }}
               >
-                <Filtros
-                  open={open}
-                  handleDrawerToggle={handleDrawerToggleCarrito}
-                />
+                <Filtros open={open} handleDrawerToggle={handleDrawerToggle} />
               </Box>
             ) : (
               <Box
@@ -225,20 +238,24 @@ function Home() {
               sx={{
                 display: "flex",
                 justifyContent: "center",
-                width: "1",
                 margin: "0 auto",
               }}
             >
               <CardContainer
                 products={
-                  productsFiltered && productsFiltered.length === 0
-                    ? products
-                    : productosFiltrados
+                  productosFiltrados && productosFiltrados.length > 0
+                    ? productosFiltrados
+                    : products
                 }
               />
             </Box>
           </Box>
-          <Box>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+            }}
+          >
             <Paginado />
           </Box>
           <Box

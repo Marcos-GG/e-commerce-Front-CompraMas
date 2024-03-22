@@ -14,7 +14,30 @@ import {
   LENGTH_PRODUCTS,
   SUCCESS,
   ERROR,
+  RELATED_PRODUCTS,
+  GET_ALL_PRODUCTS,
+  PRECIO_MAX,
+  LENGTH_PRODUCTS_FILTERED,
+  CREATE_PREFERENCE,
+  GET_COMPRAS,
 } from "../actionsTypes/ProductsActionTypes";
+
+export const getProductsAll = () => {
+  return async function (dispatch) {
+    try {
+      const config = configureHeaders();
+      const response = await axios.get(
+        `${import.meta.env.VITE_LOCALHOST}products`,
+        config
+      );
+
+      console.log(response.data, "dahsuidta78sdta87std");
+      dispatch({ type: GET_ALL_PRODUCTS, payload: response.data.products });
+    } catch (error) {
+      return error;
+    }
+  };
+};
 
 export const getProducts = (page) => {
   return async function (dispatch) {
@@ -22,16 +45,14 @@ export const getProducts = (page) => {
       const config = configureHeaders();
       const response = await axios.get(
         `${import.meta.env.VITE_LOCALHOST}products?page=${page}`,
-
         config
       );
       const products = response.data.products;
       const totalProducts = response.data.totalProducts;
 
-      console.log(response.data, "response.data");
-
       dispatch({ type: GET_PRODUCTS, payload: products });
       dispatch({ type: LENGTH_PRODUCTS, payload: totalProducts });
+      dispatch({ type: PRECIO_MAX, payload: response.data.precioMaximo });
     } catch (error) {
       return error;
     }
@@ -45,7 +66,9 @@ export const getProductId = (id) => {
       `${import.meta.env.VITE_LOCALHOST}products/${id}`,
       config
     );
-    dispatch({ type: GET_PRODUCT_ID, payload: response.data });
+
+    dispatch({ type: GET_PRODUCT_ID, payload: response.data.idProduct });
+    dispatch({ type: RELATED_PRODUCTS, payload: response.data.relacionados });
   };
 };
 
@@ -64,7 +87,7 @@ export const getTermProducts = (string, page) => {
       const productosFiltrados = response.data.productosFiltrados;
 
       dispatch({ type: GET_TERM_PRODUCTS, payload: products });
-      dispatch({ type: LENGTH_PRODUCTS, payload: productosFiltrados });
+      dispatch({ type: LENGTH_PRODUCTS_FILTERED, payload: productosFiltrados });
     } catch (error) {
       return error;
     }
@@ -129,22 +152,78 @@ export const createProduct = (product) => {
   };
 };
 
-export const apllyFilters = (combinedFilters) => {
+export const apllyFilters = (combinedFilters, page) => {
   return async function (dispatch) {
     const config = configureHeaders();
 
     const response = await axios.post(
-      `${import.meta.env.VITE_LOCALHOST}filters`,
+      `${import.meta.env.VITE_LOCALHOST}filters?page=${page}`,
       combinedFilters,
       config
     );
 
-    dispatch({ type: APPLY_FILTERS, payload: response.data });
+    dispatch({
+      type: APPLY_FILTERS,
+      payload: response.data.productosFiltrados,
+    });
+    dispatch({
+      type: LENGTH_PRODUCTS_FILTERED,
+      payload: response.data.totalProducts,
+    });
   };
 };
 
 export const clearProductosFiltrados = () => {
   return function (dispatch) {
     dispatch({ type: CLEAR_FILTERED_PRODUCTS });
+  };
+};
+
+export const productosRelacionados = (id) => {
+  return async function (dispatch) {
+    const config = configureHeaders();
+
+    const response = await axios.get(
+      `${import.meta.env.VITE_LOCALHOST}relacionados/${id}`,
+      config
+    );
+
+    dispatch({ type: RELATED_PRODUCTS, payload: response.data });
+  };
+};
+
+export const createPreference = (products, userId) => {
+  return async function (dispatch) {
+    const config = configureHeaders();
+
+    // console.log(products, "Dasd");
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_LOCALHOST}createPreference`,
+        { products, userId },
+        config
+      );
+
+      const { id } = response.data;
+      console.log(response);
+
+      dispatch({ type: CREATE_PREFERENCE, payload: id });
+    } catch (error) {
+      return error.message;
+    }
+  };
+};
+
+export const getCompras = (id) => {
+  return async function (dispatch) {
+    const config = configureHeaders();
+    console.log(id);
+    const response = await axios.get(
+      `${import.meta.env.VITE_LOCALHOST}compras?id=${id}`,
+      config
+    );
+
+    console.log(response.data, "ahjshdasd");
+    dispatch({ type: GET_COMPRAS, payload: response.data });
   };
 };

@@ -1,9 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/prop-types */
-import { useDispatch } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { getProductId } from "../Redux/actions/productsActions";
-import { useEffect, useState } from "react";
 import {
   Box,
   Typography,
@@ -13,32 +12,17 @@ import {
 } from "@mui/material";
 import ProductItem from "./ProductItem";
 
-function RelatedProducts({ productAdmin, products, category, gender }) {
+function RelatedProducts({ productAdmin }) {
   const isLTE426 = useMediaQuery("(max-width:426px)");
   const isLTE800 = useMediaQuery("(max-width:800px)");
   const isLTE1250 = useMediaQuery("(max-width:1250px)");
 
+  const productosRelacionados = useSelector(
+    (state) => state.products.relacionados
+  );
+
   const navigate = useNavigate();
-  const { id } = useParams();
   const dispatch = useDispatch();
-
-  const [filteredProducts, setFilteredProducts] = useState([]);
-
-  useEffect(() => {
-    // Filtrar directamente en el useEffect
-    const newFilteredProducts = products
-      .filter((product) => {
-        return (
-          product.id != id && // Excluir el producto actual
-          product.category === category &&
-          product.gender === gender
-        );
-      })
-      .slice(0, 5);
-
-    // Actualizar el estado
-    setFilteredProducts(newFilteredProducts);
-  }, [id, products, category, gender]);
 
   const handleProductClick = (productId) => {
     dispatch(getProductId(productId));
@@ -52,14 +36,14 @@ function RelatedProducts({ productAdmin, products, category, gender }) {
 
   const slideAnimation = keyframes`
   0% { transform: translateX(0); }
-  100% { transform: translateX(calc(-11.6rem * ${filteredProducts.length} ));
+  100% { transform: translateX(calc(-10.6rem * ${productosRelacionados.length} ));
 }
 `;
 
   const slideAnimationSmallScreen = keyframes`
   0% { transform: translateX(0); }
   100% { 
-    transform: translateX(calc(-10.5rem * ${filteredProducts.length} ));
+    transform: translateX(calc(-9rem * ${productosRelacionados.length} ));
   }
 `;
 
@@ -81,7 +65,7 @@ function RelatedProducts({ productAdmin, products, category, gender }) {
 
   return (
     <Box>
-      {filteredProducts && filteredProducts?.length === 5 && (
+      {productosRelacionados && productosRelacionados?.length === 5 && (
         <Box
           sx={{
             display: "flex",
@@ -100,12 +84,12 @@ function RelatedProducts({ productAdmin, products, category, gender }) {
             Productos relacionados:
           </Typography>
 
-          <Box sx={{ position: "relative", width: "95%" }}>
+          <Box sx={{ position: "relative", width: "85%" }}>
             <AnimatedBox
               sx={{ width: "100%", height: productAdmin && "16.5rem" }}
             >
-              {filteredProducts?.length > 0 &&
-                filteredProducts.map((product) => (
+              {productosRelacionados?.length > 0 &&
+                productosRelacionados.map((product) => (
                   <Box
                     key={product.id}
                     sx={{ width: "100%", mx: product ? "0" : "3px" }}
@@ -119,8 +103,8 @@ function RelatedProducts({ productAdmin, products, category, gender }) {
                     />
                   </Box>
                 ))}
-              {filteredProducts?.length > 0 &&
-                filteredProducts.map((product) => (
+              {productosRelacionados?.length > 0 &&
+                productosRelacionados.map((product) => (
                   <Box
                     key={product.id}
                     sx={{ width: "100%", mx: product ? "0" : "3px" }}

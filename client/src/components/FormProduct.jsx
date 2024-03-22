@@ -494,7 +494,7 @@ const FormProduct = () => {
             ></Box>
           ) : (
             <Box sx={{ mb: "10px" }}>
-              <DetailProduct product={form} />
+              <DetailProduct product={form} formularioCreacion />
             </Box>
           )}
         </Box>

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import UserAvatar from "./UserAvatar";
@@ -35,19 +36,13 @@ const Comments = ({ comments }) => {
 
   useEffect(() => {
     if (selectedComment) {
-      const producto = products.find((product) =>
-        product?.Comments?.some(
-          (comment) => comment?.id === selectedComment?.id
-        )
+      const comentario = comments.find(
+        (comment) => comment.id === selectedComment.id
       );
 
-      const comentarioEspecifico = producto?.Comments?.find(
-        (comment) => comment?.id === selectedComment?.id
-      );
-
-      setSelectedComment(comentarioEspecifico);
+      setSelectedComment(comentario);
     }
-  }, [products, selectedComment]);
+  }, [comments]);
 
   const scrollContainerRef = useRef(null); // referencia al contenedor de scroll
 

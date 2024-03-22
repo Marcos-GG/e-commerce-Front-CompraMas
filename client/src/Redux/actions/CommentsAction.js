@@ -46,7 +46,7 @@ export const postComment = (form, token, productId) => {
   };
 };
 
-export const postAnswer = (form, commentId) => {
+export const postAnswer = (form, commentId, productId) => {
   return async function (dispatch) {
     try {
       const config = configureHeaders();
@@ -57,10 +57,12 @@ export const postAnswer = (form, commentId) => {
         body,
         config
       );
-      console.log("sdasdasd", response.data);
 
-      dispatch({ type: POST_ANSWER, payload: response.data });
-      dispatch({ type: "POST_ANSWER_PRODUCTS", payload: response.data });
+      if (productId) {
+        dispatch({ type: "POST_ANSWER_PRODUCTS", payload: response.data });
+      } else {
+        dispatch({ type: POST_ANSWER, payload: response.data });
+      }
     } catch (error) {
       return error.message;
     }

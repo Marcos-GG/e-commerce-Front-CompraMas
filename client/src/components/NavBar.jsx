@@ -55,6 +55,13 @@ const NavBar = () => {
                   Home
                 </Typography>
               </ListItem>
+
+              <ListItem button component={NavLink} to="/compras">
+                <Typography variant="body1" sx={{ textDecoration: "none" }}>
+                  Compras
+                </Typography>
+              </ListItem>
+
               {admin && (
                 <ListItem button component={NavLink} to="/admin">
                   <Typography variant="body1" sx={{ textDecoration: "none" }}>
@@ -63,11 +70,6 @@ const NavBar = () => {
                 </ListItem>
               )}
 
-              <ListItem button component={NavLink} to="/favoritos">
-                <Typography variant="body1" sx={{ textDecoration: "none" }}>
-                  Favoritos
-                </Typography>
-              </ListItem>
               <ListItem button component={NavLink} to="/logout">
                 <Typography variant="body1" sx={{ textDecoration: "none" }}>
                   LogOut
@@ -113,10 +115,10 @@ const NavBar = () => {
             <Button
               variant="contained"
               component={NavLink}
-              to="/favoritos"
+              to="/compras"
               size="small"
             >
-              Favoritos
+              Compras
             </Button>
           </Box>
 

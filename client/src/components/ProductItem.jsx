@@ -28,6 +28,8 @@ const ProductItem = ({
     }
   }, [currentPath, enDetail]);
 
+  const isLTE321 = useMediaQuery("(max-width:321px)");
+  const isLTE373 = useMediaQuery("(max-width:373px)");
   const isLTE426 = useMediaQuery("(max-width:442px)");
   const isLTE490 = useMediaQuery("(max-width:490px)");
   const isLTE918 = useMediaQuery("(max-width:918px)");
@@ -42,9 +44,17 @@ const ProductItem = ({
   return (
     <Box
       sx={{
-        margin: productAdmin ? "5px" : isLTE918 ? "1px" : "10px",
+        margin: productAdmin ? "5px" : isLTE918 ? "0px" : "10px",
         marginY: isLTE426 ? "8px" : isLTE490 ? "8px" : "",
-        width: enDetail ? "10rem" : isLTE490 ? "11.5rem" : "12rem",
+        width: enDetail
+          ? "10rem"
+          : isLTE321
+          ? "13rem"
+          : isLTE373
+          ? "9.4rem"
+          : isLTE490
+          ? "11rem"
+          : "12rem",
         height: productAdmin
           ? "15rem"
           : enDetail
@@ -68,7 +78,7 @@ const ProductItem = ({
       <Box p={2} sx={{}}>
         <Box
           width={1}
-          height="8rem"
+          height={isLTE321 ? "9rem" : "8rem"}
           sx={{
             display: "flex",
             justifyContent: "center",
@@ -86,7 +96,7 @@ const ProductItem = ({
               overflow: "hidden",
               textOverflow: "ellipsis",
               lineHeight: "30px",
-              fontSize: enDetail ? "15.5px" : "19px",
+              fontSize: enDetail ? "15.5px" : isLTE490 ? "17.5px" : "19px",
             }}
           >
             {product?.title}

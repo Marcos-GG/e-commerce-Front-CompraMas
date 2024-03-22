@@ -3,7 +3,7 @@ const { Products, Like, User, Comment, Answer } = require("../../db");
 
 const getProductController = async (id, search, page) => {
   try {
-    let pageSize = 10;
+    let pageSize = 20;
     let offset = (page - 1) * pageSize;
 
     if (id) {
@@ -29,7 +29,6 @@ const getProductController = async (id, search, page) => {
         ],
       });
 
-      console.log("jdjadjajsdjajjjjjjj");
       const relacionados = await Products.findAll({
         attributes: ["id", "image1", "price", "title"],
         where: {
@@ -38,7 +37,6 @@ const getProductController = async (id, search, page) => {
         },
       });
 
-      console.log("entro en relacionados");
       const productosRelacionados = relacionados.filter(
         (product) => product.id !== idProduct.id
       );
@@ -102,7 +100,6 @@ const getProductController = async (id, search, page) => {
     // Op.and es el operador que permite combinar esas condiciones para formar una sola condición lógica. todas tienen que ser true ( en este caso las condiciones de palabras )
 
     if (search) {
-      console.log("fhausfgas");
       const products = await Products.findAll({
         where: {
           [Op.and]: palabras,
@@ -186,7 +183,6 @@ const getProductController = async (id, search, page) => {
         },
       ],
     });
-    console.log("entroasadasda");
 
     return {
       products: allProducts,

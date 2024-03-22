@@ -1,6 +1,8 @@
 /* eslint-disable react/prop-types */
 import { Box, Typography, useMediaQuery } from "@mui/material";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { getProductId } from "../Redux/actions/productsActions";
 
 const CompleteOutfits = ({
   product,
@@ -8,12 +10,15 @@ const CompleteOutfits = ({
   gender,
   category,
   products,
+  formularioCreacion,
 }) => {
   const isLTE454 = useMediaQuery("(max-width:454px)");
   const isLTE768 = useMediaQuery("(max-width:768px)");
   const isLTE1000 = useMediaQuery("(max-width:1000px)");
   const isLTE1200 = useMediaQuery("(max-width:1200px)");
   const isLTE1520 = useMediaQuery("(max-width:1520px)");
+
+  const navigate = useNavigate();
 
   const [productsOutfits, setProductsOutfits] = useState([]); // Inicializa productsOutfits
 
@@ -111,19 +116,33 @@ const CompleteOutfits = ({
                   height: "100%",
                   backgroundColor: "rgba(0, 0, 0, 0.5)",
                   zIndex: 1,
+                  pointerEvents: "none", // permite que los eventos pasen
                 },
               }}
             >
               <Box
-                component="img"
-                src={product.image1}
-                alt={product.title}
-                style={{
-                  maxWidth: "100%",
-                  height: "auto",
-                  objectFit: "contain",
+                // component={NavLink}
+                // to={`/detail/${product.id}`}
+                onClick={(e) => {
+                  if (!formularioCreacion) {
+                    console.log("a");
+                    e.preventDefault();
+                    getProductId(product.id);
+                    navigate(`/detail/${product.id}`);
+                  }
                 }}
-              />
+              >
+                <Box
+                  component="img"
+                  src={product.image1}
+                  alt={product.title}
+                  style={{
+                    maxWidth: "100%",
+                    height: "auto",
+                    objectFit: "contain",
+                  }}
+                />
+              </Box>
             </Box>
           ))}
       </Box>

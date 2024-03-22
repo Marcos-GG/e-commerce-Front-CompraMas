@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { useEffect, useState } from "react";
 import {
-  getProducts,
+  getProductsAll,
   putProduct,
   // moveToDeactivate,
 } from "../Redux/actions/productsActions";
@@ -58,7 +58,7 @@ const ProductsAdmin = ({ products, productosFiltrados }) => {
 
   useEffect(() => {
     if (products.length === 0) {
-      dispatch(getProducts());
+      dispatch(getProductsAll);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch]);
@@ -306,7 +306,7 @@ const ProductsAdmin = ({ products, productosFiltrados }) => {
         // actualizamos estados para el mensaje
 
         // Puedes realizar un dispatch de getProducts aquí si es necesario
-        dispatch(getProducts());
+        dispatch(getProductsAll);
       })
       .catch((error) => {
         // Manejar errores, si es necesario

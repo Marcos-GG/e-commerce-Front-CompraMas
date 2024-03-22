@@ -17,7 +17,7 @@ function CardContainer({ products }) {
         display: "flex",
         justifyContent: "center",
         ml: isLTE490
-          ? "1rem"
+          ? "0"
           : isLTE666
           ? "1rem"
           : isLTE707
@@ -40,7 +40,7 @@ function CardContainer({ products }) {
         }}
       >
         {products &&
-          products.map((product) => (
+          products?.map((product) => (
             <Box key={product?.id}>
               <Card product={product} />
             </Box>

@@ -2,6 +2,7 @@ import {
   ADD_PRODUCT,
   REMOVE_PRODUCT,
   SET_INITIAL_CART,
+  CLEAN_CARRITO,
 } from "../actionsTypes/ShoppingCartActionTypes";
 
 const initialState = {
@@ -52,6 +53,9 @@ const reducer = (state = initialState, action) => {
         ...state,
         products: action.payload,
       };
+
+    case CLEAN_CARRITO:
+      return { ...state, products: [] };
 
     default:
       return { ...state };

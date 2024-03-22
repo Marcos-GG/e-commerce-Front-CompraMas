@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import {
   addProduct,
-  finalizarCompra,
+  // finalizarCompra,
   removeProduct,
 } from "../../Redux/actions/ShoppingCartAction";
 import ProductPrice from "../../components/ProductPrice";
@@ -18,10 +18,18 @@ import {
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
+import { createPreference } from "../../Redux/actions/productsActions";
+import Payment from "../../components/Payment";
+import { jwtDecode } from "jwt-decode";
 
 const ShoppingCart = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const token = localStorage.getItem("token");
+
+  const decodeToken = jwtDecode(token);
+  const userId = decodeToken.id;
 
   const isLTE424 = useMediaQuery(`(max-width: 424px)`);
   const isLTE650 = useMediaQuery(`(max-width: 650px)`);
@@ -94,9 +102,9 @@ const ShoppingCart = () => {
     }
   }, [products]);
 
-  const handleCompra = () => {
-    dispatch(finalizarCompra());
-  };
+  // const handleCompra = () => {
+  //   dispatch(finalizarCompra());
+  // };
 
   return (
     <Box sx={{ mt: isLTE1200 ? "18px" : "30px" }}>
@@ -498,11 +506,12 @@ const ShoppingCart = () => {
                 mt: "10px",
                 fontSize: isLTE700 && "13px",
               }}
-              onClick={() => handleCompra()}
+              // onClick={() => handleCompra()}
+              onClick={() => dispatch(createPreference(products, userId))}
             >
               Finalizar Compra
             </Button>
-
+            <Payment />
             <Button
               component={NavLink}
               to="/"

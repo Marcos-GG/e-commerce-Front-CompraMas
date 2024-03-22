@@ -38,6 +38,7 @@ export const addProduct = (product) => {
     }
 
     dispatch({ type: ADD_PRODUCT, payload: product });
+    dispatch({ type: SUCCESS, payload: "Se agregó al carrito." });
   };
 };
 
@@ -72,7 +73,6 @@ export const finalizarCompra = () => {
     const config = configureHeaders();
 
     await axios.post(`${import.meta.env.VITE_LOCALHOST}compra`, {}, config);
-
-    dispatch({ type: SUCCESS, payload: "Compra finalizada con éxito!" });
+    dispatch({ type: SUCCESS, payload: "Compra realizada!" });
   };
 };

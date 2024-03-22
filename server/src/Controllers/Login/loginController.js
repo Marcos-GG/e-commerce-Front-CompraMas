@@ -1,6 +1,7 @@
 const { User } = require("../../db");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
+require("dotenv").config();
 
 const loginController = async (email, password) => {
   try {
@@ -18,8 +19,8 @@ const loginController = async (email, password) => {
     if (!user.active) throw new Error("El usuario esta bloqueado!");
 
     //si es valido generamos token JWT
-    const token = jwt.sign({ id: user.id }, "secretKey", {
-      expiresIn: "2h",
+    const token = jwt.sign({ id: user.id }, process.env.SECRET_KEY, {
+      expiresIn: "8h",
     });
 
     return { token, admin: user.admin, user: user.name };

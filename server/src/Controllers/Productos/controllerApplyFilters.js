@@ -1,4 +1,4 @@
-const { Products } = require("../../db");
+const { Products, Like } = require("../../db");
 const { Sequelize } = require("sequelize");
 
 const controllerApplyFilters = async ({
@@ -6,7 +6,11 @@ const controllerApplyFilters = async ({
   gender,
   category,
   morePopular,
+  page,
 }) => {
+  let pageSize = 10;
+  let offset = (page - 1) * pageSize;
+
   const filtrosQueNoSonNull = {};
 
   if (gender !== null) filtrosQueNoSonNull.gender = gender;
@@ -33,14 +37,18 @@ const controllerApplyFilters = async ({
   }
 
   const productosFiltrados = await Products.findAll({
-    where: filtrosQueNoSonNull,
+    where: { ...filtrosQueNoSonNull, status: true },
+    include: { model: Like },
     order: orderOptions, // Aplicar opciones de ordenamiento
+    offset,
+    limit: pageSize,
   });
 
   if (productosFiltrados.length === 0)
     throw new Error("No se encontraron productos con los filtros aplicados");
 
-  return productosFiltrados;
+  console.log(productosFiltrados.length, "filtrado");
+  return { productosFiltrados, totalProducts: productosFiltrados.length };
 };
 
 module.exports = controllerApplyFilters;

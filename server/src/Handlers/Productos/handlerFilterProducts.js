@@ -3,12 +3,14 @@ const controllerApplyFilters = require("../../Controllers/Productos/controllerAp
 const handlerApplyFilters = async (req, res) => {
   try {
     const { category, gender, morePopular, price } = req.body;
+    const { page } = req.query;
 
     const productosFiltrados = await controllerApplyFilters({
       category,
       gender,
       morePopular,
       price,
+      page,
     });
     if (productosFiltrados.length === 0)
       throw new Error("No se pudo filtar los porductos");

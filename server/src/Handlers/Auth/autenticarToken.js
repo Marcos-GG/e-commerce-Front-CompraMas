@@ -1,5 +1,6 @@
 const jwt = require("jsonwebtoken");
 const { User } = require("../../db");
+require("dotenv").config();
 
 const rutasDeAdmin = ["/createProduct"];
 
@@ -18,7 +19,7 @@ const autenticarToken = async (req, res, next) => {
 
   try {
     // Valido el token con la clave privada almacenada en las variables de entorno
-    let decodenToken = await jwt.verify(token, "secretKey");
+    let decodenToken = await jwt.verify(token, process.env.SECRET_KEY);
     req.userId = decodenToken.id; // Extraigo el ID del token y lo guardo en el req para usarlo en el manejador de ruta que se ejecuta después del middleware
 
     const url = req.originalUrl.replace(req.baseUrl, "");

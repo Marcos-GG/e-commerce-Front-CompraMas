@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Box, TextField, useMediaQuery } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useDispatch } from "react-redux";
 import {
   clearProductosFiltrados,
@@ -24,17 +24,11 @@ const SearchBarProduct = () => {
 
   const handlerSearchTermProducts = (event) => {
     setSearchTermProducts({ string: event.target.value });
-  };
-
-  useEffect(() => {
-    if (searchTermProducts.string.length > 0) {
-      let page = 1;
-      dispatch(getTermProducts(searchTermProducts.string, page));
-    } else {
+    if (event.target.value.trim() === "") {
+      dispatch(getProducts(1));
       dispatch(clearProductosFiltrados());
-      dispatch(getProducts());
     }
-  }, [searchTermProducts.string]);
+  };
 
   return (
     <Box sx={{}}>
@@ -44,7 +38,14 @@ const SearchBarProduct = () => {
         variant="outlined"
         onChange={handlerSearchTermProducts}
         InputProps={{
-          endAdornment: <SearchIcon />,
+          endAdornment: (
+            <SearchIcon
+              sx={{ cursor: "pointer" }}
+              onClick={() => {
+                dispatch(getTermProducts(searchTermProducts.string, 1));
+              }}
+            />
+          ),
           sx: {
             fontSize: "14px",
             width:

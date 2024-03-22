@@ -5,7 +5,6 @@ const getUserHandler = async (req, res) => {
     const { search } = req.query;
     const { id } = req.params;
     const ID = isNaN(id);
-
     if (ID) {
       const userId = await getUserController(id, search);
       if (!userId) throw new Error("No se encontro ususario con ese id");

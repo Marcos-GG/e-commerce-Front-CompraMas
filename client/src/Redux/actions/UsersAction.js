@@ -14,6 +14,7 @@ export const getUsers = () => {
   return async function (dispatch) {
     try {
       const config = configureHeaders();
+
       const response = await axios.get(
         `${import.meta.env.VITE_LOCALHOST}users`,
         config

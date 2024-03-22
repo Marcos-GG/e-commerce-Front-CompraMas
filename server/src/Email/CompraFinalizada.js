@@ -384,7 +384,7 @@ table, td { color: #ffffff; } #u_body a { color: #0000ee; text-decoration: under
     .sendMail({
       from: '"Gracias por tu compra!" <compramas9@gmail.com>', // address
       to: email, // list of receivers
-      subject: `Compra finalizada.`, // Subject line
+      subject: `Compra Realizada.`, // Subject line
       text: "", // plain text body
       html: mensajeHTML, // html body
     })

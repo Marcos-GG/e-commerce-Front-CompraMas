@@ -1,6 +1,10 @@
 const { Router } = require("express");
 // Importacion de los handlers
 
+// handler payment
+const paymentHandler = require("../Handlers/Productos/paymentHandler");
+const handlerCompras = require("../Handlers/Productos/handlerCompras");
+
 /// handlers Users
 const createUserHandler = require("../Handlers/Usuarios/postUser");
 const getUserHandler = require("../Handlers/Usuarios/getUser");
@@ -42,14 +46,19 @@ const postGenderHandler = require("../Handlers/Gender/postGender");
 const loginHandler = require("../Handlers/Login/loginHandler");
 const getFavoritesHandler = require("../Handlers/Productos/getFavorites");
 const CompraFinalizada = require("../Handlers/Email/HandlerCompraFinalizada");
+const webhookHandler = require("../Handlers/Productos/webHooksHandler");
 
 // Email
 
 const router = Router();
 
 //Email
-
 router.post("/compra", CompraFinalizada);
+
+//
+router.post("/createPreference", paymentHandler);
+router.post("/webhook", webhookHandler);
+router.get("/compras", handlerCompras);
 
 //login
 router.post("/login", loginHandler);
@@ -58,7 +67,7 @@ router.post("/login", loginHandler);
 router.get("/users/:id", getUserHandler);
 router.post("/register", createUserHandler);
 router.delete("/users/:id", deleteUserHandler);
-router.get("/user", getUserHandler);
+router.get("/users", getUserHandler);
 router.put("/users/:id", putUserHandler);
 
 // products
@@ -68,6 +77,7 @@ router.get("/products/", getProductHandler);
 router.put("/products/:id", putProductHandler);
 router.delete("/products/:id", deleteProductHandler);
 router.post("/filters", handlerApplyFilters);
+// router.get("/relacionados/:id", getRelacionadoHandler);
 
 //likes
 router.post("/likes", postLikeHandler);

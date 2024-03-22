@@ -22,7 +22,7 @@ import { useDispatch, useSelector } from "react-redux";
 import LogOut from "./views/Logout/LogOut";
 import "./App.css";
 import { SET_INITIAL_CART } from "./Redux/actionsTypes/ShoppingCartActionTypes";
-import ProductsActivated from "./components/productsActivated";
+import ProductsActivated from "./components/ProductsActivated";
 import Compras from "./components/Compras";
 
 function App() {

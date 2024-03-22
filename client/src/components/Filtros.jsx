@@ -26,6 +26,7 @@ const Filtros = ({ open, handleDrawerToggle }) => {
   const isLTE1000 = useMediaQuery("(max-width:1000px)");
   const dispatch = useDispatch();
 
+  const priceMax = useSelector((state) => state.products.priceMax);
   const products = useSelector((state) => state.products.products);
 
   const genders = useSelector((state) => state.categoryGender.gender);
@@ -50,11 +51,11 @@ const Filtros = ({ open, handleDrawerToggle }) => {
   }, []);
 
   useEffect(() => {
-    const maxPrice = Math.max(...products.map((product) => product.price));
-    setInitialPrice({ min: 0, max: maxPrice });
+    // const maxPrice = Math.max(...products.map((product) => product.price));
+    setInitialPrice({ min: 0, max: priceMax });
     setCombinedFilters((prevFilters) => ({
       ...prevFilters,
-      price: { min: 0, max: maxPrice },
+      price: { min: 0, max: priceMax },
     }));
   }, [products]);
 
@@ -73,8 +74,24 @@ const Filtros = ({ open, handleDrawerToggle }) => {
     }));
   };
 
+  useEffect(() => {
+    const isDisabled =
+      combinedFilters.category === null &&
+      combinedFilters.gender === null &&
+      combinedFilters.morePopular === null &&
+      combinedFilters.price.min === initialPrice.min &&
+      combinedFilters.price.max === initialPrice.max;
+
+    setEstadoBoton(isDisabled);
+  }, [combinedFilters, initialPrice]);
+
   const limpiarFiltros = () => {
-    dispatch(clearProductosFiltrados());
+    // restablecemos manualmente porque los valores que fueron seleccionados quedaban guardados visualmente
+    setCategoriaSeleccionada(null);
+    setGeneroSeleccionado(null);
+    setEstadoBoton(false);
+    setMorePopular(false);
+    // setInitialPrice({ min: 0, max: 0 });
 
     setCombinedFilters({
       category: null,
@@ -82,27 +99,12 @@ const Filtros = ({ open, handleDrawerToggle }) => {
       morePopular: null,
       price: { min: initialPrice.min, max: initialPrice.max },
     });
-    // restablecemos manualmente porque los valores que fueron seleccionados quedaban guardados visualmente
-    setCategoriaSeleccionada(null);
-    setGeneroSeleccionado(null);
-    setEstadoBoton(false);
-    setMorePopular(false);
+
+    dispatch(clearProductosFiltrados());
   };
 
-  useEffect(() => {
-    const { category, gender, morePopular, price } = combinedFilters;
-    const filtersNull = category === null && gender === null && !morePopular;
-    const priceChanged =
-      price.min !== initialPrice.min || price.max !== initialPrice.max;
-
-    setEstadoBoton(!(!filtersNull || priceChanged));
-  }, [combinedFilters, initialPrice]);
-
   const handleApplyFilter = () => {
-    if (!estadoBoton) {
-      dispatch(apllyFilters(combinedFilters));
-      limpiarFiltros();
-    }
+    dispatch(apllyFilters(combinedFilters, 1));
   };
 
   return (
@@ -230,7 +232,7 @@ const Filtros = ({ open, handleDrawerToggle }) => {
               mt: isLTE640 ? "10px" : "20px",
               gap: "20px",
             }}
-            onClick={handleApplyFilter}
+            onClick={() => handleApplyFilter()}
           >
             <Button
               variant="contained"
@@ -351,10 +353,10 @@ const Filtros = ({ open, handleDrawerToggle }) => {
               mt: "20px",
               gap: "20px",
             }}
-            onClick={handleApplyFilter}
           >
             <Button
               variant="contained"
+              onClick={() => handleApplyFilter()}
               disabled={estadoBoton}
               sx={{ mt: "10px", width: "12rem" }}
             >

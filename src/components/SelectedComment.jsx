@@ -29,7 +29,7 @@ const SelectedComment = ({
     <Box
       sx={{
         width: "100%",
-        height: isLTE430 ? `calc(100vh - 3.2rem)` : "45.59rem",
+        height: isLTE765 ? `calc(100vh - 3.3rem)` : "45.59rem",
         borderRadius: isLTE430 ? "" : " 0 10px 10px 0 ",
         backgroundColor: "#f5f5f5",
         boxShadow: "10px 10px 15px #888888;",
@@ -67,7 +67,7 @@ const SelectedComment = ({
           display: "flex",
           flexDirection: "column",
           width: "100%",
-          height: "95%",
+          height: isLTE430 ? "95%" : "96%",
         }}
       >
         <Box
@@ -117,6 +117,7 @@ const SelectedComment = ({
                 boxSizing: "border-box",
                 fontSize: isLTE425 && "15.5px",
                 mt: isLTE425 && "-6px",
+                height: "100%",
               }}
             >
               {selectedComment?.text}
@@ -188,6 +189,7 @@ const SelectedComment = ({
           sx={{
             bgcolor: "#F5F5F5",
             display: "flex",
+            mt: "5px",
             alignItems: "center",
             boxShadow: "0px -10px 15px #888888;",
             position: isLTE430 & "fixed",

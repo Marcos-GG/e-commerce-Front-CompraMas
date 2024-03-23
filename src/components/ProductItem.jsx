@@ -29,7 +29,7 @@ const ProductItem = ({
   }, [currentPath, enDetail]);
 
   const isLTE321 = useMediaQuery("(max-width:321px)");
-  const isLTE373 = useMediaQuery("(max-width:373px)");
+  const isLTE378 = useMediaQuery("(max-width:378px)");
   const isLTE426 = useMediaQuery("(max-width:442px)");
   const isLTE490 = useMediaQuery("(max-width:490px)");
   const isLTE766 = useMediaQuery("(max-width:766px)");
@@ -57,10 +57,10 @@ const ProductItem = ({
           ? "10rem"
           : isLTE321
           ? "12rem"
-          : isLTE373
-          ? "12rem"
+          : isLTE378
+          ? "9.4rem"
           : isLTE490
-          ? "10.5rem"
+          ? "11.3rem"
           : isLTE766
           ? "13rem"
           : "12rem",
@@ -70,7 +70,9 @@ const ProductItem = ({
           ? "15rem"
           : isLTE490
           ? "16.5rem"
-          : "17rem",
+          : isLTE766
+          ? "17rem"
+          : " 17rem",
         position: "relative",
         cursor: "pointer",
         transition: "0.1s",
@@ -90,6 +92,8 @@ const ProductItem = ({
           height={
             isLTE321
               ? "8.5rem"
+              : isLTE378
+              ? "7.8rem"
               : isLTE490
               ? "8.5rem"
               : isLTE766

@@ -29,14 +29,13 @@ const SelectedComment = ({
     <Box
       sx={{
         width: "100%",
-        height: isLTE765 ? `calc(100vh - 3.3rem)` : "45.59rem",
+        height: isLTE765 ? `calc(100vh - 4.7rem )` : "45.59rem",
         borderRadius: isLTE430 ? "" : " 0 10px 10px 0 ",
         backgroundColor: "#f5f5f5",
         boxShadow: "10px 10px 15px #888888;",
         backgroundImage: 'url("/logoblanco.svg")',
         backgroundSize: "contain",
         backgroundPosition: "center",
-        overflowY: "auto",
         backgroundRepeat: "no-repeat",
         position: "relative",
       }}
@@ -66,8 +65,10 @@ const SelectedComment = ({
         sx={{
           display: "flex",
           flexDirection: "column",
+          justifyContent: "space-between",
           width: "100%",
-          height: isLTE430 ? "95%" : "96%",
+          height: isLTE430 ? "100%" : "100%",
+          bgcolor: "aquamarine",
         }}
       >
         <Box

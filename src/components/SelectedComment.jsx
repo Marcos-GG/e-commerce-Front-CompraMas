@@ -67,7 +67,7 @@ const SelectedComment = ({
           flexDirection: "column",
           justifyContent: "space-between",
           width: "100%",
-          height: isLTE430 ? "100%" : "100%",
+          height: isLTE430 ? "100%" : "95%",
         }}
       >
         <Box
@@ -76,7 +76,7 @@ const SelectedComment = ({
             display: "flex",
             flexDirection: "column",
             height: isLTE425 ? "100%" : "100%",
-            maxHeight: isLTE765 ? "100%" : "100%", // Establecer la altura máxima para activar el scroll
+            maxHeight: isLTE430 ? "100hv" : "100vh", // Establecer la altura máxima para activar el scroll
             overflowY: "auto", // Habilitar el scroll vertical cuando el contenido excede la altura máxima
           }}
         >

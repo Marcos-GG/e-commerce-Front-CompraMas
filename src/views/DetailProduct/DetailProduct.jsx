@@ -45,7 +45,6 @@ function DetailProduct({ product, formularioCreacion }) {
 
   const location = useLocation();
   const currentPath = location.pathname;
-  console.log(currentPath, "dasdas");
 
   const { id } = useParams();
   const dispatch = useDispatch();
@@ -82,14 +81,12 @@ function DetailProduct({ product, formularioCreacion }) {
     dispatch(getProducts(1));
   }, [dispatch, id]);
 
-  //limpiamos filtros aplicados :
   useEffect(() => {
     return () => {
-      // Limpiar productos filtrados al salir del componente de detalle
       dispatch(clearProductosFiltrados());
     };
   }, [dispatch]);
-  ///////
+
   const token = localStorage.getItem("token");
 
   const decodeToken = jwtDecode(token);
@@ -112,7 +109,6 @@ function DetailProduct({ product, formularioCreacion }) {
       (like) => like.userId === userId
     );
     const likesTotales = productId.likes;
-    console.log(likesTotales);
 
     setTotalLikes(likesTotales);
 

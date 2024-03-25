@@ -21,10 +21,6 @@ const Compras = () => {
 
   const recibos = useSelector((state) => state.products.compras);
 
-  console.log(recibos, "recibos");
-
-  //   const [productCount, setProductCount] = useState({});
-
   // Objeto para rastrear la cantidad de veces que aparece cada producto por id_compra
   const productCountByCompra = {};
 
@@ -37,8 +33,6 @@ const Compras = () => {
 
     productCountByCompra[recibo.id] = countProducts;
   });
-
-  console.log(productCountByCompra, "aa");
 
   const stylePrice = {
     fontSize: "22px",

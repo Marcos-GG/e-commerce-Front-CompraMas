@@ -31,7 +31,6 @@ export const getProductsAll = () => {
         config
       );
 
-      console.log(response.data, "dahsuidta78sdta87std");
       dispatch({ type: GET_ALL_PRODUCTS, payload: response.data.products });
     } catch (error) {
       return error;
@@ -82,7 +81,6 @@ export const getTermProducts = (string, page) => {
         }products?search=${string}&page=${page}`,
         config
       );
-      console.log(response.data);
       const products = response.data.products;
       const productosFiltrados = response.data.productosFiltrados;
 
@@ -196,7 +194,6 @@ export const createPreference = (products, userId) => {
   return async function (dispatch) {
     const config = configureHeaders();
 
-    // console.log(products, "Dasd");
     try {
       const response = await axios.post(
         `${import.meta.env.VITE_LOCALHOST}createPreference`,
@@ -205,7 +202,6 @@ export const createPreference = (products, userId) => {
       );
 
       const { id } = response.data;
-      console.log(response);
 
       dispatch({ type: CREATE_PREFERENCE, payload: id });
     } catch (error) {
@@ -217,13 +213,11 @@ export const createPreference = (products, userId) => {
 export const getCompras = (id) => {
   return async function (dispatch) {
     const config = configureHeaders();
-    console.log(id);
     const response = await axios.get(
       `${import.meta.env.VITE_LOCALHOST}compras?id=${id}`,
       config
     );
 
-    console.log(response.data, "ahjshdasd");
     dispatch({ type: GET_COMPRAS, payload: response.data });
   };
 };

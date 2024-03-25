@@ -60,8 +60,6 @@ const reducer = (state = initialState, action) => {
         (product) => product.status === false
       );
 
-      console.log(statusTrue);
-      console.log(statusFalse);
       return {
         ...state,
         activatedProductsAdmin: statusTrue,
@@ -70,18 +68,9 @@ const reducer = (state = initialState, action) => {
     }
 
     case GET_PRODUCTS: {
-      // const statusTrue = action.payload.filter(
-      //   (product) => product.status === true
-      // );
-
-      // const statusFalse = action.payload.filter(
-      //   (product) => product.status === false
-      // );
-
       return {
         ...state,
         products: action.payload,
-        // desactivatedproducts: statusFalse,
       };
     }
 
@@ -105,7 +94,6 @@ const reducer = (state = initialState, action) => {
       return { ...state, productId: action.payload };
     }
     case RELATED_PRODUCTS: {
-      console.log("relacionados redux", action.payload);
       return { ...state, relacionados: action.payload };
     }
 
@@ -114,8 +102,6 @@ const reducer = (state = initialState, action) => {
     }
 
     case POST_COMMENT: {
-      console.log(action.payload);
-
       return {
         ...state,
         products: state.products.map((product) => {
@@ -135,9 +121,7 @@ const reducer = (state = initialState, action) => {
     }
 
     case GET_TERM_PRODUCTS: {
-      console.log("hola");
       if (state.isApplyFilterUsed) {
-        console.log("tenia aplicado filtros", action.payload);
         const filteredProducts = state.productsFiltered.filter((product) => {
           // Verificar si el producto actual está en action.payload
           const isProductInPayload = action.payload.some(
@@ -148,7 +132,6 @@ const reducer = (state = initialState, action) => {
           return isProductInPayload && product.status;
         });
 
-        console.log(filteredProducts, "asd");
         if (filteredProducts.length > 0) {
           return {
             ...state,
@@ -156,10 +139,6 @@ const reducer = (state = initialState, action) => {
             isSearchFilterUsed: true,
           };
         } else {
-          // Devolver un mensaje que se mostrará al cliente
-          alert(
-            "No se encontraron coincidencias con los filtros aplicados previamente."
-          );
           return { ...state, error: "No se encontraron coincidencias" };
         }
       } else {
@@ -179,26 +158,16 @@ const reducer = (state = initialState, action) => {
     }
 
     case "POST_ANSWER_PRODUCTS": {
-      // const commentId = action.payload.commentId;
-
-      console.log(action.payload);
-
       const updatedProducts = state.products.map((product) => {
         if (product.id == action.payload.Comment.Product.id) {
-          console.log(product);
-
           let ProductUpdate = {
             ...product,
             Comments: product.Comments.map((comment) => {
               if (comment.id === action.payload.Comment.id) {
-                console.log("true", comment);
-
                 let objetoConAnswer = {
                   ...comment,
                   Answers: [...(comment.Answers || []), action.payload],
                 };
-
-                console.log(objetoConAnswer);
 
                 return objetoConAnswer;
               }
@@ -206,13 +175,10 @@ const reducer = (state = initialState, action) => {
             }),
           };
 
-          console.log(ProductUpdate, "mensaje actualizado");
           return ProductUpdate;
         }
         return product;
       });
-
-      console.log(state.productId.Comments);
 
       return {
         ...state,
@@ -222,14 +188,10 @@ const reducer = (state = initialState, action) => {
           Comments: [
             ...state.productId.Comments.map((comment) => {
               if (comment.id === action.payload.commentId) {
-                console.log(comment, "mensaje actualiz");
-
                 const comentarioActualizado = {
                   ...comment,
                   Answers: [...(comment?.Answers || []), action.payload],
                 };
-
-                console.log(comentarioActualizado, "mensaje actualizado");
 
                 return comentarioActualizado;
               }
@@ -319,7 +281,6 @@ const reducer = (state = initialState, action) => {
     }
 
     case APPLY_FILTERS: {
-      console.log("entra a apllyFilters", action.payload);
       if (state.isSearchFilterUsed) {
         const filterProducts = state.productsFiltered.filter((product) => {
           return action.payload.some(
@@ -327,7 +288,6 @@ const reducer = (state = initialState, action) => {
           );
         });
 
-        console.log(filterProducts, "aa");
         if (filterProducts.length > 0) {
           return {
             ...state,
@@ -342,7 +302,6 @@ const reducer = (state = initialState, action) => {
           };
         }
       } else {
-        console.log(action.payload, "jajs");
         return {
           ...state,
           productsFiltered: action.payload,
@@ -352,8 +311,6 @@ const reducer = (state = initialState, action) => {
     }
 
     case CLEAR_FILTERED_PRODUCTS: {
-      console.log("entra el clearaaaaa");
-      console.log("Estado actual de productsFiltered:", state.productsFiltered);
       return {
         ...state,
         isSearchFilterUsed: false,

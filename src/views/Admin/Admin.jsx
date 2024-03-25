@@ -17,6 +17,31 @@ const Admin = () => {
     dispatch(getProductsAll());
   }, []);
 
+  const [commentsOrdenados, setCommentsOrdenados] = useState();
+
+  useEffect(() => {
+    const orderedArray = AllComments.sort((a, b) => {
+      const ultimoTiempoRespuestaA =
+        a.Answers.length > 0
+          ? a.Answers[a.Answers.length - 1].createdAt
+          : a.createdAt;
+      const ultimoTiempoRespuestaB =
+        b.Answers.length > 0
+          ? b.Answers[b.Answers.length - 1].createdAt
+          : b.createdAt;
+
+      if (ultimoTiempoRespuestaA > ultimoTiempoRespuestaB) {
+        return 1;
+      } else if (ultimoTiempoRespuestaA < ultimoTiempoRespuestaB) {
+        return -1;
+      } else {
+        return 0;
+      }
+    });
+
+    setCommentsOrdenados(orderedArray);
+  }, [AllComments]);
+
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -46,7 +71,7 @@ const Admin = () => {
               zIndex: -1,
             }}
           />
-          <Comments comments={AllComments} />
+          <Comments comments={commentsOrdenados} />
         </Box>
       )}
     </Box>

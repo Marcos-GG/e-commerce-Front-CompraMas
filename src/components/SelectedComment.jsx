@@ -75,8 +75,8 @@ const SelectedComment = ({
           sx={{
             display: "flex",
             flexDirection: "column",
-            height: isLTE425 ? "100%" : "100%",
-            maxHeight: isLTE430 ? "100hv" : "100vh", // Establecer la altura máxima para activar el scroll
+            height: isLTE765 ? "100%" : "100%",
+            maxHeight: isLTE765 ? "100hv" : "100vh", // Establecer la altura máxima para activar el scroll
             overflowY: "auto", // Habilitar el scroll vertical cuando el contenido excede la altura máxima
           }}
         >

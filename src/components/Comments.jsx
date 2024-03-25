@@ -98,42 +98,46 @@ const Comments = ({ comments }) => {
             }}
             onClick={() => handleSelectedComment(comment)}
           >
-            <Box sx={{ alignSelf: "flex-end" }}>
-              <FormatoHora hora={comment.createdAt} />
-            </Box>
+            {comment?.User?.active && (
+              <Box>
+                <Box sx={{ alignSelf: "flex-end" }}>
+                  <FormatoHora hora={comment.createdAt} />
+                </Box>
 
-            <Box
-              sx={{
-                display: "flex",
-                alignItems: "center",
-              }}
-            >
-              <UserAvatar user={comment.User} />
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                  }}
+                >
+                  <UserAvatar user={comment.User} />
 
-              <Typography
-                sx={{
-                  width: "15rem",
-                  overflow: "hidden",
-                  whiteSpace: "nowrap",
-                  textOverflow: "ellipsis",
-                  ml: isLTE430 ? "10px" : "20px",
-                  fontSize: isLTE425 && "15.5px",
-                }}
-              >
-                {comment?.Answers.length > 0
-                  ? comment?.Answers?.slice(-1)[0]?.answer
-                  : comment?.text}
-              </Typography>
-            </Box>
+                  <Typography
+                    sx={{
+                      width: "15rem",
+                      overflow: "hidden",
+                      whiteSpace: "nowrap",
+                      textOverflow: "ellipsis",
+                      ml: isLTE430 ? "10px" : "20px",
+                      fontSize: isLTE425 && "15.5px",
+                    }}
+                  >
+                    {comment?.Answers.length > 0
+                      ? comment?.Answers?.slice(-1)[0]?.answer
+                      : comment?.text}
+                  </Typography>
+                </Box>
 
-            <Divider
-              sx={{
-                position: "absolute",
-                bottom: "0", // posicionar la línea al fondo de la caja
-                width: "86%", // que la línea ocupe el % del ancho de la caja
-                marginLeft: !isLTE430 && "10%", // centrar la línea horizontalmente
-              }}
-            />
+                <Divider
+                  sx={{
+                    position: "absolute",
+                    bottom: "0", // posicionar la línea al fondo de la caja
+                    width: "86%", // que la línea ocupe el % del ancho de la caja
+                    marginLeft: !isLTE430 && "10%", // centrar la línea horizontalmente
+                  }}
+                />
+              </Box>
+            )}
             {/* <Badge color="secondary" variant="dot"></Badge> */}
           </Box>
         ))}

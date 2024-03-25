@@ -360,8 +360,10 @@ function DetailProduct({ product, formularioCreacion }) {
                 >
                   {product?.category || productId?.category}{" "}
                   {product?.category ||
-                  (productId?.category && product?.gender) ||
-                  productId?.gender
+                  (productId?.category &&
+                    product?.gender &&
+                    product?.gender !== "Unisex") ||
+                  productId?.gender !== "Unisex"
                     ? "para"
                     : ""}{" "}
                   {product?.gender || productId?.gender}

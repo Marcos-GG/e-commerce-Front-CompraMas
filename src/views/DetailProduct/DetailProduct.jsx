@@ -359,11 +359,10 @@ function DetailProduct({ product, formularioCreacion }) {
                   sx={{ ml: isLTE454 ? "25px" : "15px", my: "5px" }}
                 >
                   {product?.category || productId?.category}{" "}
-                  {product?.category ||
-                  (productId?.category &&
-                    product?.gender &&
-                    product?.gender !== "Unisex") ||
-                  productId?.gender !== "Unisex"
+                  {product?.gender !== "Unisex" ||
+                  (product?.gender !== "Unisex" && product?.gender) ||
+                  (productId?.category && product?.gender) ||
+                  productId?.gender
                     ? "para"
                     : ""}{" "}
                   {product?.gender || productId?.gender}

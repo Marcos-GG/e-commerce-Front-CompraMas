@@ -114,6 +114,8 @@ const Validations = (form, campo) => {
   if (campo === "DNI") {
     if (!form.DNI) {
       error.DNI = "Campo vacio.";
+    } else if (form.DNI.length < 7) {
+      error.DNI = "Minimo 8 caracteres.";
     } else if (form.DNI.length > 8) {
       error.DNI = "Máximo 8 caracteres.";
     }

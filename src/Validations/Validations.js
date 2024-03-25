@@ -40,7 +40,7 @@ const Validations = (form, campo) => {
   if (campo === "title") {
     if (!form.title) {
       error.title = "Campo está vacio.";
-    } else if (form.title.length > 36) {
+    } else if (form.title.length > 39) {
       error.title = "Titulo demasiado largo.";
     } else if (form.title.length < 5) {
       error.title = "Titulo demasiado corto.";

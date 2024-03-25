@@ -53,7 +53,7 @@ const ProductItem = ({
           ? "3px"
           : isLTE918
           ? "10px"
-          : "10px",
+          : "8px",
         marginY: isLTE426 ? "8px" : isLTE496 ? "8px" : "",
         width: enDetail
           ? "10rem"

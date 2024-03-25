@@ -68,7 +68,6 @@ const SelectedComment = ({
           justifyContent: "space-between",
           width: "100%",
           height: isLTE430 ? "100%" : "100%",
-          bgcolor: "aquamarine",
         }}
       >
         <Box

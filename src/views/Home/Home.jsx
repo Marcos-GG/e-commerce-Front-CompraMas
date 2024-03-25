@@ -225,7 +225,6 @@ function Home() {
                   width: "19rem",
                   borderRadius: "0 5px 5px 0",
                   border: "1px solid #00CCFD",
-                  minWidth: "14rem",
                   maxHeight: "37rem",
                   minHeight: "37rem",
                   marginRight: isLTE1025 ? "3.5rem" : isLTE1700 ? "3.5rem" : "",

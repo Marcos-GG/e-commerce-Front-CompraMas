@@ -29,7 +29,7 @@ const SelectedComment = ({
     <Box
       sx={{
         width: "100%",
-        height: isLTE765 ? `calc(100vh - 4.7rem )` : "45.59rem",
+        height: isLTE765 ? `calc(100vh)` : "45.59rem",
         borderRadius: isLTE430 ? "" : " 0 10px 10px 0 ",
         backgroundColor: "#f5f5f5",
         boxShadow: "10px 10px 15px #888888;",

@@ -60,122 +60,119 @@ const CommentDesplegable = ({ productId, userId }) => {
             <Box sx={{ overflow: "auto", maxHeight: "87%" }}>
               {productId.Comments.map((comment) => (
                 <Box key={comment.id}>
-                  {comment.userId !== userId &&
-                    comment?.User?.active(
+                  {comment.userId !== userId && comment?.User?.active && (
+                    <Box
+                      sx={{
+                        mx: "30px",
+                      }}
+                    >
                       <Box
                         sx={{
-                          mx: "30px",
+                          display: "flex",
+                          flexDirection: "column",
+                          gap: "1px",
                         }}
                       >
-                        <Box
-                          sx={{
-                            display: "flex",
-                            flexDirection: "column",
-                            gap: "1px",
-                          }}
-                        >
-                          <Box sx={{ maxHeight: "20px" }}>
-                            <Typography
-                              variant="p"
-                              sx={{
-                                fontSize: "12.3px",
-                                fontWeight: "bold",
-                              }}
-                            >
-                              {comment?.User?.name} {comment?.User?.lastname}
-                            </Typography>
-                          </Box>
-
-                          <Box
+                        <Box sx={{ maxHeight: "20px" }}>
+                          <Typography
+                            variant="p"
                             sx={{
-                              alignItems: "center",
-                              height: "22px",
-                              ml: "5px",
-                              display: "flex",
+                              fontSize: "12.3px",
+                              fontWeight: "bold",
                             }}
                           >
-                            <Typography
-                              sx={{
-                                display: "-webkit-box",
-                                WebkitLineClamp: 1,
-                                WebkitBoxOrient: "vertical",
-                                overflow: "hidden",
-                                textOverflow: "ellipsis",
-                                width: "95%",
-                                fontSize: isLTE454 && "14px",
-                              }}
-                            >
-                              {comment.text}
-                            </Typography>
-                            {comment.Answers && comment.Answers.length > 0 && (
-                              <IconButton
-                                onClick={() =>
-                                  toggleExpandedComment(comment.id)
-                                }
-                                aria-label="show answers"
-                              >
-                                <ExpandMoreIcon />
-                              </IconButton>
-                            )}
-                          </Box>
+                            {comment?.User?.name} {comment?.User?.lastname}
+                          </Typography>
                         </Box>
 
-                        {comment.Answers && comment.Answers.length > 0 && (
-                          <Box
+                        <Box
+                          sx={{
+                            alignItems: "center",
+                            height: "22px",
+                            ml: "5px",
+                            display: "flex",
+                          }}
+                        >
+                          <Typography
                             sx={{
-                              bgcolor: "#F5F5F5",
-                              display: "flex",
-                              flexDirection: "column",
-                              overflow: "auto",
-                              maxHeight:
-                                expandedCommentId === comment.id
-                                  ? "9.5rem"
-                                  : null,
+                              display: "-webkit-box",
+                              WebkitLineClamp: 1,
+                              WebkitBoxOrient: "vertical",
+                              overflow: "hidden",
+                              textOverflow: "ellipsis",
+                              width: "95%",
+                              fontSize: isLTE454 && "14px",
                             }}
                           >
-                            {expandedCommentId === comment.id && (
-                              <Box sx={{ textAlign: "end", mr: "10px" }}>
+                            {comment.text}
+                          </Typography>
+                          {comment.Answers && comment.Answers.length > 0 && (
+                            <IconButton
+                              onClick={() => toggleExpandedComment(comment.id)}
+                              aria-label="show answers"
+                            >
+                              <ExpandMoreIcon />
+                            </IconButton>
+                          )}
+                        </Box>
+                      </Box>
+
+                      {comment.Answers && comment.Answers.length > 0 && (
+                        <Box
+                          sx={{
+                            bgcolor: "#F5F5F5",
+                            display: "flex",
+                            flexDirection: "column",
+                            overflow: "auto",
+                            maxHeight:
+                              expandedCommentId === comment.id
+                                ? "9.5rem"
+                                : null,
+                          }}
+                        >
+                          {expandedCommentId === comment.id && (
+                            <Box sx={{ textAlign: "end", mr: "10px" }}>
+                              <Typography
+                                variant="p"
+                                sx={{
+                                  fontSize: "12.3px",
+                                  fontWeight: "bold",
+                                  color: "gray",
+                                }}
+                              >
+                                admin
+                              </Typography>
+                            </Box>
+                          )}
+                          {expandedCommentId === comment.id &&
+                            comment.Answers.map((answer) => (
+                              <Box
+                                key={answer.id}
+                                sx={{
+                                  alignSelf: answer.User.admin
+                                    ? "end"
+                                    : "start",
+                                  textAlign: answer.User.admin
+                                    ? "end"
+                                    : "start",
+                                  mx: "15px",
+                                  maxWidth: "50%",
+                                  overflow: "break-word",
+                                  wordWrap: "break-word",
+                                }}
+                              >
                                 <Typography
-                                  variant="p"
-                                  sx={{
-                                    fontSize: "12.3px",
-                                    fontWeight: "bold",
-                                    color: "gray",
-                                  }}
+                                  sx={{ fontSize: isLTE454 && "14px" }}
                                 >
-                                  admin
+                                  {answer.answer}
                                 </Typography>
                               </Box>
-                            )}
-                            {expandedCommentId === comment.id &&
-                              comment.Answers.map((answer) => (
-                                <Box
-                                  key={answer.id}
-                                  sx={{
-                                    alignSelf: answer.User.admin
-                                      ? "end"
-                                      : "start",
-                                    textAlign: answer.User.admin
-                                      ? "end"
-                                      : "start",
-                                    mx: "15px",
-                                    maxWidth: "50%",
-                                    overflow: "break-word",
-                                    wordWrap: "break-word",
-                                  }}
-                                >
-                                  <Typography
-                                    sx={{ fontSize: isLTE454 && "14px" }}
-                                  >
-                                    {answer.answer}
-                                  </Typography>
-                                </Box>
-                              ))}
-                          </Box>
-                        )}
-                        <Divider sx={{ width: "90%", m: "auto", mt: "10px" }} />
-                      </Box>
-                    )}
+                            ))}
+                        </Box>
+                      )}
+                      <Divider sx={{ width: "90%", m: "auto", mt: "10px" }} />
+                    </Box>
+                  )}
                 </Box>
               ))}
             </Box>

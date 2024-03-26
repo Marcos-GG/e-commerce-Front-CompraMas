@@ -159,6 +159,9 @@ export const apllyFilters = (combinedFilters, page) => {
       combinedFilters,
       config
     );
+    if (response.status.productosFiltrados.length === 0) {
+      dispatch({ type: ERROR, payload: "No se encontraron coincidencias" });
+    }
 
     dispatch({
       type: APPLY_FILTERS,

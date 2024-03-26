@@ -337,7 +337,7 @@ const FormProduct = () => {
                   onChange={formHandler}
                   multiline
                   rows={4}
-                  placeholder="description"
+                  placeholder="Description"
                   variant="outlined"
                   InputProps={{
                     sx: {

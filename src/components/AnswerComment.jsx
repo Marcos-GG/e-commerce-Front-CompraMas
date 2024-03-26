@@ -34,7 +34,6 @@ const AnswerComment = ({ commentId, productId }) => {
     }
 
     dispatch(postAnswer(form, commentId, productId));
-    // dispatch(postAnswerAdmin(form, commentId));
 
     setForm({ answer: "" });
   };
@@ -99,7 +98,7 @@ const AnswerComment = ({ commentId, productId }) => {
           sx={{
             borderRadius: "10px",
             border: "2px solid #F5F5F5",
-            mr: "10px", // Ajuste de margen para separar el TextField del botón
+            mr: "10px",
           }}
           type="submit"
           variant="text"

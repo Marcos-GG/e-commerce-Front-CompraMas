@@ -18,7 +18,7 @@ const NavBarAdmin = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
 
   const theme = useTheme();
-  const isLgScreen = useMediaQuery(theme.breakpoints.down("lg")); // controlamos los breakpoints con usetheme
+  const isLgScreen = useMediaQuery(theme.breakpoints.down("lg"));
 
   const handleDrawerToggle = () => {
     setDrawerOpen(!drawerOpen);
@@ -38,9 +38,7 @@ const NavBarAdmin = () => {
       }}
     >
       <Box>
-        <Hidden
-          lgUp //manejamos la vida del componente desplegable
-        >
+        <Hidden lgUp>
           <IconButton
             edge="start"
             color="inherit"

@@ -1,13 +1,7 @@
 /* eslint-disable react/prop-types */
-// import { useNavigate } from "react-router-dom";
-// import ProductItem from "./ProductItem";
-import /* addProduct  */ "../Redux/actions/ShoppingCartAction";
-import { useDispatch /* useSelector */ } from "react-redux";
-// import { jwtDecode } from "jwt-decode";
-import {
-  getFavorites /* removeLike */,
-  removeLike,
-} from "../Redux/actions/Likes";
+
+import { useDispatch } from "react-redux";
+import { getFavorites, removeLike } from "../Redux/actions/Likes";
 import { useEffect } from "react";
 import {
   Box /* useMediaQuery  */,

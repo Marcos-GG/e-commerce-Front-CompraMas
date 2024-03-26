@@ -20,7 +20,6 @@ import { CLEAN_DETAIL } from "../Redux/actionsTypes/ProductsActionTypes";
 import Validations from "../Validations/Validations";
 
 const FormProduct = () => {
-  // const [additionalImages, setAdditionalImages] = useState([]);
   const isLTE500 = useMediaQuery(`(max-width: 500px)`);
   const isLTE1023 = useMediaQuery(`(max-width: 1023px)`);
   const isLTE1300 = useMediaQuery(`(max-width: 1300px)`);
@@ -381,42 +380,7 @@ const FormProduct = () => {
                   sx={{ width: "100%" }}
                 />
               </Box>
-              <Box
-                sx={{
-                  width: isLTE1300 ? "94%" : isLTE1700 ? "90%" : "80%",
-                  my: isLTE500 ? "2px" : "3px",
-                }}
-              >
-                {error?.gender && (
-                  <Typography
-                    sx={{ fontSize: "13px", color: "red", mb: "-10px" }}
-                  >
-                    {error.gender}
-                  </Typography>
-                )}
 
-                <Select
-                  name="gender"
-                  value={form.gender}
-                  onChange={formHandler}
-                  displayEmpty
-                  placeholder="Género"
-                  sx={{
-                    bgcolor: "white",
-                    height: "2.5rem",
-                    width: "100%",
-                    mt: "10px",
-                  }}
-                >
-                  <MenuItem value="">Genero</MenuItem>
-                  {genders &&
-                    genders.map((gender) => (
-                      <MenuItem key={gender.id} value={gender.gender}>
-                        {gender.gender}
-                      </MenuItem>
-                    ))}
-                </Select>
-              </Box>
               <Box
                 sx={{
                   width: isLTE1300 ? "94%" : isLTE1700 ? "90%" : "80%",
@@ -453,6 +417,44 @@ const FormProduct = () => {
                     ))}
                 </Select>
               </Box>
+
+              <Box
+                sx={{
+                  width: isLTE1300 ? "94%" : isLTE1700 ? "90%" : "80%",
+                  my: isLTE500 ? "2px" : "3px",
+                }}
+              >
+                {error?.gender && (
+                  <Typography
+                    sx={{ fontSize: "13px", color: "red", mb: "-10px" }}
+                  >
+                    {error.gender}
+                  </Typography>
+                )}
+
+                <Select
+                  name="gender"
+                  value={form.gender}
+                  onChange={formHandler}
+                  displayEmpty
+                  placeholder="Género"
+                  sx={{
+                    bgcolor: "white",
+                    height: "2.5rem",
+                    width: "100%",
+                    mt: "10px",
+                  }}
+                >
+                  <MenuItem value="">Genero</MenuItem>
+                  {genders &&
+                    genders.map((gender) => (
+                      <MenuItem key={gender.id} value={gender.gender}>
+                        {gender.gender}
+                      </MenuItem>
+                    ))}
+                </Select>
+              </Box>
+
               <Button
                 type="submit"
                 variant="contained"

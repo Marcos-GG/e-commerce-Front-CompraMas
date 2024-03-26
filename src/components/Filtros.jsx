@@ -51,7 +51,6 @@ const Filtros = ({ open, handleDrawerToggle }) => {
   }, []);
 
   useEffect(() => {
-    // const maxPrice = Math.max(...products.map((product) => product.price));
     setInitialPrice({ min: 0, max: priceMax });
     setCombinedFilters((prevFilters) => ({
       ...prevFilters,
@@ -91,7 +90,6 @@ const Filtros = ({ open, handleDrawerToggle }) => {
     setGeneroSeleccionado(null);
     setEstadoBoton(false);
     setMorePopular(false);
-    // setInitialPrice({ min: 0, max: 0 });
 
     setCombinedFilters({
       category: null,
@@ -243,9 +241,9 @@ const Filtros = ({ open, handleDrawerToggle }) => {
             </Button>
             <Box
               sx={{
-                cursor: "pointer", // Añadí esto para que el cursor indique que es un elemento clickeable
+                cursor: "pointer",
                 "&:hover": {
-                  color: "primary.main", // Cambia el color al pasar el mouse sobre el texto
+                  color: "primary.main",
                 },
                 textAlign: "center",
               }}
@@ -365,9 +363,9 @@ const Filtros = ({ open, handleDrawerToggle }) => {
 
             <Box
               sx={{
-                cursor: "pointer", // Añadí esto para que el cursor indique que es un elemento clickeable
+                cursor: "pointer",
                 "&:hover": {
-                  color: "primary.main", // Cambia el color al pasar el mouse sobre el texto
+                  color: "primary.main",
                 },
                 textAlign: "center",
               }}

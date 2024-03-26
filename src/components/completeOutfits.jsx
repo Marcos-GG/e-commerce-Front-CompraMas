@@ -20,7 +20,7 @@ const CompleteOutfits = ({
 
   const navigate = useNavigate();
 
-  const [productsOutfits, setProductsOutfits] = useState([]); // Inicializa productsOutfits
+  const [productsOutfits, setProductsOutfits] = useState([]);
 
   useEffect(() => {
     const obtenerProductosCoincidentes = () => {
@@ -47,7 +47,7 @@ const CompleteOutfits = ({
 
     const productosParaOutfits = obtenerProductosCoincidentes();
     setProductsOutfits(productosParaOutfits);
-  }, [IdProduct, gender, category, products]); // Dependencias del useEffect
+  }, [IdProduct, gender, category, products]);
 
   return (
     <Box
@@ -121,8 +121,6 @@ const CompleteOutfits = ({
               }}
             >
               <Box
-                // component={NavLink}
-                // to={`/detail/${product.id}`}
                 onClick={(e) => {
                   if (!formularioCreacion) {
                     e.preventDefault();
@@ -136,8 +134,10 @@ const CompleteOutfits = ({
                   src={product.image1}
                   alt={product.title}
                   style={{
-                    maxWidth: "100%",
+                    maxWidth: "23rem",
+                    width: "100%",
                     height: "auto",
+                    maxHeight: "23rem",
                     objectFit: "contain",
                   }}
                 />

@@ -80,9 +80,7 @@ const NavBar = () => {
         </Hidden>
       </Box>
 
-      <Hidden // controlamos la vida del componente
-        mdDown
-      >
+      <Hidden mdDown>
         <Box
           sx={{
             width: "100vw",

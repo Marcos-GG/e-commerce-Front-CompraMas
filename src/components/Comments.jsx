@@ -141,14 +141,13 @@ const Comments = ({ comments }) => {
                 <Divider
                   sx={{
                     position: "absolute",
-                    bottom: "0", // posicionar la línea al fondo de la caja
-                    width: "86%", // que la línea ocupe el % del ancho de la caja
-                    marginLeft: !isLTE430 && "10%", // centrar la línea horizontalmente
+                    bottom: "0",
+                    width: "86%",
+                    marginLeft: !isLTE430 && "10%",
                   }}
                 />
               </Box>
             )}
-            {/* <Badge color="secondary" variant="dot"></Badge> */}
           </Box>
         ))}
       </Box>

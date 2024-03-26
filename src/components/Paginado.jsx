@@ -28,10 +28,7 @@ const Paginado = () => {
     dispatch(getProducts(page));
   };
 
-  /// cuaando  se limpia la busqueda por search se realiza un get de products por eso siempre  volvemos a mostar el valor 1 en pagination
-
   useEffect(() => {
-    // Resetear la página cuando cambie la lista de productos
     setCurrentPage(1);
   }, [productosFiltrados]);
 
@@ -41,7 +38,7 @@ const Paginado = () => {
         count={Math.ceil(
           (EstaFiltrando || EstaFiltrandoSearch
             ? productosFiltrados?.length
-            : productosLength) / 20
+            : productosLength) / 21
         )}
         page={currentPage}
         onChange={(e, page) => {

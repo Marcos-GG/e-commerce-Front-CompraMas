@@ -2,7 +2,10 @@
 import Style from "./Home.module.css";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
-import { getProducts } from "../../Redux/actions/productsActions";
+import {
+  getProducts,
+  getProductsAll,
+} from "../../Redux/actions/productsActions";
 import CardContainer from "../../components/CardContainer";
 import Filtros from "../../components/Filtros";
 import { Badge, Box, IconButton, useMediaQuery } from "@mui/material";
@@ -106,6 +109,10 @@ function Home() {
   }, [favoriteProducts]);
 
   const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    dispatch(getProductsAll());
+  }, []);
 
   useEffect(() => {
     if (

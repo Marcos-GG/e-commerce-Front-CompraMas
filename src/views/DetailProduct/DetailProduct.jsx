@@ -53,7 +53,9 @@ function DetailProduct({ product, formularioCreacion }) {
 
   const productId = useSelector((state) => state.products.productId);
 
-  const products = useSelector((state) => state.products.products);
+  const products = useSelector(
+    (state) => state.products.activatedProductsAdmin
+  );
 
   const [fotoPrincipal, setFotoPrincipal] = useState("");
   const [fotoLength, setFotoLength] = useState([]);

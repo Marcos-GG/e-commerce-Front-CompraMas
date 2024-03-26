@@ -85,7 +85,6 @@ const AnswerComment = ({ commentId, productId }) => {
             sx={{
               width: "100%",
               mt: "5px",
-              overflow: "auto",
               maxHeight: isLTE768 ? "3rem" : "3.8rem",
             }}
             InputProps={{

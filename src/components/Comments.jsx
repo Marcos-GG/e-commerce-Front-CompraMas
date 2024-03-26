@@ -99,8 +99,8 @@ const Comments = ({ comments }) => {
             onClick={() => handleSelectedComment(comment)}
           >
             {comment?.User?.active && (
-              <Box sx={{ display: "flex" }}>
-                <Box sx={{ justifyContent: "end" }}>
+              <Box sx={{ display: "flex", flexDirection: "column" }}>
+                <Box sx={{ alignSelf: "flex-end" }}>
                   <FormatoHora
                     hora={
                       comment?.Answers.length > 0

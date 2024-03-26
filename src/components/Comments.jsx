@@ -95,16 +95,12 @@ const Comments = ({ comments }) => {
               "&:not(:last-child)": {
                 marginBottom: isLTE430 ? "" : "10px",
               },
-              animation:
-                comment.id === selectedComment?.id
-                  ? "slide-down 0.3s ease"
-                  : "none",
             }}
             onClick={() => handleSelectedComment(comment)}
           >
             {comment?.User?.active && (
-              <Box>
-                <Box sx={{ alignSelf: "flex-end" }}>
+              <Box sx={{ display: "flex" }}>
+                <Box sx={{ justifyContent: "end" }}>
                   <FormatoHora
                     hora={
                       comment?.Answers.length > 0

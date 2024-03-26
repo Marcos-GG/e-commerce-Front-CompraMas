@@ -152,25 +152,27 @@ export const createProduct = (product) => {
 
 export const apllyFilters = (combinedFilters, page) => {
   return async function (dispatch) {
-    const config = configureHeaders();
+    try {
+      const config = configureHeaders();
 
-    const response = await axios.post(
-      `${import.meta.env.VITE_LOCALHOST}filters?page=${page}`,
-      combinedFilters,
-      config
-    );
-    if (response.status.productosFiltrados.length === 0) {
-      dispatch({ type: ERROR, payload: "No se encontraron coincidencias" });
+      const response = await axios.post(
+        `${import.meta.env.VITE_LOCALHOST}filters?page=${page}`,
+        combinedFilters,
+        config
+      );
+
+      console.log(response);
+      dispatch({
+        type: APPLY_FILTERS,
+        payload: response.data.productosFiltrados,
+      });
+      dispatch({
+        type: LENGTH_PRODUCTS_FILTERED,
+        payload: response.data.totalProducts,
+      });
+    } catch (error) {
+      dispatch({ type: ERROR, payload: error.response.data.error });
     }
-
-    dispatch({
-      type: APPLY_FILTERS,
-      payload: response.data.productosFiltrados,
-    });
-    dispatch({
-      type: LENGTH_PRODUCTS_FILTERED,
-      payload: response.data.totalProducts,
-    });
   };
 };
 

@@ -108,7 +108,7 @@ const Compras = () => {
                         height: "24rem",
                         borderRadius: "4px",
                         boxShadow: 10,
-
+                        overflow: "auto",
                         display: "flex",
                         justifyContent: "center",
                         alignItems: "center",

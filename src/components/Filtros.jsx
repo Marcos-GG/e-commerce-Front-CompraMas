@@ -311,6 +311,7 @@ const Filtros = ({ open, handleDrawerToggle }) => {
 
             <Box sx={{ mt: "2px", width: "11rem" }}>
               <Checkbox
+                disabled={!combinedFilters.gender && !combinedFilters.category}
                 checked={morePopular}
                 onChange={handleChangeCheckbox}
                 name="morePopular"

@@ -101,6 +101,12 @@ const Filtros = ({ open, handleDrawerToggle }) => {
     dispatch(clearProductosFiltrados());
   };
 
+  useEffect(() => {
+    if (combinedFilters.gender === null && combinedFilters.category === null) {
+      setMorePopular(false);
+    }
+  }, [combinedFilters.gender, combinedFilters.category]);
+
   const handleApplyFilter = () => {
     dispatch(apllyFilters(combinedFilters, 1));
   };
@@ -182,6 +188,7 @@ const Filtros = ({ open, handleDrawerToggle }) => {
 
             <Box sx={{ mt: isLTE640 ? "" : "2px", width: "11rem" }}>
               <Checkbox
+                disabled={!combinedFilters.gender && !combinedFilters.category}
                 checked={morePopular}
                 onChange={handleChangeCheckbox}
                 name="morePopular"

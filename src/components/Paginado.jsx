@@ -1,6 +1,6 @@
 import { Box, Pagination } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { getProducts } from "../Redux/actions/productsActions";
+import { apllyFilters, getProducts } from "../Redux/actions/productsActions";
 import { useEffect, useState } from "react";
 
 const Paginado = () => {
@@ -9,8 +9,14 @@ const Paginado = () => {
     (state) => state.products?.lengthProducts
   );
 
-  const productosFiltrados = useSelector(
-    (state) => state.products?.productsFiltered
+  // const productosFiltrados = useSelector(
+  //   (state) => state.products?.productsFiltered
+  // );
+
+  const filtrosAplicados = useSelector((state) => state.products?.filtros);
+
+  const paginadoFiltrados = useSelector(
+    (state) => state.products?.lengthProductsFiltered
   );
 
   const EstaFiltrandoSearch = useSelector(
@@ -25,20 +31,24 @@ const Paginado = () => {
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
-    dispatch(getProducts(page));
+    if (EstaFiltrandoSearch || EstaFiltrando) {
+      dispatch(apllyFilters(filtrosAplicados, page));
+    } else {
+      dispatch(getProducts(page));
+    }
   };
 
   useEffect(() => {
     setCurrentPage(1);
-  }, [productosFiltrados]);
+  }, [paginadoFiltrados]);
 
   return (
     <Box sx={{ bgcolor: "#F5F5F5", my: "2rem" }}>
       <Pagination
         count={Math.ceil(
           (EstaFiltrando || EstaFiltrandoSearch
-            ? productosFiltrados?.length
-            : productosLength) / 21
+            ? paginadoFiltrados
+            : productosLength) / 2
         )}
         page={currentPage}
         onChange={(e, page) => {

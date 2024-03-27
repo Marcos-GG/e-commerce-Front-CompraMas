@@ -21,12 +21,14 @@ import {
   LENGTH_PRODUCTS_FILTERED,
   CREATE_PREFERENCE,
   GET_COMPRAS,
+  FILTERS,
 } from "../actionsTypes/ProductsActionTypes";
 import { ADD_LIKE, REMOVE_LIKE } from "../actionsTypes/LikesTypes";
 import { POST_COMMENT } from "../actionsTypes/CommentsTypes";
 
 const initialState = {
   preferenceId: null,
+  filtros: null,
   products: [],
   compras: [],
   lengthProducts: null,
@@ -118,6 +120,10 @@ const reducer = (state = initialState, action) => {
           Comments: [...state.productId.Comments, action.payload],
         },
       };
+    }
+
+    case FILTERS: {
+      return { ...state, filtros: action.payload };
     }
 
     case GET_TERM_PRODUCTS: {

@@ -20,6 +20,7 @@ import {
   LENGTH_PRODUCTS_FILTERED,
   CREATE_PREFERENCE,
   GET_COMPRAS,
+  FILTERS,
 } from "../actionsTypes/ProductsActionTypes";
 
 export const getProductsAll = () => {
@@ -161,11 +162,12 @@ export const apllyFilters = (combinedFilters, page) => {
         config
       );
 
-      console.log(response);
       dispatch({
         type: APPLY_FILTERS,
         payload: response.data.productosFiltrados,
       });
+      dispatch({ type: FILTERS, payload: combinedFilters });
+
       dispatch({
         type: LENGTH_PRODUCTS_FILTERED,
         payload: response.data.totalProducts,

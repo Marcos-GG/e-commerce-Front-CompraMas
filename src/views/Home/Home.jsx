@@ -11,6 +11,7 @@ import Filtros from "../../components/Filtros";
 import { Badge, Box, IconButton, useMediaQuery } from "@mui/material";
 import {
   CLEAN_DETAIL,
+  CLEAR_FILTERED_PRODUCTS,
   GET_PRODUCTS,
 } from "../../Redux/actionsTypes/ProductsActionTypes";
 import SearchBarProduct from "../../components/SearchBarProduct";
@@ -55,6 +56,8 @@ function Home() {
   useEffect(() => {
     try {
       dispatch({ type: CLEAN_DETAIL });
+      dispatch({ type: CLEAR_FILTERED_PRODUCTS });
+
       const persistedData = localStorage.getItem("persist:root");
 
       if (persistedData) {

@@ -9,10 +9,6 @@ const Paginado = () => {
     (state) => state.products?.lengthProducts
   );
 
-  // const productosFiltrados = useSelector(
-  //   (state) => state.products?.productsFiltered
-  // );
-
   const filtrosAplicados = useSelector((state) => state.products?.filtros);
 
   const paginadoFiltrados = useSelector(

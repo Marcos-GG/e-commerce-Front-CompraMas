@@ -88,6 +88,7 @@ export const getTermProducts = (string, page) => {
       dispatch({ type: GET_TERM_PRODUCTS, payload: products });
       dispatch({ type: LENGTH_PRODUCTS_FILTERED, payload: productosFiltrados });
     } catch (error) {
+      dispatch({ type: ERROR, payload: error.response.data.error });
       return error;
     }
   };

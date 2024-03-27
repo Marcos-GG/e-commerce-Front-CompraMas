@@ -54,18 +54,18 @@ function RelatedProducts({ productAdmin }) {
     "& > div": {
       whiteSpace: "nowrap",
       display: "flex",
-      animation: `${slideAnimation} 30s linear infinite`, // Aquí he aumentado la duración para mantener el desplazamiento continuo
+      animation: `${slideAnimation} 35s linear infinite`, // Aquí he aumentado la duración para mantener el desplazamiento continuo
     },
     "@media (max-width: 800px)": {
       "& > div": {
-        animation: `${slideAnimationSmallScreen} 30s linear infinite`, // Para pantallas de 800px o menos
+        animation: `${slideAnimationSmallScreen} 35s linear infinite`, // Para pantallas de 800px o menos
       },
     },
   });
 
   return (
     <Box>
-      {productosRelacionados && productosRelacionados?.length === 5 && (
+      {productosRelacionados && productosRelacionados?.length >= 5 && (
         <Box
           sx={{
             display: "flex",

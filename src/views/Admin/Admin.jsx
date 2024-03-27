@@ -7,6 +7,7 @@ import { Box } from "@mui/material";
 
 import Circularprogress from "../../components/CircularProgress";
 import { getProductsAll } from "../../Redux/actions/productsActions";
+import { CLEAR_FILTERED_PRODUCTS } from "../../Redux/actionsTypes/ProductsActionTypes";
 
 const Admin = () => {
   const dispatch = useDispatch();
@@ -15,6 +16,7 @@ const Admin = () => {
   useEffect(() => {
     dispatch(allComments());
     dispatch(getProductsAll());
+    dispatch({ type: CLEAR_FILTERED_PRODUCTS });
   }, []);
 
   const [commentsOrdenados, setCommentsOrdenados] = useState();

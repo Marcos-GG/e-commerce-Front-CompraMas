@@ -61,7 +61,7 @@ const Paginado = () => {
         count={Math.ceil(
           (EstaFiltrando || EstaFiltrandoSearch
             ? paginadoFiltrados
-            : productosLength) / 7
+            : productosLength) / 21
         )}
         page={currentPage}
         onChange={(e, page) => {

@@ -209,6 +209,7 @@ const Filtros = ({ open, handleDrawerToggle }) => {
             }}
           >
             <Slider
+              disabled={!combinedFilters.gender && !combinedFilters.category}
               sx={{
                 color:
                   "linear-gradient(0deg, rgba(1,46,84,1) 0%, rgba(0,205,254,1) 100%)",
@@ -331,6 +332,7 @@ const Filtros = ({ open, handleDrawerToggle }) => {
             }}
           >
             <Slider
+              disabled={!combinedFilters.gender && !combinedFilters.category}
               sx={{
                 color:
                   "linear-gradient(0deg, rgba(1,46,84,1) 0%, rgba(0,205,254,1) 100%)",

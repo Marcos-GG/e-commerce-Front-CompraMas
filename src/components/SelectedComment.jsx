@@ -67,7 +67,7 @@ const SelectedComment = ({
           flexDirection: "column",
           justifyContent: "space-between",
           width: "100%",
-          height: isLTE430 ? "100%" : "95%",
+          height: isLTE430 ? "100%" : "99%",
         }}
       >
         <Box

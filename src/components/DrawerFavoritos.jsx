@@ -22,7 +22,7 @@ const DrawerFavoritos = ({
   favoriteProducts,
 }) => {
   const isLTE530 = useMediaQuery("(max-width: 530px)");
-  const isLTE600 = useMediaQuery("(max-width: 600px)");
+  const isLTE730 = useMediaQuery("(max-width: 730px)");
 
   const isLTE1440 = useMediaQuery("(max-width:1440px)");
   const isLTE1200 = useMediaQuery("(max-width:1200px)");
@@ -56,7 +56,7 @@ const DrawerFavoritos = ({
       >
         <Box
           sx={{
-            width: isLTE530 ? "100%" : isLTE600 ? "25rem" : "30rem",
+            width: isLTE530 ? "100%" : isLTE730 ? "25rem" : "30rem",
             display: "flex",
             flexDirection: "column",
             overflow: "hidden",
@@ -67,7 +67,7 @@ const DrawerFavoritos = ({
         >
           <Box
             sx={{
-              width: isLTE600 ? "100%" : "98%",
+              width: isLTE730 ? "100%" : "98%",
               height: "100%",
               display: "flex",
               flexDirection: "column",

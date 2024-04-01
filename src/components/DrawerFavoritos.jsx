@@ -56,7 +56,8 @@ const DrawerFavoritos = ({
       >
         <Box
           sx={{
-            width: isLTE530 ? "100%" : isLTE730 ? "25rem" : "30rem",
+            width: isLTE730 ? "25rem" : "30rem",
+            maxWidth: "90vw",
             display: "flex",
             flexDirection: "column",
             overflow: "hidden",

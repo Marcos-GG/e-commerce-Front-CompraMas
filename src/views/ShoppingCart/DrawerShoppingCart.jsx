@@ -26,7 +26,7 @@ const DrawerShoppingCart = ({
   const isLTE424 = useMediaQuery("(max-width: 424px)");
   const isLTE500 = useMediaQuery("(max-width: 500px)");
   const isLTE530 = useMediaQuery("(max-width: 530px)");
-  const isLTE600 = useMediaQuery("(max-width: 600px)");
+  const isLTE730 = useMediaQuery("(max-width: 730px)");
   const isLTE650 = useMediaQuery("(max-width: 650px)");
   const isLTE700 = useMediaQuery("(max-width: 700px)");
   const isLTE1440 = useMediaQuery("(max-width:1440px)");
@@ -109,7 +109,8 @@ const DrawerShoppingCart = ({
           >
             <Box
               sx={{
-                width: isLTE530 ? "100%" : isLTE600 ? "25rem" : "30rem",
+                width: isLTE730 ? "25rem" : "30rem",
+                maxWidth: "90vw",
                 display: "flex",
                 flexDirection: "column",
                 justifyContent: "center",
@@ -121,7 +122,7 @@ const DrawerShoppingCart = ({
             >
               <Box
                 sx={{
-                  width: isLTE600 ? "100%" : "98%",
+                  width: isLTE730 ? "100%" : "98%",
                   height: "80%",
                   display: "flex",
                   flexDirection: "column",
